@@ -1,0 +1,17 @@
+[package]
+name = "codeatlas-runtime"
+description = "Adapter (driving): serve --stdio JSON-RPC runtime."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
+
+[dependencies]
+codeatlas-core.workspace = true
+codeatlas-application.workspace = true
+codeatlas-protocol.workspace = true
+
+[lints]
+workspace = true

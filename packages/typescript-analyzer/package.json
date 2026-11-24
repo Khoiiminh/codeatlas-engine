@@ -1,0 +1,20 @@
+{
+  "name": "@codeatlas/typescript-analyzer",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Out-of-process driven adapter: TypeScript Compiler API resolution for codeatlas-semantic-typescript (ADR-0010 rule 6).",
+  "license": "UNLICENSED",
+  "type": "module",
+  "engines": {
+    "node": ">=26.13.1"
+  },
+  "main": "./src/main.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "start": "node ./src/main.ts"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "typescript": "6.0.3"
+  }
+}

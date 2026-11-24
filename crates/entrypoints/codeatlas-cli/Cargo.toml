@@ -1,0 +1,28 @@
+[package]
+name = "codeatlas-cli"
+description = "Entrypoint: the codeatlas binary and composition root."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "codeatlas"
+path = "src/main.rs"
+
+[dependencies]
+codeatlas-core.workspace = true
+codeatlas-graph.workspace = true
+codeatlas-impact.workspace = true
+codeatlas-application.workspace = true
+codeatlas-protocol.workspace = true
+codeatlas-runtime.workspace = true
+codeatlas-scanner-fs.workspace = true
+codeatlas-parser-treesitter.workspace = true
+codeatlas-semantic-typescript.workspace = true
+codeatlas-storage-sqlite.workspace = true
+
+[lints]
+workspace = true
