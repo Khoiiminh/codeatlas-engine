@@ -1,0 +1,14 @@
+[package]
+name = "codeatlas-architecture-tests"
+description = "FND-05: asserts the Cargo crate graph matches the dependency matrix in crates/README.md (ADR-0010)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dev-dependencies]
+cargo_metadata = "0.23"
+
+[lints]
+workspace = true
