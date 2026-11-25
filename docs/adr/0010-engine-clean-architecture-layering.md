@@ -1,6 +1,6 @@
 # ADR-0010: Engine Clean Architecture layering and crate dependency rule
-- Status: Proposed
-- Date: 2026-11-24
+- Status: Accepted
+- Date: 2026-11-25
 - Decision owners: Engine maintainers
 - Repository scope: engine
 - Supersedes: none
@@ -29,12 +29,31 @@ Adopt Clean Architecture (Blueprint v1.3 §2) with four layers, expressed as Car
 
 Rules:
 
-1. Dependencies point inward only. The exact matrix is in [`crates/README.md`](../../crates/README.md) and is normative.
-2. Port traits (`SourceScanner`, `LanguageParser`, `SemanticResolver`, `SnapshotStore`, `GraphReader`, `ArtifactStore`, `ProgressReporter`, `CancellationToken`, `Clock`) are declared in `codeatlas-application`.
-3. Domain and application crates must not depend on `rusqlite`, `tree-sitter*`, `serde_json`, an async runtime, or process/IPC crates.
+1. Dependencies point inward only, as defined by the **dependency matrix below, which is normative**.
+2. Port traits (`SourceScanner`, `LanguageParser`, `SemanticResolver`, `SnapshotStore`, `GraphReader`, `ArtifactStore`, `JobQueue`, `ProgressReporter`, `CancellationToken`, `Clock`) are declared in `codeatlas-application`.
+3. Domain and application crates must not depend, directly or transitively, on infrastructure crates: SQLite (`rusqlite`, `libsqlite3-sys`), `tree-sitter*`, `serde_json`, async runtimes (`tokio*`, `async-std`, `smol`) or IPC crates (`interprocess`, `ipc-channel`). The authoritative list is `FORBIDDEN_IN_INNER_LAYERS` in `tests/architecture/src/lib.rs`. Adding a crate to it tightens the rule; removing one requires amending this ADR.
 4. Contract (wire) types live only in `codeatlas-protocol` and are mapped there. Domain types are never serialized directly as canonical contracts.
 5. The only allowed adapter-to-adapter dependency is `codeatlas-runtime` → `codeatlas-protocol`. Any new exception requires amending this ADR.
 6. `packages/typescript-analyzer` is an out-of-process driven adapter, reached only through `codeatlas-semantic-typescript`.
+7. Adapters depend on `codeatlas-core` and `codeatlas-application` only, not directly on `codeatlas-graph` or `codeatlas-impact`. This is stricter than Blueprint v1.3 §2.1 on purpose: graph and impact internals can change without touching adapters. Graph or impact types that an adapter needs, for example in `codeatlas-protocol` mappers, are exposed through `codeatlas-application` (use-case results or re-exports).
+8. No direct query-port exception (Blueprint v1.3 §2.3) is granted. `codeatlas-runtime` and `codeatlas-cli` call use cases.
+
+### Dependency matrix (normative)
+
+✔ = allowed; blank = forbidden. "Other adapters" means adapter crates other than `codeatlas-protocol`.
+
+| Crate ↓ may depend on → | core | graph | impact | application | protocol | other adapters |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|
+| `domain/codeatlas-core` | | | | | | |
+| `domain/codeatlas-graph` | ✔ | | | | | |
+| `domain/codeatlas-impact` | ✔ | ✔ | | | | |
+| `application/codeatlas-application` | ✔ | ✔ | ✔ | | | |
+| `adapters/codeatlas-protocol` | ✔ | | | ✔ | | |
+| `adapters/codeatlas-runtime` | ✔ | | | ✔ | ✔ | |
+| `adapters/codeatlas-scanner-fs`, `-parser-treesitter`, `-semantic-typescript`, `-storage-sqlite` | ✔ | | | ✔ | | |
+| `entrypoints/codeatlas-cli` | ✔ | ✔ | ✔ | ✔ | ✔ | ✔ |
+
+Copies that must match it: [`crates/README.md`](../../crates/README.md) (for readers) and `MATRIX` in `tests/architecture/src/lib.rs` (enforced). Changes to this matrix are made by amending this ADR in the same pull request that updates its copies. A change that adds an edge (a new layer exception) needs review by the decision owners before merge (Traceable Implementation Plan §10 rule 7). The amendment is recorded with its date under "Implementation and verification".
 
 Scaffold renames: `codeatlas-analysis` → `codeatlas-application`. New crates: `codeatlas-scanner-fs`, `codeatlas-parser-treesitter`, `codeatlas-semantic-typescript`. The Blueprint v1.2 components map as described in Blueprint v1.3 §1.1.
 
@@ -61,5 +80,5 @@ Scaffold renames: `codeatlas-analysis` → `codeatlas-application`. New crates: 
 
 - Architecture Blueprint v1.3 §1.1, §2, §4
 - Traceable Implementation Plan v1.2: FND-01, FND-05, ENG-01..05, LOC-01, RT-01
-- ADR-0004 (hybrid analysis engine), ADR-0005 (IPC), ADR-0006 (persistence), ADR-0009 (multi-repository)
-- Sibling layering decisions: ADR-0011 (`codeatlas-platform`), ADR-0012 (`codeatlas-vscode`)
+- [ADR-0004](0004-hybrid-analysis-engine.md) (hybrid analysis engine), [ADR-0005](0005-inter-process-communication.md) (IPC), [ADR-0006](0006-persistence-strategy.md) (persistence), [ADR-0009](0009-multi-repository-architecture.md) (multi-repository)
+- Sibling layering decisions: [ADR-0011](https://github.com/Khoiiminh/codeatlas-platform/blob/development/docs/adr/0011-platform-clean-architecture-bounded-contexts.md) (`codeatlas-platform`), [ADR-0012](https://github.com/Khoiiminh/codeatlas-vscode/blob/development/docs/adr/0012-vscode-extension-layering.md) (`codeatlas-vscode`)
