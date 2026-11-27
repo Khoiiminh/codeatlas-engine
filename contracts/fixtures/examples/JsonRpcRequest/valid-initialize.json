@@ -1,0 +1,17 @@
+{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "initialize",
+  "params": {
+    "client": {
+      "name": "codeatlas-vscode",
+      "version": "0.1.0"
+    },
+    "protocolVersions": [
+      "0.1"
+    ],
+    "capabilities": {
+      "progress": true
+    }
+  }
+}

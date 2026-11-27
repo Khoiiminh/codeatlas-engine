@@ -1,0 +1,10 @@
+{
+  "client": {
+    "name": "codeatlas-cli-test",
+    "version": "0"
+  },
+  "protocolVersions": [
+    "1.0",
+    "0.1"
+  ]
+}

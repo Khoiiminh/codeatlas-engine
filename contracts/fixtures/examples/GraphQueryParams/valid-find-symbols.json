@@ -1,0 +1,8 @@
+{
+  "snapshotId": "snap-20261125-0001",
+  "query": {
+    "kind": "find_symbols",
+    "text": "start",
+    "limit": 50
+  }
+}

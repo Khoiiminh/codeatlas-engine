@@ -75,7 +75,8 @@ Each repository owns its CI, required checks (including its architecture boundar
 
 - FND-01 (Done, 2026-11-24): the three repositories exist with ownership READMEs, independent CI, and rulesets that require pull requests and passing checks on `main` and `development`.
 - FND-02 (Done, 2026-11-25): ADR-0001..0012 were written, independently reviewed and accepted. The ADR indexes in all three repositories follow the cross-repository ADR rules above.
-- FND-03 and DIST-01: the engine publishes the schema bundle, contract package and versioned binaries.
+- FND-03 (2026-11-25): the schema bundle, the generated `@codeatlas/contracts` package and the Rust types are in place. CI checks them against each other and runs a consumer package-install test. The packed tarball is uploaded as a CI artifact, and the platform and VS Code pin it in `vendor/` (lockfile integrity hash, provenance in `vendor/README.md`).
+- DIST-01: the engine publishes the contract package to a registry with release provenance, plus versioned binaries.
 - IDE-01 and HOST-01: consumers pin or resolve compatible versions.
 - INT-01: engine↔VS Code and engine↔platform compatibility tests pass on pinned versions.
 

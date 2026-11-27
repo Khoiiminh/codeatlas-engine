@@ -1,0 +1,18 @@
+{
+  "kind": "semantic",
+  "analyzer": "typescript",
+  "location": {
+    "path": "src/app.ts",
+    "range": {
+      "start": {
+        "line": 5,
+        "character": 2
+      },
+      "end": {
+        "line": 5,
+        "character": 14
+      }
+    }
+  },
+  "detail": "Resolved through tsconfig paths."
+}
