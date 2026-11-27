@@ -20,6 +20,7 @@ ADR numbers are global across the three CodeAtlas repositories. Each ADR has one
 | ADR-0010 | [Engine Clean Architecture layering and crate dependency rule](0010-engine-clean-architecture-layering.md) | engine | Accepted | this repository |
 | ADR-0011 | [Platform Clean Architecture, bounded contexts and package dependency rule](https://github.com/Khoiiminh/codeatlas-platform/blob/development/docs/adr/0011-platform-clean-architecture-bounded-contexts.md) | platform | Accepted | [`codeatlas-platform`](https://github.com/Khoiiminh/codeatlas-platform/blob/development/docs/adr/0011-platform-clean-architecture-bounded-contexts.md) |
 | ADR-0012 | [VS Code extension core/adapters/presentation layering](https://github.com/Khoiiminh/codeatlas-vscode/blob/development/docs/adr/0012-vscode-extension-layering.md) | vscode | Accepted | [`codeatlas-vscode`](https://github.com/Khoiiminh/codeatlas-vscode/blob/development/docs/adr/0012-vscode-extension-layering.md) |
+| ADR-0013 | [Branch promotion and ownership of repository rules](0013-branch-promotion-and-rule-ownership.md) | cross-repository | Accepted | this repository |
 
 ## Writing and changing ADRs
 

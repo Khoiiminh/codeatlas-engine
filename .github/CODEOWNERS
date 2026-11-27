@@ -1,0 +1,34 @@
+# Code owners for the files that define this repository's rules (ADR-0009).
+#
+# Everything else has no owner, so ordinary changes need no extra review. Once the repository
+# moves to an organization with a second maintainer, replace @Khoiiminh with the core team
+# (for example @codeatlas/core) and turn on "Require review from Code Owners" in both rulesets.
+# Until then GitHub only requests a review; nothing is blocked.
+
+# CI, branch policy and this file
+/.github/                                   @Khoiiminh
+
+# Toolchains and formatting
+/rust-toolchain.toml                        @Khoiiminh
+/.node-version                              @Khoiiminh
+/.editorconfig                              @Khoiiminh
+/.prettierrc.json                           @Khoiiminh
+/.prettierignore                            @Khoiiminh
+/.gitattributes                             @Khoiiminh
+/Cargo.toml                                 @Khoiiminh
+
+# Architecture rules (ADR-0010): dependency matrix and boundary checks
+/crates/README.md                           @Khoiiminh
+/tests/architecture/                        @Khoiiminh
+
+# Contracts (ADR-0009): canonical schemas and port fixtures, and the package generator
+/contracts/                                 @Khoiiminh
+/packages/contracts/scripts/                @Khoiiminh
+
+# Golden fixtures and their compiler cross-check
+/tests/fixtures/                            @Khoiiminh
+/packages/typescript-analyzer/scripts/      @Khoiiminh
+
+# Decisions and architecture documentation
+/docs/adr/                                  @Khoiiminh
+/docs/architecture/                         @Khoiiminh

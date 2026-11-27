@@ -79,6 +79,7 @@ Each repository owns its CI, required checks (including its architecture boundar
 - DIST-01: the engine publishes the contract package to a registry with release provenance, plus versioned binaries.
 - IDE-01 and HOST-01: consumers pin or resolve compatible versions.
 - INT-01: engine↔VS Code and engine↔platform compatibility tests pass on pinned versions.
+- 2026-11-27: [ADR-0013](0013-branch-promotion-and-rule-ownership.md) refines how `main` is updated. `main` only moves forward to `development` by a fast-forward push, a pull request into `main` must come from `development` (required check `source-branch`), and `.github/CODEOWNERS` names the owners of rule files.
 
 ## Related records
 
