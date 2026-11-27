@@ -1,4 +1,0 @@
-{
-  "kind": "syntactic",
-  "analyzer": "tree-sitter"
-}

@@ -1,9 +1,0 @@
-{
-  "jsonrpc": "2.0",
-  "method": "$/progress",
-  "params": {
-    "token": "t1",
-    "kind": "report",
-    "percentage": 40
-  }
-}

@@ -1,8 +1,0 @@
-{
-  "snapshotId": "s",
-  "query": {
-    "kind": "neighbors",
-    "nodeId": "n",
-    "limit": 5000
-  }
-}

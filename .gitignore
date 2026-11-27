@@ -1,9 +1,0 @@
-/target
-node_modules/
-dist/
-/packages/contracts/schemas/
-*.tgz
-# FND-04: the SynchroStream fixture keeps stand-in dependency and build folders on purpose,
-# so scanners are tested against them (tests/fixtures/README.md).
-!/tests/fixtures/synchrostream/repo/node_modules/
-!/tests/fixtures/synchrostream/repo/backend/dist/

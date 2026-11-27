@@ -1,8 +1,0 @@
-{
-  "id": "edge:calls:start->logger.info",
-  "kind": "calls",
-  "source": "symbol:src/app.ts#start",
-  "target": "symbol:src/logger.ts#info",
-  "resolution": "resolved",
-  "evidence": []
-}
