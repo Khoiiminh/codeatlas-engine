@@ -44,6 +44,8 @@ cd packages/contracts && npm ci && npm run check:generated && npm run format:che
 
 CI (`.github/workflows/ci.yml`) runs the jobs `rust`, `architecture`, `contracts` and `typescript-analyzer`. Mark all four as required in branch protection. The `contracts` job also uploads the packed `@codeatlas/contracts` tarball as the `codeatlas-contracts` artifact.
 
+Branches ([ADR-0013](docs/adr/0013-branch-promotion-and-rule-ownership.md)): work reaches `development` through pull requests. `main` only moves forward to a commit of `development` (a fast-forward push by a maintainer on the `protect-main` bypass list), so both branches share one history. The `source-branch` check in `.github/workflows/branch-policy.yml` fails any pull request into `main` that does not come from this repository's `development`. Make it required in `protect-main` only. `.github/CODEOWNERS` names the owners of the files that define this repository's rules.
+
 Canonical contracts (schemas, examples, versioning rules): [`contracts/README.md`](contracts/README.md). Test fixtures: [`tests/fixtures/README.md`](tests/fixtures/README.md) (source repositories) and [`contracts/fixtures/ports/README.md`](contracts/fixtures/ports/README.md) (snapshot-port scenarios).
 
 ## Decision records
