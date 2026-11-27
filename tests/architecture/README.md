@@ -2,7 +2,7 @@
 
 Required CI check `architecture` (FND-05, [ADR-0010](../../docs/adr/0010-engine-clean-architecture-layering.md)).
 
-`codeatlas-architecture-tests` is a workspace member that reads the resolved crate graph with `cargo metadata` and fails if:
+`codeatlas-architecture-tests` is a workspace member (test tooling, like `codeatlas-fixture-tests`; both are listed in `TOOLING_CRATES` and no product crate may depend on them) that reads the resolved crate graph with `cargo metadata` and fails if:
 
 - a crate depends on a workspace crate the [dependency matrix](../../crates/README.md) does not allow (any dependency kind);
 - a crate under `crates/` is missing from the matrix, or sits in a folder that does not match its layer;

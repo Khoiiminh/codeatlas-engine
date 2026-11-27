@@ -2,4 +2,6 @@
 # so the packed @codeatlas/contracts tarball is reproducible.
 contracts/** text eol=lf
 packages/contracts/** text eol=lf
+# FND-04: fixture sources and expectations are golden (line numbers, content hashes in seeds).
+tests/fixtures/** text eol=lf
 *.tgz binary

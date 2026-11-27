@@ -91,3 +91,5 @@ jobs:
           cache-dependency-path: packages/typescript-analyzer/package-lock.json
       - run: npm ci
       - run: npm run typecheck
+      - name: Fixture expectations agree with the TypeScript compiler (FND-04)
+        run: npm run check:fixtures

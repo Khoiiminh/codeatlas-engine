@@ -1,0 +1,123 @@
+{
+  "$schema": "../scenario.schema.json",
+  "port": "GraphReader",
+  "title": "limit keeps the first nodes by id, drops edges to removed nodes and sets truncated",
+  "given": [
+    "synchrostream-2"
+  ],
+  "steps": [
+    {
+      "op": "query",
+      "snapshotId": "snap-synchrostream-0002",
+      "query": {
+        "kind": "callers",
+        "nodeId": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+        "depth": 2,
+        "limit": 2
+      },
+      "expect": {
+        "result": {
+          "nodes": [
+            {
+              "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+              "kind": "method",
+              "name": "execute",
+              "qualifiedName": "JoinPartyUseCase.execute",
+              "language": "typescript",
+              "location": {
+                "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+                "range": {
+                  "start": {
+                    "line": 14,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 14,
+                    "character": 76
+                  }
+                }
+              },
+              "exported": false
+            },
+            {
+              "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+              "kind": "method",
+              "name": "handle",
+              "qualifiedName": "SyncGateway.handle",
+              "language": "typescript",
+              "location": {
+                "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+                "range": {
+                  "start": {
+                    "line": 8,
+                    "character": 4
+                  },
+                  "end": {
+                    "line": 8,
+                    "character": 51
+                  }
+                }
+              },
+              "exported": false
+            }
+          ],
+          "edges": [
+            {
+              "id": "edge:calls:JoinPartyUseCase.execute->PartyRoomRepository.findByCode",
+              "kind": "calls",
+              "source": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+              "target": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+              "resolution": "resolved",
+              "evidence": [
+                {
+                  "kind": "semantic",
+                  "analyzer": "typescript",
+                  "location": {
+                    "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+                    "range": {
+                      "start": {
+                        "line": 15,
+                        "character": 27
+                      },
+                      "end": {
+                        "line": 15,
+                        "character": 49
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "edge:calls:SyncGateway.handle->PartyRoomRepository.findByCode",
+              "kind": "calls",
+              "source": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+              "target": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+              "resolution": "resolved",
+              "evidence": [
+                {
+                  "kind": "semantic",
+                  "analyzer": "typescript",
+                  "location": {
+                    "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+                    "range": {
+                      "start": {
+                        "line": 9,
+                        "character": 27
+                      },
+                      "end": {
+                        "line": 9,
+                        "character": 49
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          ],
+          "truncated": true
+        }
+      }
+    }
+  ]
+}

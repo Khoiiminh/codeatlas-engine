@@ -43,6 +43,7 @@ Combine **two analysis sources** and merge them with explicit provenance:
 
 ## Implementation and verification
 
+- FND-04 (2026-11-27): the SynchroStream golden fixture in [`tests/fixtures`](../../tests/fixtures/README.md) lists every file, symbol, relationship and unresolved reference (with reasons) that a complete analysis must report, and the conventions that define them. TypeScript 6.0.3 cross-checks it in CI: import resolution, call and reference targets, and an exhaustive symbol list.
 - ENG-01: deterministic scanner inventory that ignores generated and dependency folders.
 - ENG-02/03: Tree-sitter parsing and symbol extraction, covered by golden snapshots and stable IDs.
 - ENG-04: semantic resolution tests on SynchroStream fixtures.

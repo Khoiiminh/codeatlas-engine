@@ -1,0 +1,157 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:codeatlas:port-fixtures:scenario:1",
+  "title": "Port behaviour scenario",
+  "description": "One behaviour of the SnapshotStore or GraphReader port (FND-04, ADR-0006). A runner saves the 'given' seeds into an empty store, then runs the steps in order and compares each outcome with 'expect'. Rules: contracts/fixtures/ports/README.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["port", "title", "given", "steps"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "port": { "enum": ["SnapshotStore", "GraphReader"] },
+    "title": { "type": "string", "minLength": 1 },
+    "given": {
+      "description": "Seed names (files in seeds/, without .json) saved before the first step. Each save must succeed.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/seedName" }
+    },
+    "steps": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/step" } }
+  },
+  "$defs": {
+    "seedName": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "snapshotId": { "$ref": "urn:codeatlas:contracts:0.1.0#/$defs/SnapshotId" },
+    "ok": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ok"],
+      "properties": { "ok": { "const": true } }
+    },
+    "storeError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error"],
+      "properties": { "error": { "enum": ["already_exists", "invalid_status", "not_found"] } }
+    },
+    "queryError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["error"],
+      "properties": { "error": { "enum": ["snapshot_not_found", "snapshot_not_complete", "node_not_found"] } }
+    },
+    "step": {
+      "oneOf": [
+        {
+          "title": "save",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "seed", "expect"],
+          "properties": {
+            "op": { "const": "save" },
+            "seed": { "$ref": "#/$defs/seedName" },
+            "expect": { "oneOf": [{ "$ref": "#/$defs/ok" }, { "$ref": "#/$defs/storeError" }] }
+          }
+        },
+        {
+          "title": "get",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "snapshotId", "expect"],
+          "properties": {
+            "op": { "const": "get" },
+            "snapshotId": { "$ref": "#/$defs/snapshotId" },
+            "expect": {
+              "oneOf": [
+                {
+                  "description": "The stored snapshot equals this seed.",
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["snapshot"],
+                  "properties": { "snapshot": { "$ref": "#/$defs/seedName" } }
+                },
+                { "$ref": "#/$defs/storeError" }
+              ]
+            }
+          }
+        },
+        {
+          "title": "list",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "params", "expect"],
+          "properties": {
+            "op": { "const": "list" },
+            "params": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "repository": { "type": "string", "minLength": 1 },
+                "limit": { "type": "integer", "minimum": 1 }
+              }
+            },
+            "expect": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["snapshotIds"],
+              "properties": { "snapshotIds": { "type": "array", "items": { "$ref": "#/$defs/snapshotId" } } }
+            }
+          }
+        },
+        {
+          "title": "latest",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "repository", "expect"],
+          "properties": {
+            "op": { "const": "latest" },
+            "repository": { "type": "string", "minLength": 1 },
+            "expect": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["snapshotId"],
+                  "properties": { "snapshotId": { "$ref": "#/$defs/snapshotId" } }
+                },
+                { "$ref": "#/$defs/storeError" }
+              ]
+            }
+          }
+        },
+        {
+          "title": "delete",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "snapshotId", "expect"],
+          "properties": {
+            "op": { "const": "delete" },
+            "snapshotId": { "$ref": "#/$defs/snapshotId" },
+            "expect": { "oneOf": [{ "$ref": "#/$defs/ok" }, { "$ref": "#/$defs/storeError" }] }
+          }
+        },
+        {
+          "title": "query",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["op", "snapshotId", "query", "expect"],
+          "properties": {
+            "op": { "const": "query" },
+            "snapshotId": { "$ref": "#/$defs/snapshotId" },
+            "query": { "$ref": "urn:codeatlas:contracts:0.1.0#/$defs/GraphQuery" },
+            "expect": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["result"],
+                  "properties": { "result": { "$ref": "urn:codeatlas:contracts:0.1.0#/$defs/GraphQueryResult" } }
+                },
+                { "$ref": "#/$defs/queryError" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}
