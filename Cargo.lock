@@ -152,6 +152,15 @@ name = "codeatlas-core"
 version = "0.0.0"
 
 [[package]]
+name = "codeatlas-fixture-tests"
+version = "0.0.0"
+dependencies = [
+ "codeatlas-protocol",
+ "jsonschema",
+ "serde_json",
+]
+
+[[package]]
 name = "codeatlas-graph"
 version = "0.0.0"
 dependencies = [

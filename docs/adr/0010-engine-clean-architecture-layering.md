@@ -72,6 +72,7 @@ Scaffold renames: `codeatlas-analysis` → `codeatlas-application`. New crates: 
 ## Implementation and verification
 
 - FND-01: workspace `Cargo.toml` and per-crate manifests that encode exactly the matrix.
+- FND-04 (2026-11-27): `tests/fixtures` adds a second test-tooling crate, `codeatlas-fixture-tests`, listed in `TOOLING_CRATES`. Like the architecture tests, it is outside the dependency matrix and no product crate may depend on it. The matrix is unchanged.
 - FND-05: `tests/architecture` (`codeatlas-architecture-tests`) asserts the `cargo metadata` crate graph against the matrix and the forbidden-external list, as the required CI job `architecture`. A deliberately introduced violation must fail CI. Verified on 2026-11-24: an adapter-to-adapter edge and `serde_json` in a domain crate fail the test, and an inward-to-outward edge is rejected by Cargo as a cycle.
 - ENG-01/02/04 and LOC-01 each introduce their port in `codeatlas-application` before the adapter.
 - Domain/application unit tests run with in-memory port fakes only.

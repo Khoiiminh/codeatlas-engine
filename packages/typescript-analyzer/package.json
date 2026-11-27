@@ -11,6 +11,7 @@
   "main": "./src/main.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
+    "check:fixtures": "node ./scripts/check-fixtures.ts",
     "start": "node ./src/main.ts"
   },
   "devDependencies": {

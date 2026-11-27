@@ -18,8 +18,9 @@ members = [
     "crates/adapters/codeatlas-storage-sqlite",
     # Layer 4: entrypoints (composition roots)
     "crates/entrypoints/codeatlas-cli",
-    # Architecture boundary checks (not a product crate)
+    # Test tooling (not product crates)
     "tests/architecture",
+    "tests/fixtures",
 ]
 
 [workspace.package]

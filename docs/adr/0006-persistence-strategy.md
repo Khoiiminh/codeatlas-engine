@@ -47,6 +47,9 @@ Rules:
 ## Implementation and verification
 
 - FND-04: snapshot-port behaviour fixtures that both adapters can consume.
+  - Delivered 2026-11-27 in [`contracts/fixtures/ports`](../../contracts/fixtures/ports/README.md): 6 canonical seed snapshots, 7 `SnapshotStore` and 6 `GraphReader` scenarios, and the written rules both adapters implement (immutability, only finished snapshots are stored, a failed analysis never replaces the latest complete one, list order, query semantics and truncation).
+  - An in-memory reference store passes every scenario, and a store that overwrites snapshots fails at least one (`tests/fixtures`, `codeatlas-fixture-tests`).
+  - The scenarios are not in the 0.1.0 contract tarball. They ship with the next contract release, before HOST-02 needs them (ADR-0009).
 - LOC-01: SQLite migrations and round-trip tests, with the adapter passing the port fixtures.
 - HOST-02: the PostgreSQL adapter passes the same fixtures, with no database-file sync.
 

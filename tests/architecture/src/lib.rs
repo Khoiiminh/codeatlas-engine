@@ -102,7 +102,7 @@ pub const FORBIDDEN_IN_INNER_LAYERS: &[&str] = &[
 ];
 
 /// Workspace members that are tools, not product crates.
-pub const TOOLING_CRATES: &[&str] = &["codeatlas-architecture-tests"];
+pub const TOOLING_CRATES: &[&str] = &["codeatlas-architecture-tests", "codeatlas-fixture-tests"];
 
 /// A workspace crate as seen by the checker.
 #[derive(Clone, Debug)]

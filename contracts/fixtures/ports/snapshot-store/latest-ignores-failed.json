@@ -1,0 +1,34 @@
+{
+  "$schema": "../scenario.schema.json",
+  "port": "SnapshotStore",
+  "title": "A failed analysis never replaces the last complete snapshot",
+  "given": [
+    "synchrostream-1",
+    "synchrostream-2",
+    "synchrostream-3-failed",
+    "codeatlas-demo-1"
+  ],
+  "steps": [
+    {
+      "op": "latest",
+      "repository": "synchrostream",
+      "expect": {
+        "snapshotId": "snap-synchrostream-0002"
+      }
+    },
+    {
+      "op": "latest",
+      "repository": "codeatlas-demo",
+      "expect": {
+        "snapshotId": "snap-codeatlas-demo-0001"
+      }
+    },
+    {
+      "op": "latest",
+      "repository": "unknown-repository",
+      "expect": {
+        "error": "not_found"
+      }
+    }
+  ]
+}
