@@ -64,7 +64,12 @@ jobs:
       - name: Consumer package-install test
         run: npm run test:consumer
       - name: Pack the contract artifact
-        run: npm pack --pack-destination "$RUNNER_TEMP/contracts"
+        # npm pack does not create the destination folder. The printed SHA-256 must match
+        # the vendored copies in codeatlas-platform and codeatlas-vscode (vendor/README.md).
+        run: |
+          mkdir -p "$RUNNER_TEMP/contracts"
+          npm pack --pack-destination "$RUNNER_TEMP/contracts"
+          sha256sum "$RUNNER_TEMP"/contracts/*.tgz
       - uses: actions/upload-artifact@v7
         with:
           name: codeatlas-contracts
