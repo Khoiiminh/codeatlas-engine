@@ -38,6 +38,7 @@ An ad-hoc or implicit protocol breaks silently when either side upgrades. Some t
 
 ## Implementation and verification
 
+- FND-03 (2026-11-25): the protocol is defined in `contracts/schemas/codeatlas.schema.json`: the JSON-RPC envelopes, `initialize` / `analysis/run` / `graph/query` / `snapshot/list` / `shutdown`, `$/progress`, `$/cancelRequest`, `exit`, and the error codes including `UNSUPPORTED_PROTOCOL_VERSION` (-32010). Version negotiation follows the compatibility-key rule in `codeatlas_protocol::version`, which is unit-tested. `contract_compatibility.rs` checks schema, examples and Rust types against each other.
 - RT-01: protocol tests; a test asserts that stdout is protocol-only.
 - RT-02: progress, cancellation, stderr diagnostics and clean-exit lifecycle tests.
 - DIST-01: releases publish the supported protocol range.

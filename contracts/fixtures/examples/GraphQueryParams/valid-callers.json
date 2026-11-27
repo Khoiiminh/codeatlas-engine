@@ -1,0 +1,11 @@
+{
+  "snapshotId": "snap-20261125-0001",
+  "query": {
+    "kind": "callers",
+    "nodeId": "symbol:src/app.ts#start",
+    "depth": 2,
+    "edgeKinds": [
+      "calls"
+    ]
+  }
+}

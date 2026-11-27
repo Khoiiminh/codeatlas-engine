@@ -1,0 +1,8 @@
+target/
+**/node_modules/
+**/dist/
+packages/contracts/schemas/
+contracts/fixtures/
+*.tgz
+package-lock.json
+Cargo.lock

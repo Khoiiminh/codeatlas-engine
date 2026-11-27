@@ -42,6 +42,11 @@ codeatlas-parser-treesitter = { path = "crates/adapters/codeatlas-parser-treesit
 codeatlas-semantic-typescript = { path = "crates/adapters/codeatlas-semantic-typescript" }
 codeatlas-storage-sqlite = { path = "crates/adapters/codeatlas-storage-sqlite" }
 
+# External crates. Inner layers (domain, application) must not use these (ADR-0010 rule 3).
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+jsonschema = { version = "0.61.2", default-features = false }
+
 [workspace.lints.rust]
 unsafe_code = "forbid"
 

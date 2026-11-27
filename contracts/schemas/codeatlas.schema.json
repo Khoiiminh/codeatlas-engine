@@ -1,0 +1,659 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:codeatlas:contracts:0.1.0",
+  "title": "CodeAtlasContracts",
+  "description": "Canonical CodeAtlas contracts (FND-03, ADR-0005, ADR-0009). Single source of truth for the analysis model and the JSON-RPC runtime protocol. Every type is a named definition under $defs. Objects are closed (additionalProperties: false) so producers are tested strictly; consumers must ignore unknown properties (see contracts/README.md).",
+  "x-contract-version": "0.1.0",
+  "x-protocol-version": "0.1",
+  "$defs": {
+    "ContractVersion": {
+      "title": "ContractVersion",
+      "description": "Semantic version of this contract bundle (MAJOR.MINOR.PATCH).",
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "ProtocolVersion": {
+      "title": "ProtocolVersion",
+      "description": "JSON-RPC protocol version (MAJOR.MINOR). Compatible versions share a compatibility key: MAJOR when MAJOR >= 1, MAJOR.MINOR while MAJOR is 0.",
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "EngineVersion": {
+      "title": "EngineVersion",
+      "description": "Semantic version of an engine build, optionally with a pre-release suffix.",
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?$"
+    },
+    "Sha256": {
+      "title": "Sha256",
+      "description": "Lower-case hexadecimal SHA-256 digest.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "NodeId": {
+      "title": "NodeId",
+      "description": "Stable, opaque node identifier. Identical source produces the identical ID across runs.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "EdgeId": {
+      "title": "EdgeId",
+      "description": "Stable, opaque edge identifier.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "SnapshotId": {
+      "title": "SnapshotId",
+      "description": "Opaque snapshot identifier. A new analysis always creates a new snapshot ID.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "RepoPath": {
+      "title": "RepoPath",
+      "description": "Repository-relative path with forward slashes, no leading slash, no backslashes and no '..' segments.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^/\\\\][^\\\\]*$"
+    },
+    "Position": {
+      "title": "Position",
+      "description": "Zero-based position. 'character' counts UTF-16 code units, as in VS Code and LSP.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["line", "character"],
+      "properties": {
+        "line": { "type": "integer", "minimum": 0 },
+        "character": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "Range": {
+      "title": "Range",
+      "description": "Half-open source range [start, end).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "$ref": "#/$defs/Position" },
+        "end": { "$ref": "#/$defs/Position" }
+      }
+    },
+    "SourceLocation": {
+      "title": "SourceLocation",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "range"],
+      "properties": {
+        "path": { "$ref": "#/$defs/RepoPath" },
+        "range": { "$ref": "#/$defs/Range" }
+      }
+    },
+    "Language": {
+      "title": "Language",
+      "type": "string",
+      "enum": ["typescript", "tsx", "javascript", "jsx"]
+    },
+    "NodeKind": {
+      "title": "NodeKind",
+      "type": "string",
+      "enum": [
+        "file",
+        "external_module",
+        "namespace",
+        "class",
+        "interface",
+        "type_alias",
+        "enum",
+        "function",
+        "method",
+        "property",
+        "variable"
+      ]
+    },
+    "Node": {
+      "title": "Node",
+      "description": "A graph node: a file, an external module or a symbol.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "name"],
+      "properties": {
+        "id": { "$ref": "#/$defs/NodeId" },
+        "kind": { "$ref": "#/$defs/NodeKind" },
+        "name": { "type": "string", "minLength": 1 },
+        "qualifiedName": { "type": "string", "minLength": 1 },
+        "language": { "$ref": "#/$defs/Language" },
+        "location": { "$ref": "#/$defs/SourceLocation" },
+        "exported": { "type": "boolean" },
+        "contentHash": {
+          "description": "SHA-256 of the file content. Set for 'file' nodes only.",
+          "$ref": "#/$defs/Sha256"
+        }
+      }
+    },
+    "EdgeKind": {
+      "title": "EdgeKind",
+      "type": "string",
+      "enum": ["contains", "imports", "exports", "calls", "references", "extends", "implements"]
+    },
+    "EvidenceKind": {
+      "title": "EvidenceKind",
+      "description": "How a relationship was established: from syntax (Tree-sitter), from semantic analysis (TypeScript Compiler API), or inferred by a heuristic.",
+      "type": "string",
+      "enum": ["syntactic", "semantic", "inferred"]
+    },
+    "Evidence": {
+      "title": "Evidence",
+      "description": "Why the engine believes a relationship exists (ADR-0004).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "analyzer", "location"],
+      "properties": {
+        "kind": { "$ref": "#/$defs/EvidenceKind" },
+        "analyzer": {
+          "description": "Producer of the evidence, for example 'tree-sitter' or 'typescript'.",
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9.-]*$"
+        },
+        "location": { "$ref": "#/$defs/SourceLocation" },
+        "detail": { "type": "string", "maxLength": 1000 }
+      }
+    },
+    "Resolution": {
+      "title": "Resolution",
+      "type": "string",
+      "enum": ["resolved", "unresolved"]
+    },
+    "UnresolvedReason": {
+      "title": "UnresolvedReason",
+      "type": "string",
+      "enum": ["not_found", "ambiguous", "dynamic", "unsupported"]
+    },
+    "UnresolvedTarget": {
+      "title": "UnresolvedTarget",
+      "description": "What an unresolved relationship pointed at, and why it could not be resolved.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["specifier", "reason"],
+      "properties": {
+        "specifier": { "type": "string", "minLength": 1 },
+        "reason": { "$ref": "#/$defs/UnresolvedReason" }
+      }
+    },
+    "Edge": {
+      "title": "Edge",
+      "description": "A directed relationship. A resolved edge has 'target' and no 'unresolved'; an unresolved edge has 'unresolved' and no 'target'. Every edge carries at least one piece of evidence.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "source", "resolution", "evidence"],
+      "properties": {
+        "id": { "$ref": "#/$defs/EdgeId" },
+        "kind": { "$ref": "#/$defs/EdgeKind" },
+        "source": { "$ref": "#/$defs/NodeId" },
+        "target": { "$ref": "#/$defs/NodeId" },
+        "resolution": { "$ref": "#/$defs/Resolution" },
+        "unresolved": { "$ref": "#/$defs/UnresolvedTarget" },
+        "evidence": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/Evidence" }
+        }
+      },
+      "if": { "properties": { "resolution": { "const": "resolved" } } },
+      "then": { "required": ["target"], "not": { "required": ["unresolved"] } },
+      "else": { "required": ["unresolved"], "not": { "required": ["target"] } }
+    },
+    "DiagnosticSeverity": {
+      "title": "DiagnosticSeverity",
+      "type": "string",
+      "enum": ["error", "warning", "info"]
+    },
+    "Diagnostic": {
+      "title": "Diagnostic",
+      "description": "An analysis diagnostic, for example a file that failed to parse.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["severity", "code", "message"],
+      "properties": {
+        "severity": { "$ref": "#/$defs/DiagnosticSeverity" },
+        "code": { "type": "string", "pattern": "^CA[0-9]{4}$" },
+        "message": { "type": "string", "minLength": 1 },
+        "location": { "$ref": "#/$defs/SourceLocation" }
+      }
+    },
+    "RepositoryIdentity": {
+      "title": "RepositoryIdentity",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "remoteUrl": { "type": "string", "format": "uri" }
+      }
+    },
+    "SourceFingerprint": {
+      "title": "SourceFingerprint",
+      "description": "What source the snapshot was built from.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contentFingerprint"],
+      "properties": {
+        "commit": { "type": "string", "pattern": "^[0-9a-f]{40}([0-9a-f]{24})?$" },
+        "contentFingerprint": { "$ref": "#/$defs/Sha256" },
+        "dirty": {
+          "description": "True when the working tree had uncommitted changes.",
+          "type": "boolean"
+        }
+      }
+    },
+    "SnapshotStatus": {
+      "title": "SnapshotStatus",
+      "type": "string",
+      "enum": ["in_progress", "complete", "failed"]
+    },
+    "SnapshotStats": {
+      "title": "SnapshotStats",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["files", "nodes", "edges", "unresolvedEdges", "diagnostics"],
+      "properties": {
+        "files": { "type": "integer", "minimum": 0 },
+        "nodes": { "type": "integer", "minimum": 0 },
+        "edges": { "type": "integer", "minimum": 0 },
+        "unresolvedEdges": { "type": "integer", "minimum": 0 },
+        "diagnostics": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "SnapshotInfo": {
+      "title": "SnapshotInfo",
+      "description": "Snapshot identity and metadata (Blueprint v1.3 section 4.1, ADR-0003).",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "snapshotId",
+        "repository",
+        "source",
+        "contractVersion",
+        "engineVersion",
+        "configFingerprint",
+        "createdAt",
+        "status",
+        "stats"
+      ],
+      "properties": {
+        "snapshotId": { "$ref": "#/$defs/SnapshotId" },
+        "repository": { "$ref": "#/$defs/RepositoryIdentity" },
+        "source": { "$ref": "#/$defs/SourceFingerprint" },
+        "contractVersion": { "$ref": "#/$defs/ContractVersion" },
+        "engineVersion": { "$ref": "#/$defs/EngineVersion" },
+        "configFingerprint": { "$ref": "#/$defs/Sha256" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "completedAt": { "type": "string", "format": "date-time" },
+        "status": { "$ref": "#/$defs/SnapshotStatus" },
+        "stats": { "$ref": "#/$defs/SnapshotStats" }
+      }
+    },
+    "Snapshot": {
+      "title": "Snapshot",
+      "description": "A complete analysis snapshot: metadata plus the graph.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["info", "nodes", "edges", "diagnostics"],
+      "properties": {
+        "info": { "$ref": "#/$defs/SnapshotInfo" },
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/Node" } },
+        "edges": { "type": "array", "items": { "$ref": "#/$defs/Edge" } },
+        "diagnostics": { "type": "array", "items": { "$ref": "#/$defs/Diagnostic" } }
+      }
+    },
+    "AnalysisOptions": {
+      "title": "AnalysisOptions",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "include": {
+          "description": "Glob patterns (repository-relative) to include. Default: all supported files.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "exclude": {
+          "description": "Glob patterns to exclude, in addition to the built-in generated/dependency folder rules.",
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "languages": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/Language" }
+        },
+        "semanticAnalysis": {
+          "description": "Run the TypeScript semantic adapter. Default: true.",
+          "type": "boolean"
+        }
+      }
+    },
+    "AnalysisRequest": {
+      "title": "AnalysisRequest",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root"],
+      "properties": {
+        "root": {
+          "description": "Absolute path of the repository root on the machine running the engine.",
+          "type": "string",
+          "minLength": 1
+        },
+        "repository": {
+          "description": "Repository identity. When omitted, the engine derives it from the root folder.",
+          "$ref": "#/$defs/RepositoryIdentity"
+        },
+        "options": { "$ref": "#/$defs/AnalysisOptions" }
+      }
+    },
+    "ArtifactKind": {
+      "title": "ArtifactKind",
+      "type": "string",
+      "enum": ["snapshot_graph"]
+    },
+    "ArtifactReference": {
+      "title": "ArtifactReference",
+      "description": "A reference to a large result stored outside the message, for example the full snapshot graph.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "uri", "sha256", "sizeBytes"],
+      "properties": {
+        "kind": { "$ref": "#/$defs/ArtifactKind" },
+        "uri": { "type": "string", "format": "uri-reference" },
+        "sha256": { "$ref": "#/$defs/Sha256" },
+        "sizeBytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "AnalysisResult": {
+      "title": "AnalysisResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshot", "diagnostics", "diagnosticsTruncated"],
+      "properties": {
+        "snapshot": { "$ref": "#/$defs/SnapshotInfo" },
+        "diagnostics": {
+          "type": "array",
+          "maxItems": 1000,
+          "items": { "$ref": "#/$defs/Diagnostic" }
+        },
+        "diagnosticsTruncated": {
+          "description": "True when more diagnostics exist than are listed.",
+          "type": "boolean"
+        },
+        "artifacts": { "type": "array", "items": { "$ref": "#/$defs/ArtifactReference" } }
+      }
+    },
+    "JsonRpcId": {
+      "title": "JsonRpcId",
+      "type": ["string", "integer"]
+    },
+    "JsonRpcRequest": {
+      "title": "JsonRpcRequest",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jsonrpc", "id", "method"],
+      "properties": {
+        "jsonrpc": { "const": "2.0" },
+        "id": { "$ref": "#/$defs/JsonRpcId" },
+        "method": { "$ref": "#/$defs/RequestMethod" },
+        "params": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "JsonRpcNotification": {
+      "title": "JsonRpcNotification",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jsonrpc", "method"],
+      "properties": {
+        "jsonrpc": { "const": "2.0" },
+        "method": { "$ref": "#/$defs/NotificationMethod" },
+        "params": { "type": "object", "additionalProperties": true }
+      }
+    },
+    "JsonRpcSuccessResponse": {
+      "title": "JsonRpcSuccessResponse",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jsonrpc", "id", "result"],
+      "properties": {
+        "jsonrpc": { "const": "2.0" },
+        "id": { "$ref": "#/$defs/JsonRpcId" },
+        "result": {}
+      }
+    },
+    "JsonRpcError": {
+      "title": "JsonRpcError",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "message"],
+      "properties": {
+        "code": { "type": "integer" },
+        "message": { "type": "string", "minLength": 1 },
+        "data": {}
+      }
+    },
+    "JsonRpcErrorResponse": {
+      "title": "JsonRpcErrorResponse",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["jsonrpc", "id", "error"],
+      "properties": {
+        "jsonrpc": { "const": "2.0" },
+        "id": {
+          "description": "The request ID, or null when the request could not be read.",
+          "anyOf": [{ "$ref": "#/$defs/JsonRpcId" }, { "type": "null" }]
+        },
+        "error": { "$ref": "#/$defs/JsonRpcError" }
+      }
+    },
+    "ErrorCode": {
+      "title": "ErrorCode",
+      "description": "JSON-RPC error codes. The first five are defined by JSON-RPC 2.0; the rest are CodeAtlas-specific. Names are given in x-names, in the same order.",
+      "type": "integer",
+      "enum": [-32700, -32600, -32601, -32602, -32603, -32002, -32010, -32020, -32021, -32800],
+      "x-names": [
+        "PARSE_ERROR",
+        "INVALID_REQUEST",
+        "METHOD_NOT_FOUND",
+        "INVALID_PARAMS",
+        "INTERNAL_ERROR",
+        "NOT_INITIALIZED",
+        "UNSUPPORTED_PROTOCOL_VERSION",
+        "ANALYSIS_FAILED",
+        "SNAPSHOT_NOT_FOUND",
+        "REQUEST_CANCELLED"
+      ]
+    },
+    "RequestMethod": {
+      "title": "RequestMethod",
+      "description": "Methods a client may call. 'initialize' must be the first request.",
+      "type": "string",
+      "enum": ["initialize", "analysis/run", "graph/query", "snapshot/list", "shutdown"]
+    },
+    "NotificationMethod": {
+      "title": "NotificationMethod",
+      "description": "'$/progress' is sent by the engine; '$/cancelRequest' and 'exit' are sent by the client.",
+      "type": "string",
+      "enum": ["$/progress", "$/cancelRequest", "exit"]
+    },
+    "ClientInfo": {
+      "title": "ClientInfo",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 }
+      }
+    },
+    "ClientCapabilities": {
+      "title": "ClientCapabilities",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "progress": { "description": "The client handles '$/progress' notifications.", "type": "boolean" }
+      }
+    },
+    "InitializeParams": {
+      "title": "InitializeParams",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["client", "protocolVersions"],
+      "properties": {
+        "client": { "$ref": "#/$defs/ClientInfo" },
+        "protocolVersions": {
+          "description": "Protocol versions the client supports, most preferred first.",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/ProtocolVersion" }
+        },
+        "capabilities": { "$ref": "#/$defs/ClientCapabilities" }
+      }
+    },
+    "EngineInfo": {
+      "title": "EngineInfo",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "$ref": "#/$defs/EngineVersion" }
+      }
+    },
+    "ServerCapabilities": {
+      "title": "ServerCapabilities",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["methods", "progress", "cancellation", "languages"],
+      "properties": {
+        "methods": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/RequestMethod" } },
+        "progress": { "type": "boolean" },
+        "cancellation": { "type": "boolean" },
+        "languages": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/Language" } }
+      }
+    },
+    "InitializeResult": {
+      "title": "InitializeResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["protocolVersion", "contractVersion", "engine", "capabilities"],
+      "properties": {
+        "protocolVersion": {
+          "description": "The protocol version chosen from the client's list.",
+          "$ref": "#/$defs/ProtocolVersion"
+        },
+        "contractVersion": { "$ref": "#/$defs/ContractVersion" },
+        "engine": { "$ref": "#/$defs/EngineInfo" },
+        "capabilities": { "$ref": "#/$defs/ServerCapabilities" }
+      }
+    },
+    "AnalysisRunParams": {
+      "title": "AnalysisRunParams",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request"],
+      "properties": {
+        "request": { "$ref": "#/$defs/AnalysisRequest" },
+        "progressToken": {
+          "description": "When set, the engine reports '$/progress' notifications with this token.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "GraphQueryKind": {
+      "title": "GraphQueryKind",
+      "type": "string",
+      "enum": ["find_symbols", "callers", "callees", "dependencies", "dependents", "neighbors"]
+    },
+    "GraphQuery": {
+      "title": "GraphQuery",
+      "description": "A bounded graph query. 'find_symbols' needs 'text'; every other kind needs 'nodeId'.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "$ref": "#/$defs/GraphQueryKind" },
+        "text": { "type": "string", "minLength": 1 },
+        "nodeId": { "$ref": "#/$defs/NodeId" },
+        "edgeKinds": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/EdgeKind" } },
+        "depth": { "description": "Traversal depth. Default: 1.", "type": "integer", "minimum": 1, "maximum": 5 },
+        "limit": { "description": "Maximum nodes returned. Default: 200.", "type": "integer", "minimum": 1, "maximum": 1000 }
+      },
+      "if": { "properties": { "kind": { "const": "find_symbols" } } },
+      "then": { "required": ["text"] },
+      "else": { "required": ["nodeId"] }
+    },
+    "GraphQueryParams": {
+      "title": "GraphQueryParams",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshotId", "query"],
+      "properties": {
+        "snapshotId": { "$ref": "#/$defs/SnapshotId" },
+        "query": { "$ref": "#/$defs/GraphQuery" }
+      }
+    },
+    "GraphQueryResult": {
+      "title": "GraphQueryResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes", "edges", "truncated"],
+      "properties": {
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/Node" } },
+        "edges": { "type": "array", "items": { "$ref": "#/$defs/Edge" } },
+        "truncated": { "description": "True when the limit cut the result short.", "type": "boolean" }
+      }
+    },
+    "SnapshotListParams": {
+      "title": "SnapshotListParams",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "root": { "description": "Only snapshots of this repository root.", "type": "string", "minLength": 1 },
+        "limit": { "type": "integer", "minimum": 1, "maximum": 100 }
+      }
+    },
+    "SnapshotListResult": {
+      "title": "SnapshotListResult",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["snapshots"],
+      "properties": {
+        "snapshots": { "type": "array", "items": { "$ref": "#/$defs/SnapshotInfo" } }
+      }
+    },
+    "ProgressKind": {
+      "title": "ProgressKind",
+      "type": "string",
+      "enum": ["begin", "report", "end"]
+    },
+    "ProgressParams": {
+      "title": "ProgressParams",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["token", "kind"],
+      "properties": {
+        "token": { "type": "string", "minLength": 1 },
+        "kind": { "$ref": "#/$defs/ProgressKind" },
+        "message": { "type": "string" },
+        "percentage": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "CancelParams": {
+      "title": "CancelParams",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": { "$ref": "#/$defs/JsonRpcId" }
+      }
+    }
+  }
+}

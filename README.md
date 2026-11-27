@@ -38,9 +38,12 @@ cargo test --workspace                        # includes the architecture bounda
 cargo test -p codeatlas-architecture-tests    # boundary check only (tests/architecture)
 cargo clippy --workspace --all-targets -- -D warnings
 cd packages/typescript-analyzer && npm ci && npm run typecheck
+cd packages/contracts && npm ci && npm run check:generated && npm run format:check && npm run typecheck && npm run test:consumer
 ```
 
-CI (`.github/workflows/ci.yml`) runs the jobs `rust`, `architecture` and `typescript-analyzer`. Mark all three as required in branch protection.
+CI (`.github/workflows/ci.yml`) runs the jobs `rust`, `architecture`, `contracts` and `typescript-analyzer`. Mark all four as required in branch protection. The `contracts` job also uploads the packed `@codeatlas/contracts` tarball as the `codeatlas-contracts` artifact.
+
+Canonical contracts (schemas, examples, versioning rules): [`contracts/README.md`](contracts/README.md).
 
 ## Decision records
 

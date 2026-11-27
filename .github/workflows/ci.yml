@@ -39,6 +39,38 @@ jobs:
       - uses: Swatinem/rust-cache@v2
       - run: cargo test -p codeatlas-architecture-tests --locked
 
+  # FND-03: canonical contracts. Rust schema/compatibility tests run in the `rust` job
+  # (crates/adapters/codeatlas-protocol/tests/contract_compatibility.rs).
+  contracts:
+    name: contracts
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/contracts
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: packages/contracts/package-lock.json
+      - run: npm ci
+      - name: Generated types match the schema
+        run: npm run check:generated
+      - name: Formatting (Prettier, 4-space indent)
+        run: npm run format:check
+      - name: Types and every valid example type-check
+        run: npm run typecheck
+      - name: Consumer package-install test
+        run: npm run test:consumer
+      - name: Pack the contract artifact
+        run: npm pack --pack-destination "$RUNNER_TEMP/contracts"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: codeatlas-contracts
+          path: ${{ runner.temp }}/contracts/*.tgz
+          if-no-files-found: error
+
   typescript-analyzer:
     name: typescript-analyzer
     runs-on: ubuntu-latest
