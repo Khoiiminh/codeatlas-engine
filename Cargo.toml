@@ -47,6 +47,10 @@ codeatlas-storage-sqlite = { path = "crates/adapters/codeatlas-storage-sqlite" }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.154"
 jsonschema = { version = "0.61.2", default-features = false }
+# ENG-01 scanner adapter: repository-local .gitignore matching (ripgrep's engine) and SHA-256.
+ignore = "0.4.35"
+sha2 = "0.11.2"
+tempfile = "3.27.0"
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
