@@ -1,0 +1,30 @@
+{
+  "info": {
+    "snapshotId": "snap-synchrostream-0002",
+    "repository": {
+      "name": "synchrostream",
+      "remoteUrl": "https://github.com/example/synchrostream"
+    },
+    "source": {
+      "commit": "ecc2853c85e37f5544d87b8c8322b33bcb8986bf",
+      "contentFingerprint": "6c67f3358097950ef70e2d761172e44d6ac538e5336e1007e2d655bf83dd7bec",
+      "dirty": false
+    },
+    "contractVersion": "0.1.0",
+    "engineVersion": "0.1.0-dev",
+    "configFingerprint": "46ce179126eaf00a592be24a9a00fcb1fb41c40c21ae62b06052e8469d26f5e7",
+    "createdAt": "2026-11-21T11:00:00Z",
+    "completedAt": "2026-11-21T11:00:04Z",
+    "status": "complete",
+    "stats": {
+      "files": 0,
+      "nodes": 0,
+      "edges": 0,
+      "unresolvedEdges": 0,
+      "diagnostics": 0
+    }
+  },
+  "nodes": [],
+  "edges": [],
+  "diagnostics": []
+}

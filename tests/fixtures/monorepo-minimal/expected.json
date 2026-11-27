@@ -1,0 +1,23 @@
+{
+  "$schema": "../expected.schema.json",
+  "fixture": "monorepo-minimal",
+  "revision": 1,
+  "root": "repo",
+  "typescriptProjects": ["repo/packages/shared/tsconfig.json", "repo/packages/app/tsconfig.json"],
+  "files": [
+    { "path": "packages/app/src/main.mts", "language": "typescript" },
+    { "path": "packages/shared/src/greet.ts", "language": "typescript" }
+  ],
+  "ignoredPaths": [],
+  "externalModules": [],
+  "symbols": [
+    { "id": "symbol:packages/app/src/main.mts#run", "kind": "function", "name": "run", "path": "packages/app/src/main.mts", "line": 3, "exported": true },
+    { "id": "symbol:packages/shared/src/greet.ts#greet", "kind": "function", "name": "greet", "path": "packages/shared/src/greet.ts", "line": 1, "exported": true }
+  ],
+  "edges": [
+    { "kind": "imports", "from": "file:packages/app/src/main.mts", "to": "file:packages/shared/src/greet.ts", "path": "packages/app/src/main.mts", "line": 1, "text": "\"@shared/greet\"", "specifier": "@shared/greet" },
+    { "kind": "calls", "from": "symbol:packages/app/src/main.mts#run", "to": "symbol:packages/shared/src/greet.ts#greet", "path": "packages/app/src/main.mts", "line": 4, "text": "greet(\"atlas\")" }
+  ],
+  "unresolved": [],
+  "typescriptDiagnostics": []
+}

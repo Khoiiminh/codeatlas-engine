@@ -1,0 +1,7 @@
+# FND-03: contract sources and the generated package must be byte-identical on every OS,
+# so the packed @codeatlas/contracts tarball is reproducible.
+contracts/** text eol=lf
+packages/contracts/** text eol=lf
+# FND-04: fixture sources and expectations are golden (line numbers, content hashes in seeds).
+tests/fixtures/** text eol=lf
+*.tgz binary

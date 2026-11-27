@@ -1,0 +1,64 @@
+# Workspace manifest (FND-01). The member list and each crate's [dependencies]
+# encode the layer graph in crates/README.md; tests/architecture enforces it (FND-05).
+[workspace]
+resolver = "3"
+members = [
+    # Layer 1: domain
+    "crates/domain/codeatlas-core",
+    "crates/domain/codeatlas-graph",
+    "crates/domain/codeatlas-impact",
+    # Layer 2: application (use cases + ports)
+    "crates/application/codeatlas-application",
+    # Layer 3: adapters
+    "crates/adapters/codeatlas-protocol",
+    "crates/adapters/codeatlas-runtime",
+    "crates/adapters/codeatlas-scanner-fs",
+    "crates/adapters/codeatlas-parser-treesitter",
+    "crates/adapters/codeatlas-semantic-typescript",
+    "crates/adapters/codeatlas-storage-sqlite",
+    # Layer 4: entrypoints (composition roots)
+    "crates/entrypoints/codeatlas-cli",
+    # Test tooling (not product crates)
+    "tests/architecture",
+    "tests/fixtures",
+]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2024"
+rust-version = "1.100"
+license = "UNLICENSED"
+publish = false
+repository = "https://github.com/Khoiiminh/codeatlas-engine"
+
+[workspace.dependencies]
+codeatlas-core = { path = "crates/domain/codeatlas-core" }
+codeatlas-graph = { path = "crates/domain/codeatlas-graph" }
+codeatlas-impact = { path = "crates/domain/codeatlas-impact" }
+codeatlas-application = { path = "crates/application/codeatlas-application" }
+codeatlas-protocol = { path = "crates/adapters/codeatlas-protocol" }
+codeatlas-runtime = { path = "crates/adapters/codeatlas-runtime" }
+codeatlas-scanner-fs = { path = "crates/adapters/codeatlas-scanner-fs" }
+codeatlas-parser-treesitter = { path = "crates/adapters/codeatlas-parser-treesitter" }
+codeatlas-semantic-typescript = { path = "crates/adapters/codeatlas-semantic-typescript" }
+codeatlas-storage-sqlite = { path = "crates/adapters/codeatlas-storage-sqlite" }
+
+# External crates. Inner layers (domain, application) must not use these (ADR-0010 rule 3).
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+jsonschema = { version = "0.61.2", default-features = false }
+# ENG-01 scanner adapter: repository-local .gitignore matching (ripgrep's engine) and SHA-256.
+ignore = "0.4.35"
+sha2 = "0.11.2"
+tempfile = "3.27.0"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.cargo]
+# Skeleton crates declare their allowed layer dependencies before any code uses them.
+# Re-enable (remove this line) once ENG-01 lands real code in every crate.
+unused_dependencies = "allow"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }

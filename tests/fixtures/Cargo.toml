@@ -1,0 +1,18 @@
+[package]
+name = "codeatlas-fixture-tests"
+description = "FND-04: checks the SynchroStream source fixture against its expectations and runs the snapshot-port behaviour scenarios against an in-memory reference store."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+codeatlas-protocol.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+jsonschema.workspace = true
+
+[lints]
+workspace = true

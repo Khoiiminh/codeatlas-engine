@@ -1,0 +1,17 @@
+{
+  "$schema": "../scenario.schema.json",
+  "port": "SnapshotStore",
+  "title": "Reading an unknown snapshot reports not_found",
+  "given": [
+    "synchrostream-1"
+  ],
+  "steps": [
+    {
+      "op": "get",
+      "snapshotId": "snap-does-not-exist",
+      "expect": {
+        "error": "not_found"
+      }
+    }
+  ]
+}

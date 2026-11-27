@@ -1,0 +1,1800 @@
+{
+  "$schema": "../expected.schema.json",
+  "fixture": "synchrostream",
+  "revision": 1,
+  "root": "repo",
+  "files": [
+    {
+      "path": "backend/src/app.module.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/main.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/application/ports.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/shared/kernel/clock.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/shared/kernel/errors.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/shared/kernel/index.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "backend/src/shared/kernel/result.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "sfu/src/logger.cjs",
+      "language": "javascript"
+    },
+    {
+      "path": "sfu/src/router.js",
+      "language": "javascript"
+    },
+    {
+      "path": "sfu/src/server.mjs",
+      "language": "javascript"
+    },
+    {
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "language": "tsx"
+    },
+    {
+      "path": "web/src/features/party/api/party-api.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "web/src/features/party/model/use-party-sync.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "language": "tsx"
+    },
+    {
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "language": "tsx"
+    },
+    {
+      "path": "web/src/shared/lib/http.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "web/src/shared/lib/index.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "web/src/shared/lib/legacy-format.js",
+      "language": "javascript"
+    },
+    {
+      "path": "web/src/shared/ui/badge.tsx",
+      "language": "tsx"
+    },
+    {
+      "path": "web/src/shared/ui/index.ts",
+      "language": "typescript"
+    },
+    {
+      "path": "web/src/shared/ui/legacy-banner.jsx",
+      "language": "jsx"
+    }
+  ],
+  "ignoredPaths": [
+    "node_modules/",
+    "backend/dist/"
+  ],
+  "externalModules": [
+    "@nestjs/common",
+    "@nestjs/core",
+    "node:http",
+    "node:os",
+    "react"
+  ],
+  "symbols": [
+    {
+      "id": "symbol:backend/src/main.ts#bootstrap",
+      "kind": "function",
+      "name": "bootstrap",
+      "path": "backend/src/main.ts",
+      "line": 4,
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/app.module.ts#AppModule",
+      "kind": "class",
+      "name": "AppModule",
+      "path": "backend/src/app.module.ts",
+      "line": 5,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/result.ts#Result",
+      "kind": "type_alias",
+      "name": "Result",
+      "path": "backend/src/shared/kernel/result.ts",
+      "line": 1,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/result.ts#ok",
+      "kind": "function",
+      "name": "ok",
+      "path": "backend/src/shared/kernel/result.ts",
+      "line": 3,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/result.ts#err",
+      "kind": "function",
+      "name": "err",
+      "path": "backend/src/shared/kernel/result.ts",
+      "line": 7,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/errors.ts#DomainError",
+      "kind": "class",
+      "name": "DomainError",
+      "path": "backend/src/shared/kernel/errors.ts",
+      "line": 1,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/errors.ts#DomainError.code",
+      "kind": "property",
+      "name": "code",
+      "path": "backend/src/shared/kernel/errors.ts",
+      "line": 2,
+      "parent": "symbol:backend/src/shared/kernel/errors.ts#DomainError",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/clock.ts#Clock",
+      "kind": "interface",
+      "name": "Clock",
+      "path": "backend/src/shared/kernel/clock.ts",
+      "line": 1,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/clock.ts#Clock.now",
+      "kind": "method",
+      "name": "now",
+      "path": "backend/src/shared/kernel/clock.ts",
+      "line": 2,
+      "parent": "symbol:backend/src/shared/kernel/clock.ts#Clock",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/clock.ts#SystemClock",
+      "kind": "class",
+      "name": "SystemClock",
+      "path": "backend/src/shared/kernel/clock.ts",
+      "line": 5,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/shared/kernel/clock.ts#SystemClock.now",
+      "kind": "method",
+      "name": "now",
+      "path": "backend/src/shared/kernel/clock.ts",
+      "line": 6,
+      "parent": "symbol:backend/src/shared/kernel/clock.ts#SystemClock",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-member.ts#MemberRole",
+      "kind": "type_alias",
+      "name": "MemberRole",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 1,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember",
+      "kind": "interface",
+      "name": "PartyMember",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 3,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember.userId",
+      "kind": "property",
+      "name": "userId",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 4,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember.role",
+      "kind": "property",
+      "name": "role",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 5,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember.joinedAt",
+      "kind": "property",
+      "name": "joinedAt",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 6,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-member.ts#HostMember",
+      "kind": "interface",
+      "name": "HostMember",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 9,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-member.ts#HostMember.role",
+      "kind": "property",
+      "name": "role",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 10,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-member.ts#HostMember",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#RoomCode",
+      "kind": "type_alias",
+      "name": "RoomCode",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 4,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackState",
+      "kind": "enum",
+      "name": "PlaybackState",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackPermissionError",
+      "kind": "class",
+      "name": "PlaybackPermissionError",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 11,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "kind": "class",
+      "name": "PartyRoom",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 17,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.members",
+      "kind": "property",
+      "name": "members",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 18,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.state",
+      "kind": "property",
+      "name": "state",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 19,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.code",
+      "kind": "property",
+      "name": "code",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 22,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.hostId",
+      "kind": "property",
+      "name": "hostId",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 23,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.clock",
+      "kind": "property",
+      "name": "clock",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 24,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.open",
+      "kind": "method",
+      "name": "open",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 27,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "kind": "method",
+      "name": "join",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 33,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.play",
+      "kind": "method",
+      "name": "play",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 40,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.pause",
+      "kind": "method",
+      "name": "pause",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 45,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.memberCount",
+      "kind": "property",
+      "name": "memberCount",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 50,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.assertHost",
+      "kind": "method",
+      "name": "assertHost",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 54,
+      "parent": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/ports.ts#PARTY_ROOM_REPOSITORY",
+      "kind": "variable",
+      "name": "PARTY_ROOM_REPOSITORY",
+      "path": "backend/src/modules/watch-party/application/ports.ts",
+      "line": 3,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "kind": "interface",
+      "name": "PartyRoomRepository",
+      "path": "backend/src/modules/watch-party/application/ports.ts",
+      "line": 5,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+      "kind": "method",
+      "name": "findByCode",
+      "path": "backend/src/modules/watch-party/application/ports.ts",
+      "line": 6,
+      "parent": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.save",
+      "kind": "method",
+      "name": "save",
+      "path": "backend/src/modules/watch-party/application/ports.ts",
+      "line": 7,
+      "parent": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyCommand",
+      "kind": "interface",
+      "name": "JoinPartyCommand",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyCommand.roomCode",
+      "kind": "property",
+      "name": "roomCode",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 7,
+      "parent": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyCommand",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyCommand.userId",
+      "kind": "property",
+      "name": "userId",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 8,
+      "parent": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyCommand",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase",
+      "kind": "class",
+      "name": "JoinPartyUseCase",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 12,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.rooms",
+      "kind": "property",
+      "name": "rooms",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 13,
+      "parent": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "kind": "method",
+      "name": "execute",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 15,
+      "parent": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository",
+      "kind": "class",
+      "name": "InMemoryPartyRoomRepository",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository.rooms",
+      "kind": "property",
+      "name": "rooms",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 7,
+      "parent": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository.findByCode",
+      "kind": "method",
+      "name": "findByCode",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 9,
+      "parent": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository.save",
+      "kind": "method",
+      "name": "save",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 13,
+      "parent": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#JoinPartyBody",
+      "kind": "class",
+      "name": "JoinPartyBody",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 4,
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#JoinPartyBody.userId",
+      "kind": "property",
+      "name": "userId",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 5,
+      "parent": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#JoinPartyBody",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController",
+      "kind": "class",
+      "name": "WatchPartyController",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 9,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController.joinParty",
+      "kind": "property",
+      "name": "joinParty",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 10,
+      "parent": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController.join",
+      "kind": "method",
+      "name": "join",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 13,
+      "parent": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncEvent",
+      "kind": "type_alias",
+      "name": "SyncEvent",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 4,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway",
+      "kind": "class",
+      "name": "SyncGateway",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.rooms",
+      "kind": "property",
+      "name": "rooms",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 7,
+      "parent": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+      "kind": "method",
+      "name": "handle",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 9,
+      "parent": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.loadHandler",
+      "kind": "method",
+      "name": "loadHandler",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 16,
+      "parent": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway",
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/watch-party.module.ts#WatchPartyModule",
+      "kind": "class",
+      "name": "WatchPartyModule",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 11,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/lib/http.ts#HttpError",
+      "kind": "class",
+      "name": "HttpError",
+      "path": "web/src/shared/lib/http.ts",
+      "line": 1,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/lib/http.ts#HttpError.status",
+      "kind": "property",
+      "name": "status",
+      "path": "web/src/shared/lib/http.ts",
+      "line": 3,
+      "parent": "symbol:web/src/shared/lib/http.ts#HttpError",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/shared/lib/http.ts#httpGet",
+      "kind": "function",
+      "name": "httpGet",
+      "path": "web/src/shared/lib/http.ts",
+      "line": 10,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/lib/http.ts#formatDuration",
+      "kind": "function",
+      "name": "formatDuration",
+      "path": "web/src/shared/lib/http.ts",
+      "line": 20,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/lib/legacy-format.js#formatDuration",
+      "kind": "function",
+      "name": "formatDuration",
+      "path": "web/src/shared/lib/legacy-format.js",
+      "line": 2,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/lib/legacy-format.js#formatViewerCount",
+      "kind": "function",
+      "name": "formatViewerCount",
+      "path": "web/src/shared/lib/legacy-format.js",
+      "line": 8,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/ui/badge.tsx#BadgeProps",
+      "kind": "interface",
+      "name": "BadgeProps",
+      "path": "web/src/shared/ui/badge.tsx",
+      "line": 1,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/ui/badge.tsx#BadgeProps.label",
+      "kind": "property",
+      "name": "label",
+      "path": "web/src/shared/ui/badge.tsx",
+      "line": 2,
+      "parent": "symbol:web/src/shared/ui/badge.tsx#BadgeProps",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/shared/ui/badge.tsx#BadgeProps.tone",
+      "kind": "property",
+      "name": "tone",
+      "path": "web/src/shared/ui/badge.tsx",
+      "line": 3,
+      "parent": "symbol:web/src/shared/ui/badge.tsx#BadgeProps",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/shared/ui/badge.tsx#Badge",
+      "kind": "function",
+      "name": "Badge",
+      "path": "web/src/shared/ui/badge.tsx",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/ui/index.ts#Ui",
+      "kind": "namespace",
+      "name": "Ui",
+      "path": "web/src/shared/ui/index.ts",
+      "line": 1,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/shared/ui/legacy-banner.jsx#LegacyBanner",
+      "kind": "function",
+      "name": "LegacyBanner",
+      "path": "web/src/shared/ui/legacy-banner.jsx",
+      "line": 2,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/api/party-api.ts#PartySummary",
+      "kind": "interface",
+      "name": "PartySummary",
+      "path": "web/src/features/party/api/party-api.ts",
+      "line": 3,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/api/party-api.ts#PartySummary.roomCode",
+      "kind": "property",
+      "name": "roomCode",
+      "path": "web/src/features/party/api/party-api.ts",
+      "line": 4,
+      "parent": "symbol:web/src/features/party/api/party-api.ts#PartySummary",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/features/party/api/party-api.ts#PartySummary.hostName",
+      "kind": "property",
+      "name": "hostName",
+      "path": "web/src/features/party/api/party-api.ts",
+      "line": 5,
+      "parent": "symbol:web/src/features/party/api/party-api.ts#PartySummary",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/features/party/api/party-api.ts#PartySummary.viewerCount",
+      "kind": "property",
+      "name": "viewerCount",
+      "path": "web/src/features/party/api/party-api.ts",
+      "line": 6,
+      "parent": "symbol:web/src/features/party/api/party-api.ts#PartySummary",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/features/party/api/party-api.ts#fetchPartySummary",
+      "kind": "function",
+      "name": "fetchPartySummary",
+      "path": "web/src/features/party/api/party-api.ts",
+      "line": 9,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/model/use-party-sync.ts#SyncStatus",
+      "kind": "type_alias",
+      "name": "SyncStatus",
+      "path": "web/src/features/party/model/use-party-sync.ts",
+      "line": 4,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/model/use-party-sync.ts#usePartySync",
+      "kind": "function",
+      "name": "usePartySync",
+      "path": "web/src/features/party/model/use-party-sync.ts",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControlsProps",
+      "kind": "interface",
+      "name": "PlaybackControlsProps",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 3,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControlsProps.positionMs",
+      "kind": "property",
+      "name": "positionMs",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 4,
+      "parent": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControlsProps",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControlsProps.viewerCount",
+      "kind": "property",
+      "name": "viewerCount",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 5,
+      "parent": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControlsProps",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControlsProps.onToggle",
+      "kind": "property",
+      "name": "onToggle",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 6,
+      "parent": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControlsProps",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControls",
+      "kind": "function",
+      "name": "PlaybackControls",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 9,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomViewProps",
+      "kind": "interface",
+      "name": "PartyRoomViewProps",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 6,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomViewProps.roomCode",
+      "kind": "property",
+      "name": "roomCode",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 7,
+      "parent": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomViewProps",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomView",
+      "kind": "function",
+      "name": "PartyRoomView",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 10,
+      "exported": true
+    },
+    {
+      "id": "symbol:web/src/app/party/[roomCode]/page.tsx#PageProps",
+      "kind": "interface",
+      "name": "PageProps",
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "line": 4,
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/app/party/[roomCode]/page.tsx#PageProps.params",
+      "kind": "property",
+      "name": "params",
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "line": 5,
+      "parent": "symbol:web/src/app/party/[roomCode]/page.tsx#PageProps",
+      "exported": false
+    },
+    {
+      "id": "symbol:web/src/app/party/[roomCode]/page.tsx#PartyPage",
+      "kind": "function",
+      "name": "PartyPage",
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "line": 8,
+      "exported": true
+    },
+    {
+      "id": "symbol:sfu/src/logger.cjs#os",
+      "kind": "variable",
+      "name": "os",
+      "path": "sfu/src/logger.cjs",
+      "line": 2,
+      "exported": false
+    },
+    {
+      "id": "symbol:sfu/src/logger.cjs#createLogger",
+      "kind": "function",
+      "name": "createLogger",
+      "path": "sfu/src/logger.cjs",
+      "line": 4,
+      "exported": true
+    },
+    {
+      "id": "symbol:sfu/src/logger.cjs#loadTransport",
+      "kind": "function",
+      "name": "loadTransport",
+      "path": "sfu/src/logger.cjs",
+      "line": 12,
+      "exported": true
+    },
+    {
+      "id": "symbol:sfu/src/router.js#logger",
+      "kind": "variable",
+      "name": "logger",
+      "path": "sfu/src/router.js",
+      "line": 3,
+      "exported": false
+    },
+    {
+      "id": "symbol:sfu/src/router.js#createRouter",
+      "kind": "function",
+      "name": "createRouter",
+      "path": "sfu/src/router.js",
+      "line": 5,
+      "exported": true
+    },
+    {
+      "id": "symbol:sfu/src/server.mjs#logger",
+      "kind": "variable",
+      "name": "logger",
+      "path": "sfu/src/server.mjs",
+      "line": 6,
+      "exported": false
+    },
+    {
+      "id": "symbol:sfu/src/server.mjs#handleJoin",
+      "kind": "function",
+      "name": "handleJoin",
+      "path": "sfu/src/server.mjs",
+      "line": 8,
+      "exported": false
+    },
+    {
+      "id": "symbol:sfu/src/server.mjs#route",
+      "kind": "variable",
+      "name": "route",
+      "path": "sfu/src/server.mjs",
+      "line": 12,
+      "exported": false
+    },
+    {
+      "id": "symbol:sfu/src/server.mjs#start",
+      "kind": "function",
+      "name": "start",
+      "path": "sfu/src/server.mjs",
+      "line": 14,
+      "exported": true
+    }
+  ],
+  "edges": [
+    {
+      "kind": "imports",
+      "from": "file:backend/src/main.ts",
+      "to": "external:@nestjs/core",
+      "path": "backend/src/main.ts",
+      "line": 1,
+      "text": "\"@nestjs/core\"",
+      "specifier": "@nestjs/core"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/main.ts",
+      "to": "file:backend/src/app.module.ts",
+      "path": "backend/src/main.ts",
+      "line": 2,
+      "text": "\"./app.module\"",
+      "specifier": "./app.module"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/app.module.ts",
+      "to": "external:@nestjs/common",
+      "path": "backend/src/app.module.ts",
+      "line": 1,
+      "text": "\"@nestjs/common\"",
+      "specifier": "@nestjs/common"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/app.module.ts",
+      "to": "file:backend/src/modules/watch-party/watch-party.module.ts",
+      "path": "backend/src/app.module.ts",
+      "line": 2,
+      "text": "\"./modules/watch-party/watch-party.module\"",
+      "specifier": "./modules/watch-party/watch-party.module"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "to": "file:backend/src/shared/kernel/index.ts",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 1,
+      "text": "\"../../../shared/kernel\"",
+      "specifier": "../../../shared/kernel"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "to": "file:backend/src/modules/watch-party/domain/party-member.ts",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 2,
+      "text": "\"./party-member\"",
+      "specifier": "./party-member",
+      "typeOnly": true
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/application/ports.ts",
+      "to": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "path": "backend/src/modules/watch-party/application/ports.ts",
+      "line": 1,
+      "text": "\"../domain/party-room\"",
+      "specifier": "../domain/party-room",
+      "typeOnly": true
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "to": "external:@nestjs/common",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 1,
+      "text": "\"@nestjs/common\"",
+      "specifier": "@nestjs/common"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "to": "file:backend/src/shared/kernel/index.ts",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 2,
+      "text": "\"../../../shared/kernel\"",
+      "specifier": "../../../shared/kernel"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "to": "file:backend/src/modules/watch-party/domain/party-member.ts",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 3,
+      "text": "\"../domain/party-member\"",
+      "specifier": "../domain/party-member",
+      "typeOnly": true
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "to": "file:backend/src/modules/watch-party/application/ports.ts",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 4,
+      "text": "\"./ports\"",
+      "specifier": "./ports"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "to": "external:@nestjs/common",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 1,
+      "text": "\"@nestjs/common\"",
+      "specifier": "@nestjs/common"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "to": "file:backend/src/modules/watch-party/application/ports.ts",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 2,
+      "text": "\"../application/ports\"",
+      "specifier": "../application/ports",
+      "typeOnly": true
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "to": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 3,
+      "text": "\"../domain/party-room\"",
+      "specifier": "../domain/party-room",
+      "typeOnly": true
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "to": "external:@nestjs/common",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 1,
+      "text": "\"@nestjs/common\"",
+      "specifier": "@nestjs/common"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "to": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 2,
+      "text": "\"../application/join-party.use-case\"",
+      "specifier": "../application/join-party.use-case"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "to": "file:backend/src/modules/watch-party/application/ports.ts",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 1,
+      "text": "\"../application/ports\"",
+      "specifier": "../application/ports",
+      "typeOnly": true
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/watch-party.module.ts",
+      "to": "external:@nestjs/common",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 1,
+      "text": "\"@nestjs/common\"",
+      "specifier": "@nestjs/common"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/watch-party.module.ts",
+      "to": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 2,
+      "text": "\"./application/join-party.use-case\"",
+      "specifier": "./application/join-party.use-case"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/watch-party.module.ts",
+      "to": "file:backend/src/modules/watch-party/application/ports.ts",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 3,
+      "text": "\"./application/ports\"",
+      "specifier": "./application/ports"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/watch-party.module.ts",
+      "to": "file:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 4,
+      "text": "\"./infrastructure/in-memory-party-room.repository\"",
+      "specifier": "./infrastructure/in-memory-party-room.repository"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/watch-party.module.ts",
+      "to": "file:backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 5,
+      "text": "\"./presentation/watch-party.controller\"",
+      "specifier": "./presentation/watch-party.controller"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/api/party-api.ts",
+      "to": "file:web/src/shared/lib/http.ts",
+      "path": "web/src/features/party/api/party-api.ts",
+      "line": 1,
+      "text": "\"@/shared/lib/http\"",
+      "specifier": "@/shared/lib/http"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/model/use-party-sync.ts",
+      "to": "external:react",
+      "path": "web/src/features/party/model/use-party-sync.ts",
+      "line": 1,
+      "text": "\"react\"",
+      "specifier": "react"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/model/use-party-sync.ts",
+      "to": "file:web/src/features/party/api/party-api.ts",
+      "path": "web/src/features/party/model/use-party-sync.ts",
+      "line": 2,
+      "text": "\"../api/party-api\"",
+      "specifier": "../api/party-api"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/ui/playback-controls.tsx",
+      "to": "file:web/src/shared/lib/index.ts",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 1,
+      "text": "\"@/shared/lib\"",
+      "specifier": "@/shared/lib"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/ui/party-room-view.tsx",
+      "to": "external:react",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 1,
+      "text": "\"react\"",
+      "specifier": "react"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/ui/party-room-view.tsx",
+      "to": "file:web/src/shared/ui/index.ts",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 2,
+      "text": "\"@/shared/ui\"",
+      "specifier": "@/shared/ui"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/ui/party-room-view.tsx",
+      "to": "file:web/src/features/party/model/use-party-sync.ts",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 3,
+      "text": "\"../model/use-party-sync\"",
+      "specifier": "../model/use-party-sync"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/features/party/ui/party-room-view.tsx",
+      "to": "file:web/src/features/party/ui/playback-controls.tsx",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 4,
+      "text": "\"./playback-controls\"",
+      "specifier": "./playback-controls"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/app/party/[roomCode]/page.tsx",
+      "to": "file:web/src/features/party/ui/party-room-view.tsx",
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "line": 1,
+      "text": "\"@/features/party/ui/party-room-view\"",
+      "specifier": "@/features/party/ui/party-room-view"
+    },
+    {
+      "kind": "imports",
+      "from": "file:web/src/app/party/[roomCode]/page.tsx",
+      "to": "file:web/src/shared/ui/legacy-banner.jsx",
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "line": 2,
+      "text": "\"@/shared/ui/legacy-banner\"",
+      "specifier": "@/shared/ui/legacy-banner"
+    },
+    {
+      "kind": "imports",
+      "from": "file:sfu/src/logger.cjs",
+      "to": "external:node:os",
+      "path": "sfu/src/logger.cjs",
+      "line": 2,
+      "text": "\"node:os\"",
+      "specifier": "node:os"
+    },
+    {
+      "kind": "imports",
+      "from": "file:sfu/src/router.js",
+      "to": "file:sfu/src/logger.cjs",
+      "path": "sfu/src/router.js",
+      "line": 1,
+      "text": "\"./logger.cjs\"",
+      "specifier": "./logger.cjs"
+    },
+    {
+      "kind": "imports",
+      "from": "file:sfu/src/server.mjs",
+      "to": "external:node:http",
+      "path": "sfu/src/server.mjs",
+      "line": 1,
+      "text": "\"node:http\"",
+      "specifier": "node:http"
+    },
+    {
+      "kind": "imports",
+      "from": "file:sfu/src/server.mjs",
+      "to": "file:sfu/src/logger.cjs",
+      "path": "sfu/src/server.mjs",
+      "line": 2,
+      "text": "\"./logger.cjs\"",
+      "specifier": "./logger.cjs"
+    },
+    {
+      "kind": "imports",
+      "from": "file:sfu/src/server.mjs",
+      "to": "file:sfu/src/router.js",
+      "path": "sfu/src/server.mjs",
+      "line": 3,
+      "text": "\"./router.js\"",
+      "specifier": "./router.js"
+    },
+    {
+      "kind": "exports",
+      "from": "file:backend/src/shared/kernel/index.ts",
+      "to": "file:backend/src/shared/kernel/result.ts",
+      "path": "backend/src/shared/kernel/index.ts",
+      "line": 1,
+      "text": "export * from \"./result\"",
+      "specifier": "./result"
+    },
+    {
+      "kind": "exports",
+      "from": "file:backend/src/shared/kernel/index.ts",
+      "to": "file:backend/src/shared/kernel/errors.ts",
+      "path": "backend/src/shared/kernel/index.ts",
+      "line": 2,
+      "text": "export { DomainError } from \"./errors\"",
+      "specifier": "./errors"
+    },
+    {
+      "kind": "exports",
+      "from": "file:backend/src/shared/kernel/index.ts",
+      "to": "file:backend/src/shared/kernel/clock.ts",
+      "path": "backend/src/shared/kernel/index.ts",
+      "line": 3,
+      "text": "export { SystemClock } from \"./clock\"",
+      "specifier": "./clock"
+    },
+    {
+      "kind": "exports",
+      "from": "file:backend/src/shared/kernel/index.ts",
+      "to": "file:backend/src/shared/kernel/clock.ts",
+      "path": "backend/src/shared/kernel/index.ts",
+      "line": 4,
+      "text": "export type { Clock } from \"./clock\"",
+      "specifier": "./clock",
+      "typeOnly": true
+    },
+    {
+      "kind": "exports",
+      "from": "file:web/src/shared/lib/index.ts",
+      "to": "file:web/src/shared/lib/http.ts",
+      "path": "web/src/shared/lib/index.ts",
+      "line": 1,
+      "text": "export * from \"./http\"",
+      "specifier": "./http"
+    },
+    {
+      "kind": "exports",
+      "from": "file:web/src/shared/lib/index.ts",
+      "to": "file:web/src/shared/lib/legacy-format.js",
+      "path": "web/src/shared/lib/index.ts",
+      "line": 2,
+      "text": "export * from \"./legacy-format\"",
+      "specifier": "./legacy-format"
+    },
+    {
+      "kind": "exports",
+      "from": "file:web/src/shared/ui/index.ts",
+      "to": "file:web/src/shared/ui/badge.tsx",
+      "path": "web/src/shared/ui/index.ts",
+      "line": 1,
+      "text": "export * as Ui from \"./badge\"",
+      "specifier": "./badge"
+    },
+    {
+      "kind": "extends",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-member.ts#HostMember",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-member.ts#PartyMember",
+      "path": "backend/src/modules/watch-party/domain/party-member.ts",
+      "line": 9,
+      "text": "extends PartyMember"
+    },
+    {
+      "kind": "extends",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackPermissionError",
+      "to": "symbol:backend/src/shared/kernel/errors.ts#DomainError",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 11,
+      "text": "extends DomainError"
+    },
+    {
+      "kind": "implements",
+      "from": "symbol:backend/src/shared/kernel/clock.ts#SystemClock",
+      "to": "symbol:backend/src/shared/kernel/clock.ts#Clock",
+      "path": "backend/src/shared/kernel/clock.ts",
+      "line": 5,
+      "text": "implements Clock"
+    },
+    {
+      "kind": "implements",
+      "from": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository",
+      "to": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "path": "backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts",
+      "line": 6,
+      "text": "implements PartyRoomRepository"
+    },
+    {
+      "kind": "calls",
+      "from": "file:backend/src/main.ts",
+      "to": "symbol:backend/src/main.ts#bootstrap",
+      "path": "backend/src/main.ts",
+      "line": 9,
+      "text": "void bootstrap()"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackPermissionError",
+      "to": "symbol:backend/src/shared/kernel/errors.ts#DomainError",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 13,
+      "text": "super(\"playback_permission\""
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.open",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 28,
+      "text": "new PartyRoom("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.open",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 29,
+      "text": "room.join(hostId)"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "to": "symbol:backend/src/shared/kernel/clock.ts#Clock.now",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 35,
+      "text": "this.clock.now()"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.play",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.assertHost",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 41,
+      "text": "this.assertHost(userId)"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.pause",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.assertHost",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 46,
+      "text": "this.assertHost(userId)"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.assertHost",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackPermissionError",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 56,
+      "text": "new PlaybackPermissionError("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "to": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 16,
+      "text": "this.rooms.findByCode("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "to": "symbol:backend/src/shared/kernel/result.ts#err",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 18,
+      "text": "return err("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 20,
+      "text": "room.join("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "to": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.save",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 21,
+      "text": "this.rooms.save("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "to": "symbol:backend/src/shared/kernel/result.ts#ok",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 22,
+      "text": "return ok("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController.join",
+      "to": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "line": 14,
+      "text": "this.joinParty.execute("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+      "to": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 10,
+      "text": "this.rooms.findByCode("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:web/src/shared/lib/http.ts#httpGet",
+      "to": "symbol:web/src/shared/lib/http.ts#HttpError",
+      "path": "web/src/shared/lib/http.ts",
+      "line": 13,
+      "text": "new HttpError("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:web/src/features/party/api/party-api.ts#fetchPartySummary",
+      "to": "symbol:web/src/shared/lib/http.ts#httpGet",
+      "path": "web/src/features/party/api/party-api.ts",
+      "line": 10,
+      "text": "httpGet<PartySummary>("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:web/src/features/party/model/use-party-sync.ts#usePartySync",
+      "to": "symbol:web/src/features/party/api/party-api.ts#fetchPartySummary",
+      "path": "web/src/features/party/model/use-party-sync.ts",
+      "line": 11,
+      "text": "fetchPartySummary(roomCode)"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControls",
+      "to": "symbol:web/src/shared/lib/legacy-format.js#formatViewerCount",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 14,
+      "text": "formatViewerCount(viewerCount)"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomView",
+      "to": "symbol:web/src/features/party/model/use-party-sync.ts#usePartySync",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 11,
+      "text": "usePartySync(roomCode)"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:sfu/src/router.js#logger",
+      "to": "symbol:sfu/src/logger.cjs#createLogger",
+      "path": "sfu/src/router.js",
+      "line": 3,
+      "text": "createLogger(\"router\")"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:sfu/src/server.mjs#logger",
+      "to": "symbol:sfu/src/logger.cjs#createLogger",
+      "path": "sfu/src/server.mjs",
+      "line": 6,
+      "text": "createLogger(\"server\")"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:sfu/src/server.mjs#route",
+      "to": "symbol:sfu/src/router.js#createRouter",
+      "path": "sfu/src/server.mjs",
+      "line": 12,
+      "text": "createRouter({"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:sfu/src/server.mjs#start",
+      "to": "symbol:sfu/src/logger.cjs#loadTransport",
+      "path": "sfu/src/server.mjs",
+      "line": 15,
+      "text": "loadTransport("
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:sfu/src/server.mjs#start",
+      "to": "symbol:sfu/src/server.mjs#route",
+      "path": "sfu/src/server.mjs",
+      "line": 17,
+      "text": "route({ type"
+    },
+    {
+      "kind": "calls",
+      "from": "file:sfu/src/server.mjs",
+      "to": "symbol:sfu/src/server.mjs#start",
+      "path": "sfu/src/server.mjs",
+      "line": 23,
+      "text": "start();"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/main.ts#bootstrap",
+      "to": "symbol:backend/src/app.module.ts#AppModule",
+      "path": "backend/src/main.ts",
+      "line": 5,
+      "text": "NestFactory.create(AppModule)"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/app.module.ts#AppModule",
+      "to": "symbol:backend/src/modules/watch-party/watch-party.module.ts#WatchPartyModule",
+      "path": "backend/src/app.module.ts",
+      "line": 4,
+      "text": "imports: [WatchPartyModule]"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.state",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackState",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 19,
+      "text": "= PlaybackState.Paused;"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.play",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackState",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 42,
+      "text": "this.state = PlaybackState.Playing"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.pause",
+      "to": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PlaybackState",
+      "path": "backend/src/modules/watch-party/domain/party-room.ts",
+      "line": 47,
+      "text": "this.state = PlaybackState.Paused"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.rooms",
+      "to": "symbol:backend/src/modules/watch-party/application/ports.ts#PARTY_ROOM_REPOSITORY",
+      "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "line": 13,
+      "text": "@Inject(PARTY_ROOM_REPOSITORY)"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/watch-party.module.ts#WatchPartyModule",
+      "to": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 8,
+      "text": "controllers: [WatchPartyController]"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/watch-party.module.ts#WatchPartyModule",
+      "to": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 9,
+      "text": "providers: [JoinPartyUseCase"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/watch-party.module.ts#WatchPartyModule",
+      "to": "symbol:backend/src/modules/watch-party/application/ports.ts#PARTY_ROOM_REPOSITORY",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 9,
+      "text": "provide: PARTY_ROOM_REPOSITORY"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:backend/src/modules/watch-party/watch-party.module.ts#WatchPartyModule",
+      "to": "symbol:backend/src/modules/watch-party/infrastructure/in-memory-party-room.repository.ts#InMemoryPartyRoomRepository",
+      "path": "backend/src/modules/watch-party/watch-party.module.ts",
+      "line": 9,
+      "text": "useClass: InMemoryPartyRoomRepository"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomView",
+      "to": "symbol:web/src/shared/ui/badge.tsx#Badge",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 17,
+      "text": "<Ui.Badge"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomView",
+      "to": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControls",
+      "path": "web/src/features/party/ui/party-room-view.tsx",
+      "line": 18,
+      "text": "<PlaybackControls"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:web/src/app/party/[roomCode]/page.tsx#PartyPage",
+      "to": "symbol:web/src/shared/ui/legacy-banner.jsx#LegacyBanner",
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "line": 11,
+      "text": "<LegacyBanner"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:web/src/app/party/[roomCode]/page.tsx#PartyPage",
+      "to": "symbol:web/src/features/party/ui/party-room-view.tsx#PartyRoomView",
+      "path": "web/src/app/party/[roomCode]/page.tsx",
+      "line": 12,
+      "text": "<PartyRoomView"
+    },
+    {
+      "kind": "references",
+      "from": "symbol:sfu/src/server.mjs#route",
+      "to": "symbol:sfu/src/server.mjs#handleJoin",
+      "path": "sfu/src/server.mjs",
+      "line": 12,
+      "text": "join: handleJoin"
+    }
+  ],
+  "unresolved": [
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 2,
+      "text": "\"./missing-sync-metrics\"",
+      "specifier": "./missing-sync-metrics",
+      "reason": "not_found"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 12,
+      "text": "recordDrift(event",
+      "specifier": "recordDrift",
+      "reason": "not_found"
+    },
+    {
+      "kind": "imports",
+      "from": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 17,
+      "text": "import(`./handlers/${type}`)",
+      "specifier": "`./handlers/${type}`",
+      "reason": "dynamic"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:web/src/shared/lib/http.ts#httpGet",
+      "path": "web/src/shared/lib/http.ts",
+      "line": 14,
+      "text": "reportToMonitoring(error)",
+      "specifier": "reportToMonitoring",
+      "reason": "not_found"
+    },
+    {
+      "kind": "calls",
+      "from": "symbol:web/src/features/party/ui/playback-controls.tsx#PlaybackControls",
+      "path": "web/src/features/party/ui/playback-controls.tsx",
+      "line": 13,
+      "text": "formatDuration(positionMs)",
+      "specifier": "formatDuration",
+      "reason": "ambiguous"
+    },
+    {
+      "kind": "imports",
+      "from": "file:sfu/src/logger.cjs",
+      "path": "sfu/src/logger.cjs",
+      "line": 13,
+      "text": "require(name)",
+      "specifier": "name",
+      "reason": "dynamic"
+    },
+    {
+      "kind": "imports",
+      "from": "file:sfu/src/server.mjs",
+      "path": "sfu/src/server.mjs",
+      "line": 4,
+      "text": "\"./defaults.json\"",
+      "specifier": "./defaults.json",
+      "reason": "unsupported"
+    }
+  ],
+  "typescriptDiagnostics": [
+    {
+      "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "line": 2,
+      "code": 2307
+    },
+    {
+      "path": "web/src/shared/lib/http.ts",
+      "line": 14,
+      "code": 2304
+    },
+    {
+      "path": "web/src/shared/lib/index.ts",
+      "line": 2,
+      "code": 2308
+    }
+  ]
+}

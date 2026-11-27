@@ -1,0 +1,10 @@
+{
+  "client": {
+    "name": "codeatlas-vscode",
+    "version": "0.1.0"
+  },
+  "protocolVersions": [],
+  "capabilities": {
+    "progress": true
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "info": {
+    "snapshotId": "snap-codeatlas-demo-0001",
+    "repository": {
+      "name": "codeatlas-demo",
+      "remoteUrl": "https://github.com/example/codeatlas-demo"
+    },
+    "source": {
+      "commit": "2a97516c354b68848cdbd8f54a226a0a55b21ed1",
+      "contentFingerprint": "cb2868a2d6afe7bd28d1de87fb2f703fd87e579956fa7a2230b359ca23e25505",
+      "dirty": false
+    },
+    "contractVersion": "0.1.0",
+    "engineVersion": "0.1.0-dev",
+    "configFingerprint": "46ce179126eaf00a592be24a9a00fcb1fb41c40c21ae62b06052e8469d26f5e7",
+    "createdAt": "2026-11-21T10:00:00Z",
+    "completedAt": "2026-11-21T10:00:04Z",
+    "status": "complete",
+    "stats": {
+      "files": 1,
+      "nodes": 2,
+      "edges": 1,
+      "unresolvedEdges": 0,
+      "diagnostics": 0
+    }
+  },
+  "nodes": [
+    {
+      "id": "file:backend/src/modules/watch-party/application/ports.ts",
+      "kind": "file",
+      "name": "ports.ts",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/ports.ts",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 8,
+            "character": 0
+          }
+        }
+      },
+      "contentHash": "2f61f2e3f9759c1a6ad42a86ed3c55ce5ae7f35ce8430517593963ee716d13df"
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "kind": "interface",
+      "name": "PartyRoomRepository",
+      "qualifiedName": "PartyRoomRepository",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/ports.ts",
+        "range": {
+          "start": {
+            "line": 4,
+            "character": 0
+          },
+          "end": {
+            "line": 4,
+            "character": 38
+          }
+        }
+      },
+      "exported": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:contains:ports.ts->PartyRoomRepository",
+      "kind": "contains",
+      "source": "file:backend/src/modules/watch-party/application/ports.ts",
+      "target": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/ports.ts",
+            "range": {
+              "start": {
+                "line": 4,
+                "character": 0
+              },
+              "end": {
+                "line": 4,
+                "character": 38
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "diagnostics": []
+}

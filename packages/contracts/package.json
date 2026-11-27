@@ -1,0 +1,44 @@
+{
+  "name": "@codeatlas/contracts",
+  "version": "0.1.0",
+  "description": "Canonical CodeAtlas contract types and JSON Schema bundle, generated from codeatlas-engine contracts/schemas (FND-03).",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Khoiiminh/codeatlas-engine",
+    "directory": "packages/contracts"
+  },
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./schemas/codeatlas.schema.json": "./schemas/codeatlas.schema.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "schemas"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "generate": "node scripts/generate.mts",
+    "check:generated": "node scripts/generate.mts --check",
+    "format": "prettier --write scripts src test",
+    "format:check": "prettier --check scripts src test",
+    "typecheck": "tsc -p tsconfig.json",
+    "build": "node scripts/copy-schemas.mts && tsc -p tsconfig.build.json",
+    "test:consumer": "node scripts/consumer-test.mts",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6",
+    "json-schema-to-typescript": "16.0.0",
+    "prettier": "3.10.1",
+    "typescript": "6.0.3"
+  }
+}

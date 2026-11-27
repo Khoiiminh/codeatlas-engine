@@ -1,0 +1,22 @@
+{
+  "request": {
+    "root": "/home/dev/synchrostream",
+    "repository": {
+      "name": "synchrostream"
+    },
+    "options": {
+      "include": [
+        "src/**"
+      ],
+      "exclude": [
+        "**/*.test.ts"
+      ],
+      "languages": [
+        "typescript",
+        "tsx"
+      ],
+      "semanticAnalysis": true
+    }
+  },
+  "progressToken": "analysis-1"
+}

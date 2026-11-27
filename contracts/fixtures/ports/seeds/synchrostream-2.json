@@ -1,0 +1,1075 @@
+{
+  "info": {
+    "snapshotId": "snap-synchrostream-0002",
+    "repository": {
+      "name": "synchrostream",
+      "remoteUrl": "https://github.com/example/synchrostream"
+    },
+    "source": {
+      "commit": "d4735e3a265e16eee03f59718b9b5d03019c07d8",
+      "contentFingerprint": "821e257323b7927792424159ffcdde953f8e8495963df83e8bc05e9ff8818b12",
+      "dirty": false
+    },
+    "contractVersion": "0.1.0",
+    "engineVersion": "0.1.0-dev",
+    "configFingerprint": "46ce179126eaf00a592be24a9a00fcb1fb41c40c21ae62b06052e8469d26f5e7",
+    "createdAt": "2026-11-21T10:00:00Z",
+    "completedAt": "2026-11-21T10:00:04Z",
+    "status": "complete",
+    "stats": {
+      "files": 5,
+      "nodes": 17,
+      "edges": 26,
+      "unresolvedEdges": 3,
+      "diagnostics": 1
+    }
+  },
+  "nodes": [
+    {
+      "id": "external:@nestjs/common",
+      "kind": "external_module",
+      "name": "@nestjs/common"
+    },
+    {
+      "id": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "kind": "file",
+      "name": "join-party.use-case.ts",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 24,
+            "character": 0
+          }
+        }
+      },
+      "contentHash": "0506a94db6de0ee1776af2bbc0fd345cb7ec0d627a07d8e43211c654c8e27110"
+    },
+    {
+      "id": "file:backend/src/modules/watch-party/application/ports.ts",
+      "kind": "file",
+      "name": "ports.ts",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/ports.ts",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 8,
+            "character": 0
+          }
+        }
+      },
+      "contentHash": "2f61f2e3f9759c1a6ad42a86ed3c55ce5ae7f35ce8430517593963ee716d13df"
+    },
+    {
+      "id": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "kind": "file",
+      "name": "party-room.ts",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/domain/party-room.ts",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 59,
+            "character": 0
+          }
+        }
+      },
+      "contentHash": "a6e5cad463dc2541d2c2d70090d977e771f3a9599ec1c23f61401c17bc94f259"
+    },
+    {
+      "id": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "kind": "file",
+      "name": "sync.gateway.ts",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 19,
+            "character": 0
+          }
+        }
+      },
+      "contentHash": "b0e52b72a454d92cb34184d44bf936fb7a0a6e734ed72f6bc8d041cce8760a48"
+    },
+    {
+      "id": "file:backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "kind": "file",
+      "name": "watch-party.controller.ts",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 20,
+            "character": 0
+          }
+        }
+      },
+      "contentHash": "fa65e3aebbf1a2b105d27563fccb22fc930cdcea1d0630a1f782be2b55a1dc4f"
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase",
+      "kind": "class",
+      "name": "JoinPartyUseCase",
+      "qualifiedName": "JoinPartyUseCase",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+        "range": {
+          "start": {
+            "line": 11,
+            "character": 0
+          },
+          "end": {
+            "line": 11,
+            "character": 31
+          }
+        }
+      },
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "kind": "method",
+      "name": "execute",
+      "qualifiedName": "JoinPartyUseCase.execute",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+        "range": {
+          "start": {
+            "line": 14,
+            "character": 4
+          },
+          "end": {
+            "line": 14,
+            "character": 76
+          }
+        }
+      },
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "kind": "interface",
+      "name": "PartyRoomRepository",
+      "qualifiedName": "PartyRoomRepository",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/ports.ts",
+        "range": {
+          "start": {
+            "line": 4,
+            "character": 0
+          },
+          "end": {
+            "line": 4,
+            "character": 38
+          }
+        }
+      },
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+      "kind": "method",
+      "name": "findByCode",
+      "qualifiedName": "PartyRoomRepository.findByCode",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/application/ports.ts",
+        "range": {
+          "start": {
+            "line": 5,
+            "character": 4
+          },
+          "end": {
+            "line": 5,
+            "character": 63
+          }
+        }
+      },
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "kind": "class",
+      "name": "PartyRoom",
+      "qualifiedName": "PartyRoom",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/domain/party-room.ts",
+        "range": {
+          "start": {
+            "line": 16,
+            "character": 0
+          },
+          "end": {
+            "line": 16,
+            "character": 24
+          }
+        }
+      },
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "kind": "method",
+      "name": "join",
+      "qualifiedName": "PartyRoom.join",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/domain/party-room.ts",
+        "range": {
+          "start": {
+            "line": 32,
+            "character": 4
+          },
+          "end": {
+            "line": 32,
+            "character": 39
+          }
+        }
+      },
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.open",
+      "kind": "method",
+      "name": "open",
+      "qualifiedName": "PartyRoom.open",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/domain/party-room.ts",
+        "range": {
+          "start": {
+            "line": 26,
+            "character": 4
+          },
+          "end": {
+            "line": 26,
+            "character": 74
+          }
+        }
+      },
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway",
+      "kind": "class",
+      "name": "SyncGateway",
+      "qualifiedName": "SyncGateway",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+        "range": {
+          "start": {
+            "line": 5,
+            "character": 0
+          },
+          "end": {
+            "line": 5,
+            "character": 26
+          }
+        }
+      },
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+      "kind": "method",
+      "name": "handle",
+      "qualifiedName": "SyncGateway.handle",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+        "range": {
+          "start": {
+            "line": 8,
+            "character": 4
+          },
+          "end": {
+            "line": 8,
+            "character": 51
+          }
+        }
+      },
+      "exported": false
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController",
+      "kind": "class",
+      "name": "WatchPartyController",
+      "qualifiedName": "WatchPartyController",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+        "range": {
+          "start": {
+            "line": 8,
+            "character": 0
+          },
+          "end": {
+            "line": 8,
+            "character": 35
+          }
+        }
+      },
+      "exported": true
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController.join",
+      "kind": "method",
+      "name": "join",
+      "qualifiedName": "WatchPartyController.join",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+        "range": {
+          "start": {
+            "line": 12,
+            "character": 4
+          },
+          "end": {
+            "line": 12,
+            "character": 82
+          }
+        }
+      },
+      "exported": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:calls:JoinPartyUseCase.execute->PartyRoom.join",
+      "kind": "calls",
+      "source": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "target": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "semantic",
+          "analyzer": "typescript",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+            "range": {
+              "start": {
+                "line": 19,
+                "character": 23
+              },
+              "end": {
+                "line": 19,
+                "character": 33
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:calls:JoinPartyUseCase.execute->PartyRoomRepository.findByCode",
+      "kind": "calls",
+      "source": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "target": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "semantic",
+          "analyzer": "typescript",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+            "range": {
+              "start": {
+                "line": 15,
+                "character": 27
+              },
+              "end": {
+                "line": 15,
+                "character": 49
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:calls:PartyRoom.open->PartyRoom",
+      "kind": "calls",
+      "source": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.open",
+      "target": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "semantic",
+          "analyzer": "typescript",
+          "location": {
+            "path": "backend/src/modules/watch-party/domain/party-room.ts",
+            "range": {
+              "start": {
+                "line": 27,
+                "character": 21
+              },
+              "end": {
+                "line": 27,
+                "character": 35
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:calls:PartyRoom.open->PartyRoom.join",
+      "kind": "calls",
+      "source": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.open",
+      "target": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "semantic",
+          "analyzer": "typescript",
+          "location": {
+            "path": "backend/src/modules/watch-party/domain/party-room.ts",
+            "range": {
+              "start": {
+                "line": 28,
+                "character": 8
+              },
+              "end": {
+                "line": 28,
+                "character": 25
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:calls:SyncGateway.handle->?recordDrift",
+      "kind": "calls",
+      "source": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+      "resolution": "unresolved",
+      "unresolved": {
+        "specifier": "recordDrift",
+        "reason": "not_found"
+      },
+      "evidence": [
+        {
+          "kind": "semantic",
+          "analyzer": "typescript",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+            "range": {
+              "start": {
+                "line": 11,
+                "character": 12
+              },
+              "end": {
+                "line": 11,
+                "character": 29
+              }
+            }
+          },
+          "detail": "not_found: recordDrift"
+        }
+      ]
+    },
+    {
+      "id": "edge:calls:SyncGateway.handle->PartyRoomRepository.findByCode",
+      "kind": "calls",
+      "source": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+      "target": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "semantic",
+          "analyzer": "typescript",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+            "range": {
+              "start": {
+                "line": 9,
+                "character": 27
+              },
+              "end": {
+                "line": 9,
+                "character": 49
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:calls:WatchPartyController.join->JoinPartyUseCase.execute",
+      "kind": "calls",
+      "source": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController.join",
+      "target": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "semantic",
+          "analyzer": "typescript",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+            "range": {
+              "start": {
+                "line": 13,
+                "character": 29
+              },
+              "end": {
+                "line": 13,
+                "character": 52
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:JoinPartyUseCase->JoinPartyUseCase.execute",
+      "kind": "contains",
+      "source": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase",
+      "target": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase.execute",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+            "range": {
+              "start": {
+                "line": 14,
+                "character": 4
+              },
+              "end": {
+                "line": 14,
+                "character": 76
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:PartyRoom->PartyRoom.join",
+      "kind": "contains",
+      "source": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "target": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.join",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/domain/party-room.ts",
+            "range": {
+              "start": {
+                "line": 32,
+                "character": 4
+              },
+              "end": {
+                "line": 32,
+                "character": 39
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:PartyRoom->PartyRoom.open",
+      "kind": "contains",
+      "source": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "target": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom.open",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/domain/party-room.ts",
+            "range": {
+              "start": {
+                "line": 26,
+                "character": 4
+              },
+              "end": {
+                "line": 26,
+                "character": 74
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:PartyRoomRepository->PartyRoomRepository.findByCode",
+      "kind": "contains",
+      "source": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "target": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository.findByCode",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/ports.ts",
+            "range": {
+              "start": {
+                "line": 5,
+                "character": 4
+              },
+              "end": {
+                "line": 5,
+                "character": 63
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:SyncGateway->SyncGateway.handle",
+      "kind": "contains",
+      "source": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway",
+      "target": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway.handle",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+            "range": {
+              "start": {
+                "line": 8,
+                "character": 4
+              },
+              "end": {
+                "line": 8,
+                "character": 51
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:WatchPartyController->WatchPartyController.join",
+      "kind": "contains",
+      "source": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController",
+      "target": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController.join",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+            "range": {
+              "start": {
+                "line": 12,
+                "character": 4
+              },
+              "end": {
+                "line": 12,
+                "character": 82
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:join-party.use-case.ts->JoinPartyUseCase",
+      "kind": "contains",
+      "source": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "target": "symbol:backend/src/modules/watch-party/application/join-party.use-case.ts#JoinPartyUseCase",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+            "range": {
+              "start": {
+                "line": 11,
+                "character": 0
+              },
+              "end": {
+                "line": 11,
+                "character": 31
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:party-room.ts->PartyRoom",
+      "kind": "contains",
+      "source": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "target": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/domain/party-room.ts",
+            "range": {
+              "start": {
+                "line": 16,
+                "character": 0
+              },
+              "end": {
+                "line": 16,
+                "character": 24
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:ports.ts->PartyRoomRepository",
+      "kind": "contains",
+      "source": "file:backend/src/modules/watch-party/application/ports.ts",
+      "target": "symbol:backend/src/modules/watch-party/application/ports.ts#PartyRoomRepository",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/ports.ts",
+            "range": {
+              "start": {
+                "line": 4,
+                "character": 0
+              },
+              "end": {
+                "line": 4,
+                "character": 38
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:sync.gateway.ts->SyncGateway",
+      "kind": "contains",
+      "source": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "target": "symbol:backend/src/modules/watch-party/presentation/sync.gateway.ts#SyncGateway",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+            "range": {
+              "start": {
+                "line": 5,
+                "character": 0
+              },
+              "end": {
+                "line": 5,
+                "character": 26
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:contains:watch-party.controller.ts->WatchPartyController",
+      "kind": "contains",
+      "source": "file:backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "target": "symbol:backend/src/modules/watch-party/presentation/watch-party.controller.ts#WatchPartyController",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+            "range": {
+              "start": {
+                "line": 8,
+                "character": 0
+              },
+              "end": {
+                "line": 8,
+                "character": 35
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:join-party.use-case.ts->external:@nestjs/common",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "target": "external:@nestjs/common",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 35
+              },
+              "end": {
+                "line": 0,
+                "character": 51
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:join-party.use-case.ts->ports.ts",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "target": "file:backend/src/modules/watch-party/application/ports.ts",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/join-party.use-case.ts",
+            "range": {
+              "start": {
+                "line": 3,
+                "character": 64
+              },
+              "end": {
+                "line": 3,
+                "character": 73
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:ports.ts->party-room.ts",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/application/ports.ts",
+      "target": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/application/ports.ts",
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 41
+              },
+              "end": {
+                "line": 0,
+                "character": 63
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:sync.gateway.ts->?./missing-sync-metrics",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "resolution": "unresolved",
+      "unresolved": {
+        "specifier": "./missing-sync-metrics",
+        "reason": "not_found"
+      },
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 28
+              },
+              "end": {
+                "line": 1,
+                "character": 52
+              }
+            }
+          },
+          "detail": "not_found: ./missing-sync-metrics"
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:sync.gateway.ts->?`./handlers/${type}`",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "resolution": "unresolved",
+      "unresolved": {
+        "specifier": "`./handlers/${type}`",
+        "reason": "dynamic"
+      },
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+            "range": {
+              "start": {
+                "line": 16,
+                "character": 15
+              },
+              "end": {
+                "line": 16,
+                "character": 43
+              }
+            }
+          },
+          "detail": "dynamic: `./handlers/${type}`"
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:sync.gateway.ts->ports.ts",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/presentation/sync.gateway.ts",
+      "target": "file:backend/src/modules/watch-party/application/ports.ts",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 41
+              },
+              "end": {
+                "line": 0,
+                "character": 63
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:watch-party.controller.ts->external:@nestjs/common",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "target": "external:@nestjs/common",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+            "range": {
+              "start": {
+                "line": 0,
+                "character": 46
+              },
+              "end": {
+                "line": 0,
+                "character": 62
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "edge:imports:watch-party.controller.ts->join-party.use-case.ts",
+      "kind": "imports",
+      "source": "file:backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+      "target": "file:backend/src/modules/watch-party/application/join-party.use-case.ts",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/presentation/watch-party.controller.ts",
+            "range": {
+              "start": {
+                "line": 1,
+                "character": 33
+              },
+              "end": {
+                "line": 1,
+                "character": 69
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "severity": "warning",
+      "code": "CA1001",
+      "message": "Cannot resolve module './missing-sync-metrics'.",
+      "location": {
+        "path": "backend/src/modules/watch-party/presentation/sync.gateway.ts",
+        "range": {
+          "start": {
+            "line": 1,
+            "character": 28
+          },
+          "end": {
+            "line": 1,
+            "character": 52
+          }
+        }
+      }
+    }
+  ]
+}

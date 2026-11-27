@@ -1,0 +1,104 @@
+{
+  "info": {
+    "snapshotId": "snap-synchrostream-0003",
+    "repository": {
+      "name": "synchrostream",
+      "remoteUrl": "https://github.com/example/synchrostream"
+    },
+    "source": {
+      "commit": "4e07408562bedb8b60ce05c1decfe3ad16b72230",
+      "contentFingerprint": "12a4d905a00d836deb5168d6971168bbd3aa2f59ec902bf835f06d9b0c8677d3",
+      "dirty": false
+    },
+    "contractVersion": "0.1.0",
+    "engineVersion": "0.1.0-dev",
+    "configFingerprint": "46ce179126eaf00a592be24a9a00fcb1fb41c40c21ae62b06052e8469d26f5e7",
+    "createdAt": "2026-11-22T10:00:00Z",
+    "status": "failed",
+    "stats": {
+      "files": 1,
+      "nodes": 2,
+      "edges": 1,
+      "unresolvedEdges": 0,
+      "diagnostics": 1
+    }
+  },
+  "nodes": [
+    {
+      "id": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "kind": "file",
+      "name": "party-room.ts",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/domain/party-room.ts",
+        "range": {
+          "start": {
+            "line": 0,
+            "character": 0
+          },
+          "end": {
+            "line": 59,
+            "character": 0
+          }
+        }
+      },
+      "contentHash": "a6e5cad463dc2541d2c2d70090d977e771f3a9599ec1c23f61401c17bc94f259"
+    },
+    {
+      "id": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "kind": "class",
+      "name": "PartyRoom",
+      "qualifiedName": "PartyRoom",
+      "language": "typescript",
+      "location": {
+        "path": "backend/src/modules/watch-party/domain/party-room.ts",
+        "range": {
+          "start": {
+            "line": 16,
+            "character": 0
+          },
+          "end": {
+            "line": 16,
+            "character": 24
+          }
+        }
+      },
+      "exported": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge:contains:party-room.ts->PartyRoom",
+      "kind": "contains",
+      "source": "file:backend/src/modules/watch-party/domain/party-room.ts",
+      "target": "symbol:backend/src/modules/watch-party/domain/party-room.ts#PartyRoom",
+      "resolution": "resolved",
+      "evidence": [
+        {
+          "kind": "syntactic",
+          "analyzer": "tree-sitter",
+          "location": {
+            "path": "backend/src/modules/watch-party/domain/party-room.ts",
+            "range": {
+              "start": {
+                "line": 16,
+                "character": 0
+              },
+              "end": {
+                "line": 16,
+                "character": 24
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "diagnostics": [
+    {
+      "severity": "error",
+      "code": "CA0001",
+      "message": "Analysis stopped: the TypeScript analyzer exited unexpectedly."
+    }
+  ]
+}

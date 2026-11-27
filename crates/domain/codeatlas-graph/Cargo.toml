@@ -1,0 +1,15 @@
+[package]
+name = "codeatlas-graph"
+description = "Domain layer: graph construction and query algorithms. No I/O."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
+
+[dependencies]
+codeatlas-core.workspace = true
+
+[lints]
+workspace = true

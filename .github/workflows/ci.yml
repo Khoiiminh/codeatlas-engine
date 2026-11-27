@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  push:
+    branches: [main, development]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  rust:
+    name: rust
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install toolchain from rust-toolchain.toml
+        run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --all --check
+      - run: cargo clippy --workspace --all-targets --locked -- -D warnings
+      - run: cargo test --workspace --locked --exclude codeatlas-architecture-tests
+
+  # Required check (FND-05, ADR-0010): crate graph must match crates/README.md.
+  architecture:
+    name: architecture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install toolchain from rust-toolchain.toml
+        run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test -p codeatlas-architecture-tests --locked
+
+  # FND-03: canonical contracts. Rust schema/compatibility tests run in the `rust` job
+  # (crates/adapters/codeatlas-protocol/tests/contract_compatibility.rs).
+  contracts:
+    name: contracts
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/contracts
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: packages/contracts/package-lock.json
+      - run: npm ci
+      - name: Generated types match the schema
+        run: npm run check:generated
+      - name: Formatting (Prettier, 4-space indent)
+        run: npm run format:check
+      - name: Types and every valid example type-check
+        run: npm run typecheck
+      - name: Consumer package-install test
+        run: npm run test:consumer
+      - name: Pack the contract artifact
+        # npm pack does not create the destination folder. The printed SHA-256 must match
+        # the vendored copies in codeatlas-platform and codeatlas-vscode (vendor/README.md).
+        run: |
+          mkdir -p "$RUNNER_TEMP/contracts"
+          npm pack --pack-destination "$RUNNER_TEMP/contracts"
+          sha256sum "$RUNNER_TEMP"/contracts/*.tgz
+      - uses: actions/upload-artifact@v7
+        with:
+          name: codeatlas-contracts
+          path: ${{ runner.temp }}/contracts/*.tgz
+          if-no-files-found: error
+
+  typescript-analyzer:
+    name: typescript-analyzer
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/typescript-analyzer
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: packages/typescript-analyzer/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - name: Fixture expectations agree with the TypeScript compiler (FND-04)
+        run: npm run check:fixtures

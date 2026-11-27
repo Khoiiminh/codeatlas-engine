@@ -1,0 +1,16 @@
+[package]
+name = "codeatlas-parser-treesitter"
+description = "Adapter (driven): Tree-sitter LanguageParser."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish.workspace = true
+repository.workspace = true
+
+[dependencies]
+codeatlas-core.workspace = true
+codeatlas-application.workspace = true
+
+[lints]
+workspace = true

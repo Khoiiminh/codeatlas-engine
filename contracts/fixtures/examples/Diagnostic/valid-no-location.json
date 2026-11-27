@@ -1,0 +1,5 @@
+{
+  "severity": "warning",
+  "code": "CA1001",
+  "message": "File could not be parsed completely."
+}
