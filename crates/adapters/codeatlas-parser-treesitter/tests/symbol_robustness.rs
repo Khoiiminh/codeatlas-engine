@@ -4,7 +4,7 @@
 use std::collections::BTreeSet;
 use std::time::{Duration, Instant};
 
-use codeatlas_application::{LanguageParser, ParseInput, ParseLimits};
+use codeatlas_application::{LanguageParser, NeverCancelled, ParseInput, ParseLimits};
 use codeatlas_core::{Language, ParsedSource, Position, RepoPath, SymbolLimit};
 use codeatlas_parser_treesitter::TreeSitterParser;
 use codeatlas_parser_treesitter::symbols::MAX_NAMESPACE_DEPTH;
@@ -26,6 +26,7 @@ fn parse_with(language: Language, name: &str, text: &str, limits: ParseLimits) -
                 text,
             },
             &limits,
+            &NeverCancelled,
         )
         .unwrap_or_else(|e| panic!("{name}: {e}"))
 }

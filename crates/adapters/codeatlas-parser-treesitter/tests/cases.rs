@@ -7,7 +7,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codeatlas_application::{LanguageParser, ParseInput, ParseLimits};
+use codeatlas_application::{LanguageParser, NeverCancelled, ParseInput, ParseLimits};
 use codeatlas_core::{Language, ParsedSource, RepoPath, SyntaxProblemKind};
 use codeatlas_parser_treesitter::TreeSitterParser;
 use serde_json::{Value, json};
@@ -41,6 +41,7 @@ fn parse_case(name: &str) -> ParsedSource {
                 text: &text,
             },
             &ParseLimits::default(),
+            &NeverCancelled,
         )
         .unwrap_or_else(|e| panic!("{name}: {e}"))
 }

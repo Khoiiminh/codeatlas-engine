@@ -2,7 +2,7 @@
 
 use std::time::Duration;
 
-use codeatlas_application::{LanguageParser, ParseError, ParseInput, ParseLimits};
+use codeatlas_application::{LanguageParser, NeverCancelled, ParseError, ParseInput, ParseLimits};
 use codeatlas_core::{Language, ParsedSource, Position, RepoPath, SyntaxProblemKind};
 use codeatlas_parser_treesitter::TreeSitterParser;
 
@@ -27,6 +27,7 @@ fn parse(
             text,
         },
         &limits,
+        &NeverCancelled,
     )
 }
 
@@ -152,4 +153,56 @@ fn positions_follow_line_breaks_and_skip_the_byte_order_mark() {
         let start = parsed.problems()[0].range.start();
         assert_eq!(start, Position::new(1, 0), "{prefix:?} {line_break:?}");
     }
+}
+
+/// Cancelled after its first few checks: deterministic, unlike a timer.
+struct CancelAfter {
+    checks: std::sync::atomic::AtomicUsize,
+    allowed: usize,
+}
+
+impl codeatlas_application::CancellationToken for CancelAfter {
+    fn is_cancelled(&self) -> bool {
+        self.checks
+            .fetch_add(1, std::sync::atomic::Ordering::Relaxed)
+            >= self.allowed
+    }
+}
+
+#[test]
+fn cancellation_stops_a_file_in_the_middle() {
+    let text = "export const value = [1, 2, 3].map((n) => n * 2);
+"
+    .repeat(20_000);
+    let path = RepoPath::new("case.ts").unwrap();
+    let input = ParseInput {
+        path: &path,
+        language: Language::TypeScript,
+        text: &text,
+    };
+    let cancel = CancelAfter {
+        checks: Default::default(),
+        allowed: 3,
+    };
+    assert_eq!(
+        TreeSitterParser.parse(&input, &no_timeout(), &cancel),
+        Err(ParseError::Cancelled)
+    );
+    // The parser checked during parsing, not only before it.
+    assert!(cancel.checks.load(std::sync::atomic::Ordering::Relaxed) > 1);
+    let already = CancelAfter {
+        checks: Default::default(),
+        allowed: 0,
+    };
+    assert_eq!(
+        TreeSitterParser.parse(&input, &no_timeout(), &already),
+        Err(ParseError::Cancelled)
+    );
+    // Not cancelled: the same file parses cleanly.
+    assert!(
+        TreeSitterParser
+            .parse(&input, &no_timeout(), &NeverCancelled)
+            .unwrap()
+            .is_clean()
+    );
 }

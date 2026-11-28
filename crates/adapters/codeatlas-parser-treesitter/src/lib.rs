@@ -18,7 +18,9 @@
 use std::ops::ControlFlow;
 use std::time::Instant;
 
-use codeatlas_application::{LanguageParser, ParseError, ParseInput, ParseLimits};
+use codeatlas_application::{
+    CancellationToken, LanguageParser, ParseError, ParseInput, ParseLimits,
+};
 use codeatlas_core::{
     Language, LineIndex, ParsedSource, SyntaxProblem, SyntaxProblemKind, build_symbols,
 };
@@ -46,8 +48,15 @@ impl TreeSitterParser {
         }
     }
 
-    /// Parses `text` (without a leading byte order mark) into a Tree-sitter tree.
-    fn tree(text: &str, language: Language, limits: &ParseLimits) -> Result<Tree, ParseError> {
+    /// Parses `text` (without a leading byte order mark) into a Tree-sitter tree. Tree-sitter
+    /// calls the progress callback while it works; that is where the time limit and
+    /// cancellation stop it, so even one slow file stops promptly.
+    fn tree(
+        text: &str,
+        language: Language,
+        limits: &ParseLimits,
+        cancel: &dyn CancellationToken,
+    ) -> Result<Tree, ParseError> {
         let bytes = text.len() as u64;
         if bytes > MAX_TEXT_BYTES {
             return Err(ParseError::TooLarge {
@@ -63,25 +72,26 @@ impl TreeSitterParser {
         let source = text.as_bytes();
         let mut read = |offset: usize, _| source.get(offset..).unwrap_or_default();
         let started = Instant::now();
-        let mut timed_out = false;
-        let mut progress = |_: &tree_sitter::ParseState| match limits.timeout {
-            Some(limit) if started.elapsed() >= limit => {
-                timed_out = true;
-                ControlFlow::Break(())
+        let mut stopped: Option<ParseError> = None;
+        let mut progress = |_: &tree_sitter::ParseState| {
+            if cancel.is_cancelled() {
+                stopped = Some(ParseError::Cancelled);
+                return ControlFlow::Break(());
             }
-            _ => ControlFlow::Continue(()),
+            match limits.timeout {
+                Some(limit) if started.elapsed() >= limit => {
+                    stopped = Some(ParseError::TimedOut { after: limit });
+                    ControlFlow::Break(())
+                }
+                _ => ControlFlow::Continue(()),
+            }
         };
         let options = ParseOptions::new().progress_callback(&mut progress);
         let tree = parser.parse_with_options(&mut read, None, Some(options));
-        match tree {
-            Some(tree) => Ok(tree),
-            None if timed_out => Err(ParseError::TimedOut {
-                after: limits.timeout.unwrap_or_default(),
-            }),
-            None => Err(ParseError::Failed(
-                "Tree-sitter returned no tree".to_string(),
-            )),
-        }
+        tree.ok_or_else(|| {
+            stopped
+                .unwrap_or_else(|| ParseError::Failed("Tree-sitter returned no tree".to_string()))
+        })
     }
 }
 
@@ -90,10 +100,14 @@ impl LanguageParser for TreeSitterParser {
         &self,
         input: &ParseInput<'_>,
         limits: &ParseLimits,
+        cancel: &dyn CancellationToken,
     ) -> Result<ParsedSource, ParseError> {
+        if cancel.is_cancelled() {
+            return Err(ParseError::Cancelled);
+        }
         // Editors drop a byte order mark from the document text, so positions do too.
         let text = input.text.strip_prefix(BOM).unwrap_or(input.text);
-        let tree = Self::tree(text, input.language, limits)?;
+        let tree = Self::tree(text, input.language, limits, cancel)?;
         let index = LineIndex::new(text);
         let (problems, truncated) = syntax_problems(tree.root_node(), &index, limits.max_problems);
         let extracted = symbols::extract(

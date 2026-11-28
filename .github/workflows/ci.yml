@@ -28,6 +28,20 @@ jobs:
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - run: cargo test --workspace --locked --exclude codeatlas-architecture-tests
 
+  # Report only (ADR-0014): times the engine on a generated 1-million-line repository and adds
+  # the table to the job summary. Not a required check: shared runners vary too much for a time
+  # limit. It fails only if the parallel and single-threaded results differ.
+  benchmark:
+    name: benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install toolchain from rust-toolchain.toml
+        run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - name: Engine throughput on a generated repository (ADR-0014)
+        run: cargo test --release --locked -p codeatlas-fixture-tests --test benchmark -- --ignored --nocapture
+
   # Required check (FND-05, ADR-0010): crate graph must match crates/README.md.
   architecture:
     name: architecture

@@ -9,6 +9,8 @@ use std::path::PathBuf;
 
 use codeatlas_core::{IgnorePolicy, Inventory, RepoPath};
 
+use crate::run::RunContext;
+
 /// Source files larger than this are reported as skipped, not analysed. Hand-written source is
 /// far smaller; files this big are almost always generated (bundles, generated API clients).
 pub const DEFAULT_MAX_FILE_BYTES: u64 = 2 * 1024 * 1024;
@@ -34,6 +36,8 @@ pub enum ScanError {
     },
     /// The scanner broke the inventory rules (a bug in the adapter).
     InvalidInventory(String),
+    /// The run was cancelled before the inventory was complete (ADR-0014).
+    Cancelled,
 }
 
 impl fmt::Display for ScanError {
@@ -49,6 +53,7 @@ impl fmt::Display for ScanError {
             ScanError::InvalidInventory(m) => {
                 write!(f, "scanner produced an invalid inventory: {m}")
             }
+            ScanError::Cancelled => write!(f, "the scan was cancelled"),
         }
     }
 }
@@ -64,9 +69,12 @@ impl std::error::Error for ScanError {}
 ///   global or user configuration), so the result depends only on the repository's contents;
 /// - never follow symbolic links;
 /// - classify files with `Language::detect`, and report source files that are too large, not
-///   UTF-8 or unreadable instead of failing.
-pub trait SourceScanner {
-    fn scan(&self, request: &ScanRequest) -> Result<Inventory, ScanError>;
+///   UTF-8 or unreadable instead of failing;
+/// - check `run` between entries and return `ScanError::Cancelled` once it is cancelled, and
+///   report `Phase::Scan` progress with the number of source files found so far (ADR-0014);
+/// - be usable from several threads (`Send + Sync`).
+pub trait SourceScanner: Send + Sync {
+    fn scan(&self, request: &ScanRequest, run: &RunContext<'_>) -> Result<Inventory, ScanError>;
 }
 
 /// Caller's choices for one scan; everything else comes from the defaults.
@@ -92,7 +100,13 @@ impl<'a> ScanRepository<'a> {
         ScanRepository { scanner }
     }
 
-    pub fn execute(&self, root: PathBuf, options: &ScanOptions) -> Result<Inventory, ScanError> {
+    pub fn execute(
+        &self,
+        root: PathBuf,
+        options: &ScanOptions,
+        run: &RunContext<'_>,
+    ) -> Result<Inventory, ScanError> {
+        run.check().map_err(|_| ScanError::Cancelled)?;
         let mut policy = IgnorePolicy::default();
         for name in &options.include_dir_names {
             policy = policy.include_name(name);
@@ -108,23 +122,34 @@ impl<'a> ScanRepository<'a> {
             policy,
             max_file_bytes: options.max_file_bytes.unwrap_or(DEFAULT_MAX_FILE_BYTES),
         };
-        self.scanner.scan(&request)
+        self.scanner.scan(&request, run)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use std::cell::RefCell;
+    use std::sync::Mutex;
 
     use super::*;
+    use crate::run::{CancelFlag, NoProgress};
 
     /// Records the request and returns an empty inventory.
     #[derive(Default)]
-    struct Recorder(RefCell<Option<ScanRequest>>);
+    struct Recorder(Mutex<Option<ScanRequest>>);
+
+    impl Recorder {
+        fn take(&self) -> Option<ScanRequest> {
+            self.0.lock().unwrap().take()
+        }
+    }
 
     impl SourceScanner for Recorder {
-        fn scan(&self, request: &ScanRequest) -> Result<Inventory, ScanError> {
-            *self.0.borrow_mut() = Some(request.clone());
+        fn scan(
+            &self,
+            request: &ScanRequest,
+            _run: &RunContext<'_>,
+        ) -> Result<Inventory, ScanError> {
+            *self.0.lock().unwrap() = Some(request.clone());
             Ok(Inventory::default())
         }
     }
@@ -137,9 +162,13 @@ mod tests {
     fn defaults_reach_the_scanner() {
         let scanner = Recorder::default();
         ScanRepository::new(&scanner)
-            .execute(PathBuf::from("repo"), &ScanOptions::default())
+            .execute(
+                PathBuf::from("repo"),
+                &ScanOptions::default(),
+                &RunContext::detached(),
+            )
             .unwrap();
-        let request = scanner.0.take().unwrap();
+        let request = scanner.take().unwrap();
         assert_eq!(request.root, PathBuf::from("repo"));
         assert_eq!(request.max_file_bytes, DEFAULT_MAX_FILE_BYTES);
         assert_eq!(request.policy, IgnorePolicy::default());
@@ -155,9 +184,9 @@ mod tests {
             max_file_bytes: Some(10),
         };
         ScanRepository::new(&scanner)
-            .execute(PathBuf::from("repo"), &options)
+            .execute(PathBuf::from("repo"), &options, &RunContext::detached())
             .unwrap();
-        let request = scanner.0.take().unwrap();
+        let request = scanner.take().unwrap();
         assert_eq!(request.max_file_bytes, 10);
         assert!(request.policy.ignores_dir(&p("src/generated")));
         assert!(request.policy.ignores_dir(&p("legacy/vendor")));
@@ -169,14 +198,38 @@ mod tests {
     fn scanner_errors_are_returned_unchanged() {
         struct Missing;
         impl SourceScanner for Missing {
-            fn scan(&self, request: &ScanRequest) -> Result<Inventory, ScanError> {
+            fn scan(
+                &self,
+                request: &ScanRequest,
+                _run: &RunContext<'_>,
+            ) -> Result<Inventory, ScanError> {
                 Err(ScanError::RootNotFound(request.root.clone()))
             }
         }
         let err = ScanRepository::new(&Missing)
-            .execute(PathBuf::from("nowhere"), &ScanOptions::default())
+            .execute(
+                PathBuf::from("nowhere"),
+                &ScanOptions::default(),
+                &RunContext::detached(),
+            )
             .unwrap_err();
         assert_eq!(err, ScanError::RootNotFound(PathBuf::from("nowhere")));
         assert!(err.to_string().contains("does not exist"));
+    }
+
+    #[test]
+    fn a_cancelled_run_does_not_reach_the_scanner() {
+        let scanner = Recorder::default();
+        let flag = CancelFlag::new();
+        flag.cancel();
+        let err = ScanRepository::new(&scanner)
+            .execute(
+                PathBuf::from("repo"),
+                &ScanOptions::default(),
+                &RunContext::new(&flag, &NoProgress),
+            )
+            .unwrap_err();
+        assert_eq!(err, ScanError::Cancelled);
+        assert!(scanner.take().is_none());
     }
 }

@@ -3,7 +3,10 @@
 use std::fs;
 use std::path::Path;
 
-use codeatlas_application::{ScanError, ScanOptions, ScanRepository, ScanRequest, SourceScanner};
+use codeatlas_application::{
+    CancelFlag, NoProgress, Phase, Progress, ProgressReporter, RunContext, ScanError, ScanOptions,
+    ScanRepository, ScanRequest, SourceScanner,
+};
 use codeatlas_core::{IgnorePolicy, Inventory, RepoPath, SkipReason};
 use codeatlas_scanner_fs::FsSourceScanner;
 use tempfile::TempDir;
@@ -24,7 +27,7 @@ fn repo(files: &[(&str, &str)]) -> TempDir {
 
 fn scan(root: &Path, options: &ScanOptions) -> Inventory {
     ScanRepository::new(&FsSourceScanner)
-        .execute(root.to_path_buf(), options)
+        .execute(root.to_path_buf(), options, &RunContext::detached())
         .unwrap()
 }
 
@@ -234,12 +237,12 @@ fn root_problems_are_errors() {
     };
     let missing = dir.path().join("missing");
     assert_eq!(
-        FsSourceScanner.scan(&request(&missing)),
+        FsSourceScanner.scan(&request(&missing), &RunContext::detached()),
         Err(ScanError::RootNotFound(missing.clone()))
     );
     let file = dir.path().join("file.ts");
     assert_eq!(
-        FsSourceScanner.scan(&request(&file)),
+        FsSourceScanner.scan(&request(&file), &RunContext::detached()),
         Err(ScanError::RootNotDirectory(file.clone()))
     );
 }
@@ -253,4 +256,47 @@ fn result_does_not_depend_on_creation_order() {
     let b = scan(backward.path(), &ScanOptions::default());
     assert_eq!(a, b);
     assert_eq!(paths(&a), ["a.ts", "a/c.ts", "b.ts", "z/y/x.js"]);
+}
+
+/// ADR-0014: a cancelled scan returns no inventory, and progress counts source files.
+#[test]
+fn scans_can_be_cancelled_and_report_progress() {
+    let dir = tempfile::tempdir().unwrap();
+    let request = |root: &Path| ScanRequest {
+        root: root.to_path_buf(),
+        policy: IgnorePolicy::default(),
+        max_file_bytes: 1024,
+    };
+    for i in 0..5 {
+        fs::write(dir.path().join(format!("f{i}.ts")), "export {};\n").unwrap();
+    }
+    fs::write(dir.path().join("notes.md"), "not source").unwrap();
+
+    struct Events(std::sync::Mutex<Vec<Progress>>);
+    impl ProgressReporter for Events {
+        fn report(&self, progress: Progress) {
+            self.0.lock().unwrap().push(progress);
+        }
+    }
+    let events = Events(std::sync::Mutex::new(Vec::new()));
+    let run = RunContext::new(&codeatlas_application::NeverCancelled, &events);
+    let inventory = FsSourceScanner.scan(&request(dir.path()), &run).unwrap();
+    assert_eq!(inventory.files().len(), 5);
+    let done: Vec<(Phase, usize, Option<usize>)> = events
+        .0
+        .into_inner()
+        .unwrap()
+        .iter()
+        .map(|p| (p.phase, p.done, p.total))
+        .collect();
+    assert_eq!(
+        done,
+        (1..=5).map(|n| (Phase::Scan, n, None)).collect::<Vec<_>>()
+    );
+
+    let flag = CancelFlag::new();
+    flag.cancel();
+    let cancelled =
+        FsSourceScanner.scan(&request(dir.path()), &RunContext::new(&flag, &NoProgress));
+    assert_eq!(cancelled, Err(ScanError::Cancelled));
 }
