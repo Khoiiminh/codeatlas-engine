@@ -1,0 +1,85 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "0:6-0:10",
+          "range": "0:6-0:33"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:commonjs-object.cjs#path",
+      "kind": "variable",
+      "name": "path"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "2:9-2:20",
+          "range": "2:0-4:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:commonjs-object.cjs#createThing",
+      "kind": "function",
+      "name": "createThing"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "6:6-6:14",
+          "range": "6:0-12:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:commonjs-object.cjs#Registry",
+      "kind": "class",
+      "name": "Registry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "7:4-7:9",
+          "range": "7:4-7:15"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:commonjs-object.cjs#Registry.items",
+      "kind": "property",
+      "name": "items",
+      "parent": "symbol:commonjs-object.cjs#Registry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "9:4-9:7",
+          "range": "9:4-11:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:commonjs-object.cjs#Registry.add",
+      "kind": "method",
+      "name": "add",
+      "parent": "symbol:commonjs-object.cjs#Registry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "14:6-14:17",
+          "range": "14:6-14:21"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:commonjs-object.cjs#notExported",
+      "kind": "variable",
+      "name": "notExported"
+    }
+  ],
+  "truncated": null
+}

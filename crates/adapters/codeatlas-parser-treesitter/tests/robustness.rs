@@ -90,6 +90,7 @@ fn problems_stop_at_the_limit_and_say_so() {
     let limits = ParseLimits {
         max_problems: 3,
         timeout: None,
+        ..ParseLimits::default()
     };
     let parsed = parse(Language::TypeScript, "case.ts", &text, limits).unwrap();
     assert_eq!(parsed.problems().len(), 3);
@@ -113,6 +114,7 @@ fn a_zero_timeout_on_a_large_file_times_out() {
     let limits = ParseLimits {
         max_problems: 10,
         timeout: Some(Duration::ZERO),
+        ..ParseLimits::default()
     };
     assert_eq!(
         parse(Language::TypeScript, "case.ts", &text, limits),

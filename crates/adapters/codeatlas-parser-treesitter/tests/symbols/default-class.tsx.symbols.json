@@ -1,0 +1,46 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "0:7-0:14",
+          "range": "0:0-6:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:default-class.tsx#default",
+      "kind": "class",
+      "name": "default"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "1:4-1:9",
+          "range": "1:4-1:23"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:default-class.tsx#default.title",
+      "kind": "property",
+      "name": "title",
+      "parent": "symbol:default-class.tsx#default"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "3:4-3:10",
+          "range": "3:4-5:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:default-class.tsx#default.render",
+      "kind": "method",
+      "name": "render",
+      "parent": "symbol:default-class.tsx#default"
+    }
+  ],
+  "truncated": null
+}

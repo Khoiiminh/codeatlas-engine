@@ -96,35 +96,62 @@ pub struct SourceLocation {
     pub range: Range,
 }
 
+/// Bytes between two checkpoints of a [`LineIndex`].
+const CHECKPOINT_BYTES: usize = 1024;
+
 /// Converts UTF-8 byte offsets in one text into [`Position`]s.
 ///
 /// Building the index scans the text once. Each lookup is a binary search for the line,
-/// then a count of UTF-16 units from the start of that line.
+/// then a count of UTF-16 units from the nearest earlier checkpoint on that line. Checkpoints
+/// are at most about 1 KiB apart, so a lookup costs the same on a minified file whose whole
+/// content is one line as on hand-written code (ENG-03 looks up four positions per symbol).
 #[derive(Debug, Clone)]
 pub struct LineIndex<'a> {
     text: &'a str,
     /// Byte offset where each line starts. Always starts with 0.
     line_starts: Vec<usize>,
+    /// `(byte offset, UTF-16 units from the start of its line)`, in increasing offset order.
+    /// Every offset is a character boundary and never the `\n` of a `\r\n`.
+    checkpoints: Vec<(usize, usize)>,
 }
 
 impl<'a> LineIndex<'a> {
     pub fn new(text: &'a str) -> Self {
         let bytes = text.as_bytes();
         let mut line_starts = vec![0];
+        let mut checkpoints = Vec::new();
+        let mut next_checkpoint = CHECKPOINT_BYTES;
+        let mut units = 0;
         let mut i = 0;
         while i < bytes.len() {
-            match bytes[i] {
-                b'\n' => line_starts.push(i + 1),
+            let byte = bytes[i];
+            if i >= next_checkpoint && !is_continuation(byte) {
+                checkpoints.push((i, units));
+                next_checkpoint = i + CHECKPOINT_BYTES;
+            }
+            match byte {
+                b'\n' => {
+                    line_starts.push(i + 1);
+                    units = 0;
+                }
                 b'\r' if bytes.get(i + 1) == Some(&b'\n') => {
                     line_starts.push(i + 2);
+                    units = 0;
                     i += 1;
                 }
-                b'\r' => line_starts.push(i + 1),
-                _ => {}
+                b'\r' => {
+                    line_starts.push(i + 1);
+                    units = 0;
+                }
+                _ => units += utf16_units_started_by(byte),
             }
             i += 1;
         }
-        LineIndex { text, line_starts }
+        LineIndex {
+            text,
+            line_starts,
+            checkpoints,
+        }
     }
 
     /// Number of lines. An empty text, and a text ending in a line break, end with an empty line.
@@ -144,12 +171,21 @@ impl<'a> LineIndex<'a> {
         }
         let line = self.line_starts.partition_point(|&start| start <= offset) - 1;
         let line_start = self.line_starts[line];
-        let mut line_text = &self.text[line_start..offset];
+        let nearest = self
+            .checkpoints
+            .partition_point(|&(at, _)| at <= offset)
+            .checked_sub(1)
+            .map(|k| self.checkpoints[k]);
+        let (from, units_before) = match nearest {
+            Some((at, units)) if at >= line_start => (at, units),
+            _ => (line_start, 0),
+        };
+        let mut rest = &self.text[from..offset];
         // The `\n` of a `\r\n` belongs to the previous line's break: stop before the `\r`.
-        if let Some(stripped) = line_text.strip_suffix('\r') {
-            line_text = stripped;
+        if let Some(stripped) = rest.strip_suffix('\r') {
+            rest = stripped;
         }
-        let character: usize = line_text.chars().map(char::len_utf16).sum();
+        let character = units_before + rest.chars().map(char::len_utf16).sum::<usize>();
         Position::new(saturate(line), saturate(character))
     }
 
@@ -162,6 +198,23 @@ impl<'a> LineIndex<'a> {
 
 fn saturate(n: usize) -> u32 {
     u32::try_from(n).unwrap_or(u32::MAX)
+}
+
+/// A UTF-8 continuation byte (`10xxxxxx`), which never starts a character.
+fn is_continuation(byte: u8) -> bool {
+    byte & 0xC0 == 0x80
+}
+
+/// UTF-16 units of the character that `byte` starts: 2 for a four-byte sequence (outside the
+/// Basic Multilingual Plane), 0 for a continuation byte, otherwise 1.
+fn utf16_units_started_by(byte: u8) -> usize {
+    if is_continuation(byte) {
+        0
+    } else if byte >= 0xF0 {
+        2
+    } else {
+        1
+    }
 }
 
 #[cfg(test)]
@@ -207,6 +260,76 @@ mod tests {
     fn unicode_separators_are_not_line_breaks() {
         let text = "a\u{2028}b";
         assert_eq!(LineIndex::new(text).position(text.len()), pos(0, 3));
+    }
+
+    /// The definition, without checkpoints: count UTF-16 units from the start of the line.
+    fn naive_position(text: &str, offset: usize) -> Position {
+        let mut offset = offset.min(text.len());
+        while !text.is_char_boundary(offset) {
+            offset -= 1;
+        }
+        let before = &text[..offset];
+        let (mut line, mut line_start, mut i) = (0, 0, 0);
+        let bytes = before.as_bytes();
+        while i < bytes.len() {
+            if bytes[i] == b'\n' || bytes[i] == b'\r' {
+                if bytes[i] == b'\r' && text.as_bytes().get(i + 1) == Some(&b'\n') {
+                    if i + 1 == bytes.len() {
+                        break; // `offset` is the `\n` of this `\r\n`: still on this line
+                    }
+                    i += 1;
+                }
+                line += 1;
+                line_start = i + 1;
+            }
+            i += 1;
+        }
+        let rest = before[line_start..].trim_end_matches('\r');
+        let character = rest.chars().map(char::len_utf16).sum::<usize>();
+        Position::new(line, character as u32)
+    }
+
+    #[test]
+    fn checkpoints_give_the_same_positions_as_counting_from_the_line_start() {
+        // Long lines with every character width and every line break, so checkpoints land
+        // next to multi-byte characters, `\r\n` pairs and line starts.
+        let pieces = ["a", "é", "世", "😀", "\n", "\r\n", "\r", "bc", "\u{2028}"];
+        let mut seed: u32 = 7;
+        let mut text = String::new();
+        while text.len() < 12_000 {
+            seed = seed.wrapping_mul(1_103_515_245).wrapping_add(12_345);
+            let piece = pieces[(seed >> 16) as usize % pieces.len()];
+            // Mostly characters, so lines grow far past one checkpoint interval.
+            if piece.contains(['\n', '\r']) && !(seed >> 8).is_multiple_of(64) {
+                text.push('x');
+            } else {
+                text.push_str(piece);
+            }
+        }
+        let index = LineIndex::new(&text);
+        assert!(
+            index.checkpoints.len() > 8,
+            "the test must cross checkpoints"
+        );
+        for offset in 0..=text.len() + 1 {
+            assert_eq!(
+                index.position(offset),
+                naive_position(&text, offset),
+                "offset {offset}"
+            );
+        }
+    }
+
+    #[test]
+    fn a_minified_line_costs_little_per_lookup() {
+        let text = "const a=1;".repeat(200_000); // 2 MB on one line
+        let index = LineIndex::new(&text);
+        let started = std::time::Instant::now();
+        for offset in (0..text.len()).step_by(100) {
+            assert_eq!(index.position(offset).character as usize, offset);
+        }
+        // 20,000 lookups; counting from the line start would scan 20 GB.
+        assert!(started.elapsed() < std::time::Duration::from_secs(5));
     }
 
     #[test]

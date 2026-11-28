@@ -36,9 +36,9 @@ Toolchains are pinned in `rust-toolchain.toml` and `.node-version`.
 cargo build --workspace
 cargo test --workspace                        # includes the architecture boundary check
 cargo test -p codeatlas-architecture-tests    # boundary check only (tests/architecture)
-cargo test -p codeatlas-fixture-tests         # FND-04 fixtures: SynchroStream golden file, port scenarios
+cargo test -p codeatlas-fixture-tests         # FND-04 fixtures and port scenarios; ENG-01..03 end to end against the golden files
 cargo clippy --workspace --all-targets -- -D warnings
-cd packages/typescript-analyzer && npm ci && npm run typecheck && npm run check:fixtures && npm run check:parser-cases
+cd packages/typescript-analyzer && npm ci && npm run typecheck && npm run check:fixtures && npm run check:parser-cases && npm run check:symbol-cases
 cd packages/contracts && npm ci && npm run check:generated && npm run format:check && npm run typecheck && npm run test:consumer
 ```
 

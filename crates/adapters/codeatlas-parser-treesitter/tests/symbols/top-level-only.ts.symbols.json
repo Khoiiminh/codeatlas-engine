@@ -1,0 +1,83 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "0:16-0:21",
+          "range": "0:0-7:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:top-level-only.ts#outer",
+      "kind": "function",
+      "name": "outer"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "15:13-15:23",
+          "range": "15:13-17:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:top-level-only.ts#Expression",
+      "kind": "variable",
+      "name": "Expression"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "19:13-19:19",
+          "range": "19:13-25:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:top-level-only.ts#object",
+      "kind": "variable",
+      "name": "object"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "27:13-27:18",
+          "range": "27:13-27:45"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:top-level-only.ts#arrow",
+      "kind": "variable",
+      "name": "arrow"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "enum",
+          "name": "31:5-31:10",
+          "range": "31:0-34:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:top-level-only.ts#Color",
+      "kind": "enum",
+      "name": "Color"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "enum",
+          "name": "36:11-36:20",
+          "range": "36:0-38:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:top-level-only.ts#Direction",
+      "kind": "enum",
+      "name": "Direction"
+    }
+  ],
+  "truncated": null
+}

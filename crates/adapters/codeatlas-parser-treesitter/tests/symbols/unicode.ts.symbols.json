@@ -1,0 +1,98 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "0:6-0:11",
+          "range": "0:6-0:20"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:unicode.ts#emoji",
+      "kind": "variable",
+      "name": "emoji"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "0:35-0:36",
+          "range": "0:35-0:46"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:unicode.ts#π",
+      "kind": "variable",
+      "name": "π"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "1:13-1:20",
+          "range": "1:0-1:66"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:unicode.ts#Ünïcode",
+      "kind": "class",
+      "name": "Ünïcode"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "1:33-1:38",
+          "range": "1:33-1:46"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:unicode.ts#Ünïcode.ëmoji",
+      "kind": "property",
+      "name": "ëmoji",
+      "parent": "symbol:unicode.ts#Ünïcode"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "1:47-1:53",
+          "range": "1:47-1:64"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:unicode.ts#Ünïcode.métier",
+      "kind": "method",
+      "name": "métier",
+      "parent": "symbol:unicode.ts#Ünïcode"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "2:13-2:15",
+          "range": "2:13-2:22"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:unicode.ts#变量",
+      "kind": "variable",
+      "name": "变量"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "2:24-2:29",
+          "range": "2:24-2:33"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:unicode.ts#après",
+      "kind": "variable",
+      "name": "après"
+    }
+  ],
+  "truncated": null
+}

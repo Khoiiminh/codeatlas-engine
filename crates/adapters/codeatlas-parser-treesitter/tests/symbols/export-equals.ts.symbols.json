@@ -1,0 +1,64 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "0:6-0:12",
+          "range": "0:0-2:1"
+        },
+        {
+          "kind": "namespace",
+          "name": "4:10-4:16",
+          "range": "4:0-6:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:export-equals.ts#Client",
+      "kind": "class",
+      "name": "Client"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "1:4-1:11",
+          "range": "1:4-1:22"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:export-equals.ts#Client.connect",
+      "kind": "method",
+      "name": "connect",
+      "parent": "symbol:export-equals.ts#Client"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "5:17-5:28",
+          "range": "5:17-5:33"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:export-equals.ts#Client.defaultPort",
+      "kind": "variable",
+      "name": "defaultPort",
+      "parent": "symbol:export-equals.ts#Client"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "8:9-8:20",
+          "range": "8:0-8:31"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:export-equals.ts#notExported",
+      "kind": "function",
+      "name": "notExported"
+    }
+  ],
+  "truncated": null
+}

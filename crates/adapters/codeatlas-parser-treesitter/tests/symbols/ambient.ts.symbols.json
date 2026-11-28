@@ -1,0 +1,164 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "0:17-0:24",
+          "range": "0:0-0:48"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#measure",
+      "kind": "function",
+      "name": "measure"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "1:14-1:21",
+          "range": "1:14-1:29"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#VERSION",
+      "kind": "variable",
+      "name": "VERSION"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "2:12-2:19",
+          "range": "2:12-2:27"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#mutable",
+      "kind": "variable",
+      "name": "mutable"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "2:29-2:34",
+          "range": "2:29-2:42"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#other",
+      "kind": "variable",
+      "name": "other"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "3:14-3:20",
+          "range": "3:0-6:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#Native",
+      "kind": "class",
+      "name": "Native"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "4:4-4:10",
+          "range": "4:4-4:19"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#Native.method",
+      "kind": "method",
+      "name": "method",
+      "parent": "symbol:ambient.ts#Native"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "5:4-5:9",
+          "range": "5:4-5:18"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#Native.field",
+      "kind": "property",
+      "name": "field",
+      "parent": "symbol:ambient.ts#Native"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "enum",
+          "name": "7:13-7:18",
+          "range": "7:0-10:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#Level",
+      "kind": "enum",
+      "name": "Level"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "11:24-11:32",
+          "range": "11:0-11:41"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:ambient.ts#exported",
+      "kind": "function",
+      "name": "exported"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "enum",
+          "name": "12:26-12:31",
+          "range": "12:0-14:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:ambient.ts#Flags",
+      "kind": "enum",
+      "name": "Flags"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "15:23-15:31",
+          "range": "15:0-17:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#Template",
+      "kind": "class",
+      "name": "Template"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "16:13-16:19",
+          "range": "16:4-16:30"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:ambient.ts#Template.render",
+      "kind": "method",
+      "name": "render",
+      "parent": "symbol:ambient.ts#Template"
+    }
+  ],
+  "truncated": null
+}

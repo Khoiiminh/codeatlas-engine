@@ -1,0 +1,172 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "2:13-2:18",
+          "range": "2:0-19:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:components.jsx#Panel",
+      "kind": "class",
+      "name": "Panel"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "3:11-3:23",
+          "range": "3:4-3:42"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#Panel.defaultProps",
+      "kind": "property",
+      "name": "defaultProps",
+      "parent": "symbol:components.jsx#Panel"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "4:4-4:12",
+          "range": "4:4-4:17"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#Panel.#renders",
+      "kind": "property",
+      "name": "#renders",
+      "parent": "symbol:components.jsx#Panel"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "5:4-5:9",
+          "range": "5:4-5:28"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#Panel.state",
+      "kind": "property",
+      "name": "state",
+      "parent": "symbol:components.jsx#Panel"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "7:8-7:14",
+          "range": "7:4-9:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#Panel.isOpen",
+      "kind": "property",
+      "name": "isOpen",
+      "parent": "symbol:components.jsx#Panel"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "11:4-11:10",
+          "range": "11:4-13:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#Panel.#count",
+      "kind": "method",
+      "name": "#count",
+      "parent": "symbol:components.jsx#Panel"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "15:4-15:10",
+          "range": "15:4-18:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#Panel.render",
+      "kind": "method",
+      "name": "render",
+      "parent": "symbol:components.jsx#Panel"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "21:17-21:20",
+          "range": "21:0-23:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:components.jsx#ids",
+      "kind": "function",
+      "name": "ids"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "25:22-25:26",
+          "range": "25:0-27:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:components.jsx#load",
+      "kind": "function",
+      "name": "load"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "29:13-29:18",
+          "range": "29:13-29:35"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:components.jsx#Small",
+      "kind": "variable",
+      "name": "Small"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "30:4-30:10",
+          "range": "30:4-30:14"
+        },
+        {
+          "kind": "variable",
+          "name": "31:4-31:10",
+          "range": "31:4-31:14"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#legacy",
+      "kind": "variable",
+      "name": "legacy"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "32:10-32:11",
+          "range": "32:10-32:11"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:components.jsx#b",
+      "kind": "variable",
+      "name": "b"
+    }
+  ],
+  "truncated": null
+}

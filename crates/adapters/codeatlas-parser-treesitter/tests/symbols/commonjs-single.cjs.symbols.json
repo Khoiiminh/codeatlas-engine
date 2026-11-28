@@ -1,0 +1,45 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "0:6-0:12",
+          "range": "0:0-2:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:commonjs-single.cjs#Server",
+      "kind": "class",
+      "name": "Server"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "1:4-1:10",
+          "range": "1:4-1:15"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:commonjs-single.cjs#Server.listen",
+      "kind": "method",
+      "name": "listen",
+      "parent": "symbol:commonjs-single.cjs#Server"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "4:9-4:14",
+          "range": "4:0-6:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:commonjs-single.cjs#start",
+      "kind": "function",
+      "name": "start"
+    }
+  ],
+  "truncated": null
+}

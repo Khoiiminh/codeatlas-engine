@@ -1,0 +1,31 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "0:16-0:20",
+          "range": "0:0-0:31"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:broken-recovery.ts#good",
+      "kind": "function",
+      "name": "good"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "12:13-12:17",
+          "range": "12:13-12:21"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:broken-recovery.ts#last",
+      "kind": "variable",
+      "name": "last"
+    }
+  ],
+  "truncated": null
+}

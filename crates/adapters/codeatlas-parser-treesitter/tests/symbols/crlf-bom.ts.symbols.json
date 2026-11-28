@@ -1,0 +1,45 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "1:16-1:21",
+          "range": "1:0-1:32"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:crlf-bom.ts#first",
+      "kind": "function",
+      "name": "first"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "3:13-3:19",
+          "range": "3:0-5:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:crlf-bom.ts#Second",
+      "kind": "class",
+      "name": "Second"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "4:4-4:10",
+          "range": "4:4-4:15"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:crlf-bom.ts#Second.member",
+      "kind": "property",
+      "name": "member",
+      "parent": "symbol:crlf-bom.ts#Second"
+    }
+  ],
+  "truncated": null
+}

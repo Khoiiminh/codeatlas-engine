@@ -1,0 +1,280 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "2:6-2:7",
+          "range": "2:6-2:11"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#a",
+      "kind": "variable",
+      "name": "a"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "3:9-3:10",
+          "range": "3:0-3:21"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#b",
+      "kind": "function",
+      "name": "b"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "4:6-4:7",
+          "range": "4:0-4:10"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#C",
+      "kind": "class",
+      "name": "C"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "5:4-5:5",
+          "range": "5:4-5:9"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#d",
+      "kind": "variable",
+      "name": "d"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "5:11-5:12",
+          "range": "5:11-5:16"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:exports.ts#e",
+      "kind": "variable",
+      "name": "e"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "interface",
+          "name": "6:10-6:11",
+          "range": "6:0-6:14"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#F",
+      "kind": "interface",
+      "name": "F"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "type_alias",
+          "name": "7:5-7:6",
+          "range": "7:0-7:16"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#G",
+      "kind": "type_alias",
+      "name": "G"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "8:6-8:12",
+          "range": "8:6-8:16"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:exports.ts#hidden",
+      "kind": "variable",
+      "name": "hidden"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "namespace",
+          "name": "15:12-15:22",
+          "range": "15:0-15:42"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#Everything",
+      "kind": "namespace",
+      "name": "Everything"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "19:16-19:26",
+          "range": "19:0-19:50"
+        },
+        {
+          "kind": "function",
+          "name": "20:16-20:26",
+          "range": "20:0-20:50"
+        },
+        {
+          "kind": "function",
+          "name": "21:16-21:26",
+          "range": "21:0-23:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#overloaded",
+      "kind": "function",
+      "name": "overloaded"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "25:15-25:20",
+          "range": "25:15-25:20"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#first",
+      "kind": "variable",
+      "name": "first"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "25:30-25:43",
+          "range": "25:22-25:43"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#renamedSecond",
+      "kind": "variable",
+      "name": "renamedSecond"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "25:48-25:54",
+          "range": "25:45-25:54"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#others",
+      "kind": "variable",
+      "name": "others"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "26:14-26:16",
+          "range": "26:14-26:16"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#x0",
+      "kind": "variable",
+      "name": "x0"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "26:20-26:22",
+          "range": "26:20-26:26"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#x2",
+      "kind": "variable",
+      "name": "x2"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "26:31-26:33",
+          "range": "26:28-26:33"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#xs",
+      "kind": "variable",
+      "name": "xs"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "27:18-27:22",
+          "range": "27:18-27:22"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:exports.ts#deep",
+      "kind": "variable",
+      "name": "deep"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "27:33-27:37",
+          "range": "27:33-27:37"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:exports.ts#item",
+      "kind": "variable",
+      "name": "item"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "29:13-29:19",
+          "range": "29:13-29:55"
+        },
+        {
+          "kind": "type_alias",
+          "name": "30:12-30:18",
+          "range": "30:0-30:58"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:exports.ts#Status",
+      "kind": "variable",
+      "name": "Status"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "31:17-31:25",
+          "range": "31:8-31:29"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:exports.ts#fallback",
+      "kind": "variable",
+      "name": "fallback"
+    }
+  ],
+  "truncated": null
+}

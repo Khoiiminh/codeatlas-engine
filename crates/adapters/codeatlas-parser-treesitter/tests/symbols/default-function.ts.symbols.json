@@ -1,0 +1,31 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "0:7-0:14",
+          "range": "0:0-2:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:default-function.ts#default",
+      "kind": "function",
+      "name": "default"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "4:16-4:22",
+          "range": "4:0-4:33"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:default-function.ts#helper",
+      "kind": "function",
+      "name": "helper"
+    }
+  ],
+  "truncated": null
+}

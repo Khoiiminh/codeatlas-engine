@@ -8,6 +8,7 @@
 //! |---|---|---|
 //! | `CA1001` | warning | The file parsed, but the parser had to recover from syntax errors. |
 //! | `CA1002` | warning | The file could not be parsed at all (unreadable, changed since the scan, unsupported, too large, timed out, or the parser failed). |
+//! | `CA1003` | warning | Not every symbol in the file was extracted, because it reached a limit (ENG-03). |
 
 use std::fmt;
 
@@ -40,6 +41,8 @@ impl DiagnosticCode {
     pub const PARSE_INCOMPLETE: DiagnosticCode = DiagnosticCode(*b"CA1001");
     /// The file could not be parsed at all.
     pub const PARSE_FAILED: DiagnosticCode = DiagnosticCode(*b"CA1002");
+    /// Symbol extraction stopped at a limit, so some symbols are missing.
+    pub const SYMBOLS_INCOMPLETE: DiagnosticCode = DiagnosticCode(*b"CA1003");
 
     pub fn new(code: &str) -> Option<Self> {
         let bytes: [u8; 6] = code.as_bytes().try_into().ok()?;

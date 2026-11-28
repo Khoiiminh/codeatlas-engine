@@ -17,7 +17,8 @@ The fixture is **synthetic**. It copies no code from the real SynchroStream repo
 | Check | Where | Catches |
 |---|---|---|
 | Every entry points at real source text; the file inventory is exact; the fixture set as a whole covers the FND-04 exit criteria; every fixture folder has `expected.json` | `cargo test -p codeatlas-fixture-tests` (`tests/source_fixtures.rs`, CI job `rust`) | Wrong line, missing or extra file, a covered case removed |
-| The pinned TypeScript compiler agrees: inventory, exact diagnostics, import resolution, the declaration every call, reference and heritage edge reaches, the enclosing symbol, and that the symbol list is exhaustive | `npm run check:fixtures` in `packages/typescript-analyzer` (CI job `typescript-analyzer`) | Wrong call target, wrong caller, missing or extra symbol, wrong symbol kind |
+| The pinned TypeScript compiler agrees: inventory, exact diagnostics, import resolution, the declaration every call, reference and heritage edge reaches, the enclosing symbol, and the exact symbol list with kinds, lines, parents and export flags (by the ENG-03 rules in `scripts/symbol-rules.ts`) | `npm run check:fixtures` in `packages/typescript-analyzer` (CI job `typescript-analyzer`) | Wrong call target, wrong caller, missing or extra symbol, wrong symbol kind, parent or export flag |
+| The engine reproduces the golden lists: the scanner the inventory (ENG-01), the parser every file without syntax errors (ENG-02), the Tree-sitter extractor the symbol list exactly (ENG-03) | `cargo test -p codeatlas-fixture-tests` (`tests/parse_sources.rs`, `tests/symbols.rs`) | An analyser that drifts from the golden file |
 
 Both checks fail on planted mistakes; they were tried when FND-04 was written (§5.1 of the Traceable Implementation Plan).
 
@@ -37,6 +38,8 @@ These are the rules future analysers (ENG-01 to ENG-05) must follow to match the
 - interface members: method signatures (as `method`) and property signatures (as `property`).
 
 Not symbols: constructors, enum members, locals, parameters, members of object literals and of anonymous type literals, and declarations inside `node_modules`. `exported` means exported from the module (ESM `export`, or CommonJS `module.exports`). Members are never module exports.
+
+Constructs these fixtures do not contain (namespaces, overloads and other merged declarations, destructuring, anonymous default exports, `export =`) follow the rules in [`crates/adapters/codeatlas-parser-treesitter/tests/symbols/README.md`](../../crates/adapters/codeatlas-parser-treesitter/tests/symbols/README.md) (ENG-03).
 
 **Edges** (exhaustive):
 - `imports`: from the importing file to the module it names, including `import type` (marked `typeOnly`) and CommonJS `require("…")`. The target is the module actually named (a barrel `index.ts` stays the target), or `external:<specifier>` for packages and `node:` built-ins. The implicit JSX runtime import is not recorded.
