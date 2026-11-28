@@ -11,6 +11,7 @@ The language-neutral analysis model: what a repository, file, symbol, relationsh
 **Contains:**
 - Entities and value objects: `RepositoryId`, `SourceFile`, `SourceSpan`, `Symbol`, `Relationship`, `Snapshot`, `Evidence`, `Diagnostic`
 - Stable symbol identity rules
+- Semantic facts and their linking to symbol ids (`semantic`, ENG-04): an analyser reports places; `link` turns them into relationships
 - Evidence classification and precedence (structural, semantic, inferred, unresolved)
 - Language-neutral dependency-resolution rules
 - Domain error types

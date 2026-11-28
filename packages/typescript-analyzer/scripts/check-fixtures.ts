@@ -12,11 +12,23 @@
 // the fixture folder (for a monorepo, one per package; for a plain JavaScript project, a
 // checker-only tsconfig placed next to expected.json, outside the analysed repository). The
 // default is <root>/tsconfig.json. A file belongs to the first project that includes it.
+// Programs are built as the analyzer builds them (ADR-0015): a jsconfig.json starts from the
+// defaults tsserver gives it, and project references are not passed to the compiler, so imports
+// resolve to the referenced project's source rather than to build output.
 
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import ts from "typescript";
 import { primary, symbolsOf } from "./symbol-rules.ts";
+
+/** What tsserver assumes for a jsconfig.json before reading it (as src/analysis/projects.ts). */
+const JSCONFIG_DEFAULTS: ts.CompilerOptions = {
+    allowJs: true,
+    maxNodeModuleJsDepth: 2,
+    allowSyntheticDefaultImports: true,
+    skipLibCheck: true,
+    noEmit: true,
+};
 
 interface Expected {
     root: string;
@@ -108,15 +120,12 @@ function checkFixture(name: string): void {
             continue;
         }
         const config = ts.readConfigFile(configPath, (p) => ts.sys.readFile(p));
-        const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, dirname(configPath));
+        const defaults = configPath.endsWith("jsconfig.json") ? JSCONFIG_DEFAULTS : {};
+        const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, dirname(configPath), defaults, configPath);
         for (const d of [config.error, ...parsed.errors].filter((d) => d !== undefined)) {
             fail(`${project}: ${ts.flattenDiagnosticMessageText(d.messageText, " ")}`);
         }
-        const program = ts.createProgram({
-            rootNames: parsed.fileNames,
-            options: parsed.options,
-            ...(parsed.projectReferences ? { projectReferences: parsed.projectReferences } : {}),
-        });
+        const program = ts.createProgram({ rootNames: parsed.fileNames, options: parsed.options });
         const checker = program.getTypeChecker();
         const own = program
             .getSourceFiles()

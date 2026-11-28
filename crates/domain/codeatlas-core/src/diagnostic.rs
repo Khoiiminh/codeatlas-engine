@@ -9,6 +9,8 @@
 //! | `CA1001` | warning | The file parsed, but the parser had to recover from syntax errors. |
 //! | `CA1002` | warning | The file could not be parsed at all (unreadable, changed since the scan, unsupported, too large, timed out, or the parser failed). |
 //! | `CA1003` | warning | Not every symbol in the file was extracted, because it reached a limit (ENG-03). |
+//! | `CA2001` | warning | Semantic analysis did not run for the file, or for the whole run, so its imports, calls and references are not resolved (ENG-04). |
+//! | `CA2002` | warning | A TypeScript project configuration (`tsconfig.json`, `jsconfig.json`) has errors; the files it owns were analysed with what TypeScript could read of it (ENG-04). |
 
 use std::fmt;
 
@@ -43,6 +45,10 @@ impl DiagnosticCode {
     pub const PARSE_FAILED: DiagnosticCode = DiagnosticCode(*b"CA1002");
     /// Symbol extraction stopped at a limit, so some symbols are missing.
     pub const SYMBOLS_INCOMPLETE: DiagnosticCode = DiagnosticCode(*b"CA1003");
+    /// Semantic analysis produced no result for a file, or did not run at all.
+    pub const SEMANTICS_UNAVAILABLE: DiagnosticCode = DiagnosticCode(*b"CA2001");
+    /// A project configuration file has errors.
+    pub const PROJECT_CONFIG_PROBLEM: DiagnosticCode = DiagnosticCode(*b"CA2002");
 
     pub fn new(code: &str) -> Option<Self> {
         let bytes: [u8; 6] = code.as_bytes().try_into().ok()?;

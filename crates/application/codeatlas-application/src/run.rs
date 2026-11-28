@@ -36,6 +36,8 @@ pub enum Phase {
     Scan,
     /// Parsing files and extracting their symbols.
     Parse,
+    /// Resolving imports, calls and references with a compiler (ENG-04).
+    Resolve,
 }
 
 impl Phase {
@@ -43,6 +45,7 @@ impl Phase {
         match self {
             Phase::Scan => "scan",
             Phase::Parse => "parse",
+            Phase::Resolve => "resolve",
         }
     }
 }
@@ -196,9 +199,9 @@ mod tests {
     #[test]
     fn phases_use_stable_names() {
         assert_eq!(
-            [Phase::Scan.as_str(), Phase::Parse.as_str()],
-            ["scan", "parse"]
+            [Phase::Scan, Phase::Parse, Phase::Resolve].map(Phase::as_str),
+            ["scan", "parse", "resolve"]
         );
-        assert!(Phase::Scan < Phase::Parse);
+        assert!(Phase::Scan < Phase::Parse && Phase::Parse < Phase::Resolve);
     }
 }

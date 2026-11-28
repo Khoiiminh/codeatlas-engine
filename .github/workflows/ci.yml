@@ -24,6 +24,15 @@ jobs:
       - name: Install toolchain from rust-toolchain.toml
         run: rustup show active-toolchain || rustup toolchain install
       - uses: Swatinem/rust-cache@v2
+      # ENG-04: the semantic tests run the TypeScript analyzer, a Node program (ADR-0015).
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: packages/typescript-analyzer/package-lock.json
+      - name: Install the TypeScript analyzer
+        run: npm ci
+        working-directory: packages/typescript-analyzer
       - run: cargo fmt --all --check
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - run: cargo test --workspace --locked --exclude codeatlas-architecture-tests
@@ -34,6 +43,8 @@ jobs:
   # symbolic links, file systems that ignore case). `rust` covers Linux. Warnings are errors here
   # too, so code built only for one system meets the same bar. The check names come from the
   # matrix: renaming the job or an entry renames the checks, and the rulesets must follow.
+  # ENG-04: Node and the TypeScript analyzer are installed, so the semantic tests run on each
+  # system too (path casing, Windows separators and line endings reach the analyzer).
   portability:
     name: portability (${{ matrix.os }})
     strategy:
@@ -51,11 +62,21 @@ jobs:
       - name: Install toolchain from rust-toolchain.toml
         run: rustup show active-toolchain || rustup toolchain install
       - uses: Swatinem/rust-cache@v2
+      # ENG-04: the semantic tests run the TypeScript analyzer, a Node program (ADR-0015).
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: packages/typescript-analyzer/package-lock.json
+      - name: Install the TypeScript analyzer
+        run: npm ci
+        working-directory: packages/typescript-analyzer
       - run: cargo test --workspace --locked --exclude codeatlas-architecture-tests
 
-  # Report only (ADR-0014): times the engine on a generated 1-million-line repository and adds
-  # the table to the job summary. Not a required check: shared runners vary too much for a time
-  # limit. It fails only if the parallel and single-threaded results differ.
+  # Report only (ADR-0014): times the engine on a generated 1-million-line repository, including
+  # the TypeScript semantic pass (ENG-04), and adds the table to the job summary. Not a required
+  # check: shared runners vary too much for a time limit. It fails only if the parallel and
+  # single-threaded results differ or a count is wrong.
   benchmark:
     name: benchmark
     runs-on: ubuntu-latest
@@ -64,6 +85,15 @@ jobs:
       - name: Install toolchain from rust-toolchain.toml
         run: rustup show active-toolchain || rustup toolchain install
       - uses: Swatinem/rust-cache@v2
+      # ENG-04: the semantic tests run the TypeScript analyzer, a Node program (ADR-0015).
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: npm
+          cache-dependency-path: packages/typescript-analyzer/package-lock.json
+      - name: Install the TypeScript analyzer
+        run: npm ci
+        working-directory: packages/typescript-analyzer
       - name: Engine throughput on a generated repository (ADR-0014)
         run: cargo test --release --locked -p codeatlas-fixture-tests --test benchmark -- --ignored --nocapture
 

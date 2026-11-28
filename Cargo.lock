@@ -189,6 +189,7 @@ dependencies = [
  "codeatlas-parser-treesitter",
  "codeatlas-protocol",
  "codeatlas-scanner-fs",
+ "codeatlas-semantic-typescript",
  "jsonschema",
  "serde_json",
  "tempfile",
@@ -259,6 +260,9 @@ version = "0.0.0"
 dependencies = [
  "codeatlas-application",
  "codeatlas-core",
+ "serde",
+ "serde_json",
+ "tempfile",
 ]
 
 [[package]]

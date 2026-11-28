@@ -74,10 +74,16 @@ Two side findings: on Windows, the first read of freshly written files was about
   - Eight planted defects each fail a test: results left in completion order, the worker count ignored, no cancellation check between files (first missed, which added the test for a parser that ignores the token), a parser's own `Cancelled` stopping the run, a partial report returned on cancel, Tree-sitter or the scanner ignoring cancellation, and the scanner reporting no progress.
   - Benchmark on the development machine (20 threads), 1,000,330 lines in 2,995 files: scan 0.23 s; parse and symbols 5.42 s on 1 thread, 0.46 s on 20 threads (11.7 times faster); scan and parse 0.69 s, within the 3 s budget.
 - 2026-11-28 (ARC-02, decision 7): the job `portability` in `.github/workflows/ci.yml` runs `cargo test --workspace` on `windows-latest` and `macos-latest` with `RUSTFLAGS=-D warnings` and reports the checks `portability (windows-latest)` and `portability (macos-latest)`; it is a separate job so that the required check `rust` keeps its name. The scanner's symlink test now fails in CI (where `CI` is set) instead of skipping when links cannot be created. Before the push, the job's command passed on the Windows 11 development machine with `core.autocrlf=true`, as in a fresh Windows checkout, and `CI` set (111 tests passed and 1 ignored, the benchmark; no warnings; the symlink test ran with real links). macOS is first checked by the pull request's CI. When ENG-04's tests start Node, the job installs Node as `typescript-analyzer` does.
-- ENG-04: the `SemanticResolver` port takes the run context. One TypeScript program per `tsconfig` project bounds memory; Node runs with a larger stack for deep import chains; the semantic pass joins the benchmark.
+- 2026-11-28 (ENG-04, [ADR-0015](0015-typescript-semantic-analysis.md)):
+  - `SemanticResolver::resolve` takes the run context, and `Phase::Resolve` reports one unit per file.
+  - The adapter polls the cancellation token every 50 ms while it waits for the analyzer and kills the process when the run is cancelled. A test cancels a running analyzer and checks it returns within the 1 s budget and that the process is gone.
+  - One TypeScript program per project, released before the next, bounds memory by the largest project.
+  - The analysis runs on a worker thread with a 256 MiB stack. A 3,000-file import chain passes, and overflows on a 1 MiB stack.
+  - The benchmark adds the semantic pass and asserts its relationship count. On the development machine, for 1,000,330 lines: 7.88 s and an analyzer peak of 1.55 GB, so scan, parse and semantic pass take 8.56 s, within the 30 s and 3 GB budget. The pass is one process, so it uses one core; ENG-05 adds the graph build.
+  - The `rust`, `portability` and `benchmark` jobs install Node and the analyzer, so the semantic tests run on all three systems (decision 7).
 - RT-02: the runtime maps `Progress` to `$/progress` notifications and `$/cancelRequest` to a `CancelFlag`, and checks the 1 s cancellation budget end to end.
 
 ## Related records
 
-- [ADR-0005](0005-inter-process-communication.md) (progress and cancellation on the wire), [ADR-0010](0010-engine-clean-architecture-layering.md) (layers and ports), [ADR-0004](0004-hybrid-analysis-engine.md) (analysis pipeline)
+- [ADR-0015](0015-typescript-semantic-analysis.md) (the semantic pass), [ADR-0005](0005-inter-process-communication.md) (progress and cancellation on the wire), [ADR-0010](0010-engine-clean-architecture-layering.md) (layers and ports), [ADR-0004](0004-hybrid-analysis-engine.md) (analysis pipeline)
 - Traceable Implementation Plan v1.2: ARC-01, ENG-04, ENG-05, RT-02, RT-03
