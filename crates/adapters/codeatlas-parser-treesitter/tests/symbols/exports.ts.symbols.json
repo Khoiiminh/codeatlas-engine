@@ -261,6 +261,19 @@
       "id": "symbol:exports.ts#Status",
       "kind": "variable",
       "name": "Status"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "31:17-31:25",
+          "range": "31:8-31:29"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:exports.ts#fallback",
+      "kind": "variable",
+      "name": "fallback"
     }
   ],
   "truncated": null

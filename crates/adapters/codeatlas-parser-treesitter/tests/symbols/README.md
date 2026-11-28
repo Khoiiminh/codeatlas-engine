@@ -29,7 +29,7 @@ The rules in [`tests/fixtures/README.md`](../../../../../tests/fixtures/README.m
 |---|---|
 | `classes.ts` | Decorators on classes, members and parameters; static, `#private`, `readonly`, `declare`, `accessor` and optional fields; parameter properties (and a plain parameter that is not one); getter and setter merged; method overloads; skipped index signature, static block and string, number and computed names; abstract members; `override readonly` |
 | `interfaces.ts` | `;`, `,` and no separator; optional methods; accessor signatures; skipped call, construct and index signatures and quoted keys; interface merging; class and interface merging in both orders (an interface declared first still gives a `class` located at the class) |
-| `exports.ts` | Export lists with renames and `type`; re-exports that mark nothing; `export * as`; `export default name`; exported overloads; object and array destructuring with renames, holes, defaults, rest and nesting; a `const` and a `type` with one name |
+| `exports.ts` | Export lists with renames and `type`; re-exports that mark nothing; `export * as`; `export default name`; exported overloads; object and array destructuring with renames, holes, defaults (also on a renamed name), rest and nesting; a `const` and a `type` with one name |
 | `export-equals.ts` | `export = name`; a class and a namespace merged |
 | `default-function.ts`, `default-class.tsx` | Anonymous default exports, and the members of an anonymous class |
 | `namespaces.ts` | Exported and nested namespaces, dotted names, `declare namespace`, a function merged with a namespace, skipped `declare module "x"` and `declare global` |

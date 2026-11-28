@@ -1,6 +1,6 @@
 // ENG-03: the symbol rules, written a second time against the TypeScript compiler.
 //
-// The Rust extractor (crates/adapters/codeatlas-parser-treesitter/src/symbols.rs, with the
+// The Rust extractor (crates/adapters/codeatlas-parser-treesitter/src/symbols/, with the
 // identity rules in codeatlas-core/src/symbol.rs) reads Tree-sitter trees. This module applies
 // the same written rules (tests/fixtures/README.md "Symbols", extended in
 // crates/adapters/codeatlas-parser-treesitter/tests/symbols/README.md) to the compiler's syntax

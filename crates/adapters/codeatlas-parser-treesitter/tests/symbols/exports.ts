@@ -29,3 +29,4 @@ const { nested: { deep }, list: [item] } = { nested: { deep: 1 }, list: [1] };
 
 export const Status = { On: "on", Off: "off" } as const;
 export type Status = (typeof Status)[keyof typeof Status];
+const { missing: fallback = 5 } = {} as { missing?: number };
