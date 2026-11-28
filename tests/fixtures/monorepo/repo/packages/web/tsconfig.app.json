@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "paths": { "@mono/shared": ["../shared/src/index.ts"], "@/*": ["./src/*"] } },
+  "include": ["src"]
+}

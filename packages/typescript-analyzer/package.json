@@ -2,7 +2,7 @@
   "name": "@codeatlas/typescript-analyzer",
   "version": "0.0.0",
   "private": true,
-  "description": "Out-of-process driven adapter: TypeScript Compiler API resolution for codeatlas-semantic-typescript (ADR-0010 rule 6).",
+  "description": "Out-of-process driven adapter: TypeScript Compiler API resolution for codeatlas-semantic-typescript (ADR-0010 rule 6, ADR-0015).",
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
@@ -16,8 +16,10 @@
     "check:symbol-cases": "node ./scripts/check-symbol-cases.ts",
     "start": "node ./src/main.ts"
   },
-  "devDependencies": {
-    "@types/node": "26.6.6",
+  "dependencies": {
     "typescript": "6.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6"
   }
 }

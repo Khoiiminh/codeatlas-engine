@@ -9,7 +9,7 @@ Use cases that orchestrate the domain, and the **port traits** they need from th
 **Must not depend on:** any adapter or entrypoint crate; concrete infrastructure (`rusqlite`, `tree-sitter`, filesystem walking, JSON-RPC)
 
 **Contains:**
-- Use cases: `AnalyzeRepository` (full + incremental), `QueryGraph`, `ComputeImpact`, `ManageSnapshots`
+- Use cases: `ScanRepository` (ENG-01), `ParseSources` (ENG-02/03), `ResolveSemantics` (ENG-04); later `AnalyzeRepository` (full + incremental), `QueryGraph`, `ComputeImpact`, `ManageSnapshots`
 - Driven ports: `SourceScanner`, `LanguageParser`, `SemanticResolver`, `SnapshotStore`, `GraphReader`, `ArtifactStore`, `ProgressReporter`, `CancellationToken`, `Clock`
 - Application request/response types (not the wire contracts)
 - In-memory port fakes for unit tests (behind a `test-support` feature)

@@ -1,6 +1,6 @@
 [package]
 name = "codeatlas-fixture-tests"
-description = "FND-04: checks the source fixtures against their expectations and runs the snapshot-port behaviour scenarios against an in-memory reference store. ENG-02: scans and parses every fixture end to end. ENG-03: compares the extracted symbols with the golden lists."
+description = "FND-04: checks the source fixtures against their expectations and runs the snapshot-port behaviour scenarios against an in-memory reference store. ENG-02: scans and parses every fixture end to end. ENG-03: compares the extracted symbols with the golden lists. ENG-04: compares the resolved relationships with the golden lists."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -18,6 +18,8 @@ codeatlas-core.workspace = true
 codeatlas-application.workspace = true
 codeatlas-scanner-fs.workspace = true
 codeatlas-parser-treesitter.workspace = true
+# ENG-04 end-to-end semantic checks (needs Node and npm ci in packages/typescript-analyzer).
+codeatlas-semantic-typescript.workspace = true
 tempfile.workspace = true
 
 [lints]

@@ -6,7 +6,7 @@ Deterministic source repositories that analysers are tested against (FND-04). Ev
 |---|---|
 | `synchrostream/repo/` | A small synthetic repository shaped like SynchroStream: a NestJS-style backend (TypeScript), a Next.js-style web app (TSX, plus one `.jsx` and one `.js` file) and an SFU (JavaScript: ESM `.js`/`.mjs`, CommonJS `.cjs`, a JSON import). |
 | `synchrostream/expected.json` | The golden answer: every file, symbol, relationship and unresolved reference a complete analysis must report, with 1-based line numbers. |
-| `monorepo-minimal/` | The smallest monorepo: two workspace packages, each with its own `tsconfig.json`, linked by a path alias, with an `.mts` file. It keeps the multi-project path of the checks tested; ENG-01 grows it into a full monorepo fixture. |
+| `monorepo/` | A monorepo for the TypeScript project model (ENG-04): workspace packages whose configurations extend a shared base; the same specifier `@/lib/format` reaching a different file in each of two packages; a solution `tsconfig.json` whose references own the files (`packages/web`); a `jsconfig.json` CommonJS package; files that no configuration includes (the inferred project); an alias that only another project defines, so it is not found; and an `.mts` file. It grew from `monorepo-minimal` (FND-04). |
 | `expected.schema.json` | JSON Schema for every `expected.json`. |
 | `src/`, `tests/` | The `codeatlas-fixture-tests` crate (test tooling, not a product crate). |
 
@@ -18,7 +18,7 @@ The fixture is **synthetic**. It copies no code from the real SynchroStream repo
 |---|---|---|
 | Every entry points at real source text; the file inventory is exact; the fixture set as a whole covers the FND-04 exit criteria; every fixture folder has `expected.json` | `cargo test -p codeatlas-fixture-tests` (`tests/source_fixtures.rs`, CI job `rust`) | Wrong line, missing or extra file, a covered case removed |
 | The pinned TypeScript compiler agrees: inventory, exact diagnostics, import resolution, the declaration every call, reference and heritage edge reaches, the enclosing symbol, and the exact symbol list with kinds, lines, parents and export flags (by the ENG-03 rules in `scripts/symbol-rules.ts`) | `npm run check:fixtures` in `packages/typescript-analyzer` (CI job `typescript-analyzer`) | Wrong call target, wrong caller, missing or extra symbol, wrong symbol kind, parent or export flag |
-| The engine reproduces the golden lists: the scanner the inventory (ENG-01), the parser every file without syntax errors (ENG-02), the Tree-sitter extractor the symbol list exactly (ENG-03) | `cargo test -p codeatlas-fixture-tests` (`tests/parse_sources.rs`, `tests/symbols.rs`) | An analyser that drifts from the golden file |
+| The engine reproduces the golden lists: the scanner the inventory (ENG-01), the parser every file without syntax errors (ENG-02), the Tree-sitter extractor the symbol list exactly (ENG-03), and the TypeScript analyzer every edge and unresolved reference, with ids, positions inside `text`, specifiers and reasons (ENG-04) | `cargo test -p codeatlas-fixture-tests` (`tests/parse_sources.rs`, `tests/symbols.rs`, `tests/semantics.rs`; the last needs Node and `npm ci` in `packages/typescript-analyzer`) | An analyser that drifts from the golden file |
 
 Both checks fail on planted mistakes; they were tried when FND-04 was written (§5.1 of the Traceable Implementation Plan).
 
@@ -42,18 +42,18 @@ Not symbols: constructors, enum members, locals, parameters, members of object l
 Constructs these fixtures do not contain (namespaces, overloads and other merged declarations, destructuring, anonymous default exports, `export =`) follow the rules in [`crates/adapters/codeatlas-parser-treesitter/tests/symbols/README.md`](../../crates/adapters/codeatlas-parser-treesitter/tests/symbols/README.md) (ENG-03).
 
 **Edges** (exhaustive):
-- `imports`: from the importing file to the module it names, including `import type` (marked `typeOnly`) and CommonJS `require("…")`. The target is the module actually named (a barrel `index.ts` stays the target), or `external:<specifier>` for packages and `node:` built-ins. The implicit JSX runtime import is not recorded.
+- `imports`: from the importing file to the module it names, including `import type` and type `import("…")` (marked `typeOnly`), `import("…")` with a literal specifier, and CommonJS `require("…")`. The target is the module actually named (a barrel `index.ts` stays the target), or `external:<specifier>` for packages and `node:` built-ins, installed or not; a specifier is a package when it is a valid package name (`react`, `@scope/name/sub`), so `@/x` and `~x` are aliases. A declaration file next to a scanned JavaScript file stands for that file. The implicit JSX runtime import is not recorded.
 - `exports`: re-exports only (`export … from`), from the barrel to the re-exported file.
-- `calls`: a call or `new` whose callee resolves to a project symbol, from the innermost enclosing symbol (or the file for top-level statements). `new X()` targets class `X`; `super(…)` targets the base class. Calls on built-ins, external packages, locals, parameters and object-literal members are not recorded. Calls through an interface target the interface method, not an implementation.
-- `references`: a project symbol used as a value without being called (passed as an argument, listed in decorator metadata, read as `Enum.Member`), and JSX elements (`<Component />`, `<Ns.Component />`). The target is the final declaration, after following import aliases, barrels and namespace re-exports. Type annotations are not references.
-- `extends`, `implements`: between project symbols only (extending a built-in such as `Error` is not recorded).
+- `calls`: a call, `new`, tagged template or decorator whose callee resolves to a project symbol, from the innermost enclosing symbol (or the file for top-level statements), at the callee's name. `new X()` targets class `X`; `super(…)` targets the base class and `super.m()` the base method. Calls on built-ins, external packages, locals, parameters and object-literal members are not recorded. Calls through an interface target the interface method, not an implementation.
+- `references`: a project symbol used as a value without being called (passed as an argument, listed in decorator metadata, read as `Enum.Member`), and JSX elements (`<Component />`, `<Ns.Component />`). The target is the final declaration, after following import aliases, barrels, namespace re-exports and CommonJS exports. A name read through a namespace (`Ui.Badge`, `ns.value`) counts as the final name, and `Enum.Member` as the enum. Not references: type annotations, member reads (`this.state`, `obj.prop`; only calls through them are recorded), and export lists (`export { a }`, `export default a`, `module.exports = { a }`, `exports.a = a`).
+- `extends`, `implements`: between project symbols only (extending a built-in such as `Error` is not recorded). A computed base (`extends mixin(Base)`) is no heritage edge; the call and its arguments are recorded.
 - Decorators belong to the declaration they decorate, so a reference inside `@Inject(TOKEN)` on a constructor parameter property comes from that property.
 
 **Unresolved** (exhaustive), with the contract's `UnresolvedReason`:
-- `not_found`: a missing module, an undeclared global, or a call through an import whose module is missing;
+- `not_found`: a missing module (a relative path, a `paths` alias or another specifier that cannot be a package name), an undeclared global, or a call through an import whose module is missing. A name imported from a package or a JSON module is not reported: it is not a project symbol;
 - `ambiguous`: a name exported by two `export *` sources (TypeScript reports TS2308 and silently picks one);
 - `dynamic`: an import or `require` whose specifier is computed at run time; `specifier` is the expression text;
-- `unsupported`: an import of a non-source module (here, a JSON module).
+- `unsupported`: an import of a module that exists but is not scanned source (here, a JSON module; also CSS, a declaration file without a scanned source, or a file the inventory excludes).
 
 **TypeScript diagnostics.** Exactly the diagnostics TypeScript 6.0.3 reports for the fixture's TypeScript projects (by default `<root>/tsconfig.json`; see `typescriptProjects` below); each corresponds to a deliberate unresolved reference.
 
@@ -64,11 +64,12 @@ Add a fixture for each project shape the analysers must handle (a monorepo, a pl
 1. Create `tests/fixtures/<name>/repo/` with the project's source. Write it yourself or reduce a public example; never copy private code or anything with credentials. Use LF line endings and 4-space indentation.
 2. Make it type-check with TypeScript 6.0.3:
    - a single project: a `repo/tsconfig.json`;
-   - several projects (a monorepo): list each `tsconfig.json` in `typescriptProjects`, relative to the fixture folder (see `monorepo-minimal`);
-   - a plain JavaScript project with no tsconfig: put a checker-only `checker.tsconfig.json` next to `expected.json`, with `allowJs` and `"include": ["repo"]`, and list it in `typescriptProjects`. That keeps the analysed repository unchanged.
+   - several projects (a monorepo): list each `tsconfig.json` in `typescriptProjects`, relative to the fixture folder (see `monorepo`);
+   - a plain JavaScript project with no tsconfig: put a checker-only `checker.tsconfig.json` next to `expected.json`, with `allowJs` and `"include": ["repo"]`, and list it in `typescriptProjects`. That keeps the analysed repository unchanged;
+   - files that no configuration includes are in the analyzer's inferred project: list them in a `checker.tsconfig.json` with the analyzer's inferred options (`INFERRED_OPTIONS` in `packages/typescript-analyzer/src/analysis/projects.ts`), last in `typescriptProjects` (see `monorepo`). A `jsconfig.json` gets the defaults tsserver gives it in both checks.
 3. Write `tests/fixtures/<name>/expected.json` following the conventions above, with `"fixture": "<name>"` and `"revision": 1`.
 4. If the project keeps dependency or build folders (`node_modules/`, `dist/`), list them in `ignoredPaths` and add `!/tests/fixtures/<name>/repo/<folder>/` lines to the root `.gitignore`, so the stand-ins are committed.
-5. Run both checks below. Both discover the new fixture automatically.
+5. Run both checks below. Both discover the new fixture automatically. The engine assigns each file to the nearest configuration that includes it, as an editor does (ADR-0015), so list `typescriptProjects` so that each file's first project is that one.
 
 ## Changing a fixture
 

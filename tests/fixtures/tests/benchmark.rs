@@ -10,7 +10,12 @@
 //! The repository is generated, not copied, so it is free of licences and secrets and has the
 //! same shape every time. Each file imports a file whose number is a tenth of its own, so imports
 //! form a shallow tree, as in real code: a 3,000-file import chain overflows the TypeScript
-//! compiler's stack (found while writing ADR-0014).
+//! compiler's stack (found while writing ADR-0014; the analyzer's thread has a larger stack, and
+//! `codeatlas-semantic-typescript/tests/analyzer.rs` checks such a chain).
+//!
+//! ENG-04: when the TypeScript analyzer can run (Node and `npm ci` in
+//! `packages/typescript-analyzer`; CI must have both), the semantic pass is timed too, and every
+//! file must yield exactly its relationships: one import, 49 enum references and one `new`.
 
 use std::fmt::Write as _;
 use std::fs;
@@ -18,8 +23,11 @@ use std::num::NonZeroUsize;
 use std::path::Path;
 use std::time::{Duration, Instant};
 
+mod semantic_support;
+
 use codeatlas_application::{
-    ParseLimits, ParseReport, ParseSources, RunContext, ScanOptions, ScanRepository,
+    ParseLimits, ParseReport, ParseSources, ResolveSemantics, RunContext, ScanOptions,
+    ScanRepository,
 };
 use codeatlas_core::Inventory;
 use codeatlas_parser_treesitter::TreeSitterParser;
@@ -31,9 +39,18 @@ const METHODS_PER_CLASS: usize = 24;
 /// properties and the methods, and a function.
 const SYMBOLS_PER_FILE: usize = 4 + 1 + 1 + 1 + 2 + METHODS_PER_CLASS + 1;
 
+/// Per file: the import, the enum read in the field initializer and two in each method, and
+/// `new Service{i}()` in the function.
+const RELATIONSHIPS_PER_FILE: usize = 1 + 1 + 2 * METHODS_PER_CLASS + 1;
+
 /// ADR-0014 budget for scanning, parsing and extracting symbols, per million lines, on the
 /// reference machine (8 logical cores, SSD, files already read once).
 const BUDGET_PER_MILLION_LINES: Duration = Duration::from_secs(3);
+
+/// ADR-0014 budgets for a full analysis, including the TypeScript semantic pass, per million
+/// lines.
+const FULL_BUDGET_PER_MILLION_LINES: Duration = Duration::from_secs(30);
+const FULL_MEMORY_BUDGET_BYTES: u64 = 3_000_000_000;
 
 fn file_text(i: usize) -> String {
     let import = i / 10;
@@ -185,6 +202,41 @@ fn engine_throughput() {
         table,
         "| Scan + parse, {threads} threads | {total:.2?}; budget {budget:.2?} on the 8-thread reference machine |"
     );
+
+    if let Some(resolver) = semantic_support::analyzer() {
+        let (report, semantic_time) = timed(|| {
+            ResolveSemantics::new(&resolver)
+                .execute(root, &inventory, &many, &RunContext::detached())
+                .unwrap()
+        });
+        assert_eq!(report.unavailable, None);
+        assert!(report.failed.is_empty(), "{:?}", report.failed.first());
+        assert_eq!(
+            report.relationships.len(),
+            files * RELATIONSHIPS_PER_FILE,
+            "relationships"
+        );
+        let full = total + semantic_time;
+        let full_budget = FULL_BUDGET_PER_MILLION_LINES.mul_f64(lines as f64 / 1_000_000.0);
+        let memory = report.peak_memory_bytes.unwrap_or(0);
+        let _ = writeln!(
+            table,
+            "| Semantic pass (TypeScript, 1 process) | {semantic_time:.2?} ({}), {} relationships, analyzer peak {:.2} GB |",
+            rate(lines, semantic_time),
+            report.relationships.len(),
+            memory as f64 / 1e9
+        );
+        let _ = writeln!(
+            table,
+            "| Full analysis so far (scan + parse + semantic) | {full:.2?}; budget {full_budget:.2?} and {:.0} GB on the reference machine |",
+            FULL_MEMORY_BUDGET_BYTES as f64 / 1e9
+        );
+    } else {
+        let _ = writeln!(
+            table,
+            "| Semantic pass | not run: the TypeScript analyzer is not available here |"
+        );
+    }
     println!("{table}");
     if let Ok(summary) = std::env::var("GITHUB_STEP_SUMMARY") {
         let mut existing = fs::read_to_string(&summary).unwrap_or_default();

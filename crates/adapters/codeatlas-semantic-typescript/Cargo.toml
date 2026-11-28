@@ -11,6 +11,12 @@ repository.workspace = true
 [dependencies]
 codeatlas-core.workspace = true
 codeatlas-application.workspace = true
+# ENG-04: the analyzer protocol (ADR-0015) is JSON, one message per line.
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
 
 [lints]
 workspace = true
