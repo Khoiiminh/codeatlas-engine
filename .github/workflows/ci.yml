@@ -93,3 +93,5 @@ jobs:
       - run: npm run typecheck
       - name: Fixture expectations agree with the TypeScript compiler (FND-04)
         run: npm run check:fixtures
+      - name: Parser cases agree with the TypeScript compiler (ENG-02)
+        run: npm run check:parser-cases

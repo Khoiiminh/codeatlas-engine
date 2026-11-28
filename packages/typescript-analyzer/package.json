@@ -12,6 +12,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "check:fixtures": "node ./scripts/check-fixtures.ts",
+    "check:parser-cases": "node ./scripts/check-parser-cases.ts",
     "start": "node ./src/main.ts"
   },
   "devDependencies": {

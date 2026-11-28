@@ -1,0 +1,9 @@
+{
+  "problems": [
+    {
+      "kind": "unexpected",
+      "range": "0:0-0:7"
+    }
+  ],
+  "truncated": false
+}

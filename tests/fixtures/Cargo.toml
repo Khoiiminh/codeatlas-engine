@@ -1,6 +1,6 @@
 [package]
 name = "codeatlas-fixture-tests"
-description = "FND-04: checks the SynchroStream source fixture against its expectations and runs the snapshot-port behaviour scenarios against an in-memory reference store."
+description = "FND-04: checks the source fixtures against their expectations and runs the snapshot-port behaviour scenarios against an in-memory reference store. ENG-02: scans and parses every fixture end to end."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
@@ -13,6 +13,12 @@ serde_json.workspace = true
 
 [dev-dependencies]
 jsonschema.workspace = true
+# ENG-02 end-to-end parse checks. This is a tooling crate, outside the dependency matrix.
+codeatlas-core.workspace = true
+codeatlas-application.workspace = true
+codeatlas-scanner-fs.workspace = true
+codeatlas-parser-treesitter.workspace = true
+tempfile.workspace = true
 
 [lints]
 workspace = true

@@ -1,4 +1,5 @@
-//! codeatlas-scanner-fs: Adapter (driven): filesystem SourceScanner (ENG-01).
+//! codeatlas-scanner-fs: Adapter (driven): filesystem SourceScanner (ENG-01) and
+//! SourceReader (ENG-02).
 //!
 //! Walks a repository on the local disk and builds the source inventory. The rules (which
 //! files are source, which folders to skip) come from `codeatlas-core`; this crate only does
@@ -10,7 +11,7 @@ use std::fs;
 use std::path::{Component, Path};
 use std::sync::{Arc, Mutex, PoisonError};
 
-use codeatlas_application::{ScanError, ScanRequest, SourceScanner};
+use codeatlas_application::{ReadError, ScanError, ScanRequest, SourceReader, SourceScanner};
 use codeatlas_core::{
     ContentHash, IgnorePolicy, Inventory, Language, RepoPath, SkipReason, SkippedEntry, SourceFile,
 };
@@ -139,6 +140,33 @@ impl SourceScanner for FsSourceScanner {
                 }),
         );
         Inventory::new(files, skipped).map_err(|e| ScanError::InvalidInventory(e.to_string()))
+    }
+}
+
+/// [`SourceReader`] for files inventoried by [`FsSourceScanner`] on the local file system.
+///
+/// It reads the file again and returns its text only if the size and SHA-256 still match the
+/// inventory, so a parse result always describes the content that was scanned.
+#[derive(Debug, Default, Clone, Copy)]
+pub struct FsSourceReader;
+
+impl SourceReader for FsSourceReader {
+    fn read(&self, root: &Path, file: &SourceFile) -> Result<String, ReadError> {
+        let mut full = root.to_path_buf();
+        full.extend(file.path.as_str().split('/'));
+        // Never follow a link that appeared after the scan: the scanner reported links instead.
+        let meta = fs::symlink_metadata(&full).map_err(|e| ReadError::Io(e.to_string()))?;
+        if !meta.is_file() || meta.len() != file.size_bytes {
+            return Err(ReadError::ChangedSinceScan);
+        }
+        let bytes = fs::read(&full).map_err(|e| ReadError::Io(e.to_string()))?;
+        let digest: [u8; 32] = Sha256::digest(&bytes).into();
+        if bytes.len() as u64 != file.size_bytes
+            || ContentHash::from_bytes(digest) != file.content_hash
+        {
+            return Err(ReadError::ChangedSinceScan);
+        }
+        String::from_utf8(bytes).map_err(|_| ReadError::NotUtf8)
     }
 }
 
