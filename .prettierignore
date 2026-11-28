@@ -11,3 +11,5 @@ tests/fixtures/
 # ENG-02: parser cases are deliberately broken or unusual source; expected positions depend on
 # their exact bytes.
 crates/adapters/codeatlas-parser-treesitter/tests/cases/
+# ENG-03: symbol cases; expected ranges depend on their exact bytes.
+crates/adapters/codeatlas-parser-treesitter/tests/symbols/

@@ -8,3 +8,5 @@ tests/fixtures/** text eol=lf
 # ENG-02: parser cases are kept byte for byte. Some deliberately use CRLF line endings or a
 # byte order mark, and the expected positions depend on them.
 crates/adapters/codeatlas-parser-treesitter/tests/cases/** -text
+# ENG-03: the same for the symbol cases (expected ranges depend on the exact bytes).
+crates/adapters/codeatlas-parser-treesitter/tests/symbols/** -text

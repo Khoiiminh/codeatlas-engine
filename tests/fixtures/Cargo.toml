@@ -1,6 +1,6 @@
 [package]
 name = "codeatlas-fixture-tests"
-description = "FND-04: checks the source fixtures against their expectations and runs the snapshot-port behaviour scenarios against an in-memory reference store. ENG-02: scans and parses every fixture end to end."
+description = "FND-04: checks the source fixtures against their expectations and runs the snapshot-port behaviour scenarios against an in-memory reference store. ENG-02: scans and parses every fixture end to end. ENG-03: compares the extracted symbols with the golden lists."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true

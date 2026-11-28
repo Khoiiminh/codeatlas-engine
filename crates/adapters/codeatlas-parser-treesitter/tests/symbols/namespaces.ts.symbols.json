@@ -1,0 +1,230 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "namespace",
+          "name": "0:17-0:25",
+          "range": "0:0-11:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:namespaces.ts#Geometry",
+      "kind": "namespace",
+      "name": "Geometry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "1:17-1:21",
+          "range": "1:17-1:25"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Geometry.unit",
+      "kind": "variable",
+      "name": "unit",
+      "parent": "symbol:namespaces.ts#Geometry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "2:20-2:24",
+          "range": "2:4-4:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Geometry.area",
+      "kind": "function",
+      "name": "area",
+      "parent": "symbol:namespaces.ts#Geometry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "5:10-5:16",
+          "range": "5:4-7:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Geometry.Helper",
+      "kind": "class",
+      "name": "Helper",
+      "parent": "symbol:namespaces.ts#Geometry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "6:8-6:14",
+          "range": "6:8-6:25"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Geometry.Helper.assist",
+      "kind": "method",
+      "name": "assist",
+      "parent": "symbol:namespaces.ts#Geometry.Helper"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "namespace",
+          "name": "8:21-8:26",
+          "range": "8:4-10:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Geometry.Inner",
+      "kind": "namespace",
+      "name": "Inner",
+      "parent": "symbol:namespaces.ts#Geometry"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "type_alias",
+          "name": "9:20-9:22",
+          "range": "9:8-9:32"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Geometry.Inner.Id",
+      "kind": "type_alias",
+      "name": "Id",
+      "parent": "symbol:namespaces.ts#Geometry.Inner"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "namespace",
+          "name": "13:10-13:15",
+          "range": "13:0-15:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Outer",
+      "kind": "namespace",
+      "name": "Outer"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "namespace",
+          "name": "13:16-13:22",
+          "range": "13:16-15:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Outer.Middle",
+      "kind": "namespace",
+      "name": "Middle",
+      "parent": "symbol:namespaces.ts#Outer"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "namespace",
+          "name": "13:23-13:27",
+          "range": "13:23-15:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Outer.Middle.Last",
+      "kind": "namespace",
+      "name": "Last",
+      "parent": "symbol:namespaces.ts#Outer.Middle"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "14:20-14:24",
+          "range": "14:4-14:35"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Outer.Middle.Last.deep",
+      "kind": "function",
+      "name": "deep",
+      "parent": "symbol:namespaces.ts#Outer.Middle.Last"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "namespace",
+          "name": "17:18-17:25",
+          "range": "17:0-20:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Ambient",
+      "kind": "namespace",
+      "name": "Ambient"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "18:13-18:22",
+          "range": "18:4-18:31"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Ambient.described",
+      "kind": "function",
+      "name": "described",
+      "parent": "symbol:namespaces.ts#Ambient"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "19:8-19:15",
+          "range": "19:8-19:23"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#Ambient.counter",
+      "kind": "variable",
+      "name": "counter",
+      "parent": "symbol:namespaces.ts#Ambient"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "22:9-22:15",
+          "range": "22:0-22:26"
+        },
+        {
+          "kind": "namespace",
+          "name": "23:10-23:16",
+          "range": "23:0-25:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#merged",
+      "kind": "function",
+      "name": "merged"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "24:17-24:22",
+          "range": "24:17-24:26"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:namespaces.ts#merged.extra",
+      "kind": "variable",
+      "name": "extra",
+      "parent": "symbol:namespaces.ts#merged"
+    }
+  ],
+  "truncated": null
+}

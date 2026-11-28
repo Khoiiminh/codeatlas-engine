@@ -1,4 +1,5 @@
-//! ENG-02: parse every source file of an inventory.
+//! ENG-02: parse every source file of an inventory. ENG-03: the parse result also lists the
+//! symbols each file declares.
 //!
 //! Two driven ports do the work: [`SourceReader`] fetches a file's text, and
 //! [`LanguageParser`] turns it into a [`ParsedSource`]. The use case [`ParseSources`] owns the
@@ -21,6 +22,10 @@ use codeatlas_core::{
 /// broken throughout, and listing every problem would only bloat the result.
 pub const DEFAULT_MAX_PROBLEMS_PER_FILE: usize = 100;
 
+/// A parser stops extracting symbols from one file after this many declarations. Hand-written
+/// files declare hundreds at most; the limit only bounds memory on generated code.
+pub const DEFAULT_MAX_SYMBOLS_PER_FILE: usize = 100_000;
+
 /// A parser gives up on one file after this long. Parsing hand-written source takes
 /// milliseconds; this only stops pathological input from stalling a whole analysis.
 pub const DEFAULT_PARSE_TIMEOUT: Duration = Duration::from_secs(10);
@@ -29,6 +34,7 @@ pub const DEFAULT_PARSE_TIMEOUT: Duration = Duration::from_secs(10);
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct ParseLimits {
     pub max_problems: usize,
+    pub max_symbols: usize,
     /// `None` means no time limit.
     pub timeout: Option<Duration>,
 }
@@ -37,6 +43,7 @@ impl Default for ParseLimits {
     fn default() -> Self {
         ParseLimits {
             max_problems: DEFAULT_MAX_PROBLEMS_PER_FILE,
+            max_symbols: DEFAULT_MAX_SYMBOLS_PER_FILE,
             timeout: Some(DEFAULT_PARSE_TIMEOUT),
         }
     }
@@ -93,6 +100,10 @@ impl std::error::Error for ParseError {}
 ///   they recovered as a `SyntaxProblem` with positions in the contract's units (zero-based
 ///   lines, UTF-16 characters), relative to the text after a leading UTF-8 byte order mark;
 /// - stop recording after `limits.max_problems` and set `problems_truncated`;
+/// - list the symbols the file declares, built with `codeatlas_core::build_symbols` so the
+///   identity rules are the same for every parser, with positions in the same units;
+/// - stop extracting symbols after `limits.max_symbols` declarations, or at a nesting depth
+///   they document, and say where with `symbols_truncated`;
 /// - give up with `ParseError::TimedOut` once `limits.timeout` has passed;
 /// - be deterministic: the same input and limits give the same result, apart from timeouts.
 pub trait LanguageParser {
@@ -386,6 +397,7 @@ mod tests {
         let limits = ParseLimits {
             max_problems: 2,
             timeout: None,
+            ..ParseLimits::default()
         };
         let report = run(texts, &["a.ts"], limits);
         assert_eq!(report.parsed[0].problems().len(), 2);

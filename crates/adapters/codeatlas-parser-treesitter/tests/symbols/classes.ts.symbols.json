@@ -1,0 +1,323 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "3:13-3:20",
+          "range": "2:0-47:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:classes.ts#Service",
+      "kind": "class",
+      "name": "Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "4:11-4:20",
+          "range": "4:4-4:25"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.instances",
+      "kind": "property",
+      "name": "instances",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "5:4-5:11",
+          "range": "5:4-5:18"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.#secret",
+      "kind": "property",
+      "name": "#secret",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "6:13-6:17",
+          "range": "6:4-6:38"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.name",
+      "kind": "property",
+      "name": "name",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "7:12-7:15",
+          "range": "7:4-7:24"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.tag",
+      "kind": "property",
+      "name": "tag",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "8:13-8:18",
+          "range": "8:4-8:23"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.count",
+      "kind": "property",
+      "name": "count",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "9:4-9:12",
+          "range": "9:4-9:22"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.optional",
+      "kind": "property",
+      "name": "optional",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "17:42-17:47",
+          "range": "17:8-17:55"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.token",
+      "kind": "property",
+      "name": "token",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "18:15-18:22",
+          "range": "18:8-18:30"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.retries",
+      "kind": "property",
+      "name": "retries",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "20:27-20:32",
+          "range": "20:8-20:39"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.clock",
+      "kind": "property",
+      "name": "clock",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "24:4-24:7",
+          "range": "23:4-24:18"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.run",
+      "kind": "method",
+      "name": "run",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "26:8-26:12",
+          "range": "26:4-28:5"
+        },
+        {
+          "kind": "property",
+          "name": "30:8-30:12",
+          "range": "30:4-30:30"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.size",
+      "kind": "property",
+      "name": "size",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "32:4-32:10",
+          "range": "32:4-32:34"
+        },
+        {
+          "kind": "method",
+          "name": "33:4-33:10",
+          "range": "33:4-33:34"
+        },
+        {
+          "kind": "method",
+          "name": "34:4-34:10",
+          "range": "34:4-36:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.format",
+      "kind": "method",
+      "name": "format",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "38:4-38:11",
+          "range": "38:4-38:22"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.#hidden",
+      "kind": "method",
+      "name": "#hidden",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "40:11-40:17",
+          "range": "40:4-42:5"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Service.create",
+      "kind": "method",
+      "name": "create",
+      "parent": "symbol:classes.ts#Service"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "49:22-49:27",
+          "range": "49:0-52:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:classes.ts#Shape",
+      "kind": "class",
+      "name": "Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "50:13-50:17",
+          "range": "50:4-50:28"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Shape.area",
+      "kind": "method",
+      "name": "area",
+      "parent": "symbol:classes.ts#Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "51:32-51:37",
+          "range": "51:4-51:46"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Shape.sides",
+      "kind": "property",
+      "name": "sides",
+      "parent": "symbol:classes.ts#Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "54:6-54:10",
+          "range": "54:0-56:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Base",
+      "kind": "class",
+      "name": "Base"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "58:6-58:13",
+          "range": "58:0-62:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Derived",
+      "kind": "class",
+      "name": "Derived"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "59:34-59:39",
+          "range": "59:16-59:47"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Derived.value",
+      "kind": "property",
+      "name": "value",
+      "parent": "symbol:classes.ts#Derived"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "64:9-64:12",
+          "range": "64:0-66:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:classes.ts#Log",
+      "kind": "function",
+      "name": "Log"
+    }
+  ],
+  "truncated": null
+}

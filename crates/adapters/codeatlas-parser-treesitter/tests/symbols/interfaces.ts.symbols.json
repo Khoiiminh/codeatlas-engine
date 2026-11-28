@@ -1,0 +1,243 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "interface",
+          "name": "0:17-0:22",
+          "range": "0:0-10:1"
+        },
+        {
+          "kind": "interface",
+          "name": "12:17-12:22",
+          "range": "12:0-14:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:interfaces.ts#Shape",
+      "kind": "interface",
+      "name": "Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "1:13-1:15",
+          "range": "1:4-1:24"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Shape.id",
+      "kind": "property",
+      "name": "id",
+      "parent": "symbol:interfaces.ts#Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "2:4-2:8",
+          "range": "2:4-2:19"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Shape.area",
+      "kind": "method",
+      "name": "area",
+      "parent": "symbol:interfaces.ts#Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "3:4-3:9",
+          "range": "3:4-3:34"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Shape.scale",
+      "kind": "method",
+      "name": "scale",
+      "parent": "symbol:interfaces.ts#Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "4:8-4:13",
+          "range": "4:4-4:24"
+        },
+        {
+          "kind": "property",
+          "name": "5:8-5:13",
+          "range": "5:4-5:29"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Shape.label",
+      "kind": "property",
+      "name": "label",
+      "parent": "symbol:interfaces.ts#Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "13:4-13:9",
+          "range": "13:4-13:18"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Shape.color",
+      "kind": "property",
+      "name": "color",
+      "parent": "symbol:interfaces.ts#Shape"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "interface",
+          "name": "16:10-16:16",
+          "range": "16:0-18:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Circle",
+      "kind": "interface",
+      "name": "Circle"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "17:4-17:10",
+          "range": "17:4-17:18"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Circle.radius",
+      "kind": "property",
+      "name": "radius",
+      "parent": "symbol:interfaces.ts#Circle"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "20:13-20:19",
+          "range": "20:0-22:1"
+        },
+        {
+          "kind": "interface",
+          "name": "24:17-24:23",
+          "range": "24:0-26:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:interfaces.ts#Square",
+      "kind": "class",
+      "name": "Square"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "21:4-21:8",
+          "range": "21:4-21:13"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Square.side",
+      "kind": "property",
+      "name": "side",
+      "parent": "symbol:interfaces.ts#Square"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "25:4-25:11",
+          "range": "25:4-25:20"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Square.corners",
+      "kind": "property",
+      "name": "corners",
+      "parent": "symbol:interfaces.ts#Square"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "type_alias",
+          "name": "28:5-28:10",
+          "range": "28:0-28:38"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Point",
+      "kind": "type_alias",
+      "name": "Point"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "type_alias",
+          "name": "29:12-29:16",
+          "range": "29:0-29:29"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:interfaces.ts#Pair",
+      "kind": "type_alias",
+      "name": "Pair"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "interface",
+          "name": "31:10-31:16",
+          "range": "31:0-33:1"
+        },
+        {
+          "kind": "class",
+          "name": "35:6-35:12",
+          "range": "35:0-37:1"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Widget",
+      "kind": "class",
+      "name": "Widget"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "32:4-32:8",
+          "range": "32:4-32:17"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Widget.size",
+      "kind": "property",
+      "name": "size",
+      "parent": "symbol:interfaces.ts#Widget"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "36:4-36:8",
+          "range": "36:4-36:20"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:interfaces.ts#Widget.name",
+      "kind": "property",
+      "name": "name",
+      "parent": "symbol:interfaces.ts#Widget"
+    }
+  ],
+  "truncated": null
+}

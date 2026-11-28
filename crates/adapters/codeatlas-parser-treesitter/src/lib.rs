@@ -1,8 +1,9 @@
-//! codeatlas-parser-treesitter: Adapter (driven): Tree-sitter LanguageParser (ENG-02).
+//! codeatlas-parser-treesitter: Adapter (driven): Tree-sitter LanguageParser (ENG-02, ENG-03).
 //!
-//! Parses TypeScript, TSX, JavaScript and JSX with the official Tree-sitter grammars and
-//! reports where the parser recovered from syntax errors. Tree-sitter types never leave this
-//! crate: the result is a `codeatlas_core::ParsedSource`.
+//! Parses TypeScript, TSX, JavaScript and JSX with the official Tree-sitter grammars, reports
+//! where the parser recovered from syntax errors, and extracts the symbols each file declares
+//! (see [`symbols`]). Tree-sitter types never leave this crate: the result is a
+//! `codeatlas_core::ParsedSource`.
 //!
 //! Grammar per language:
 //!
@@ -18,8 +19,12 @@ use std::ops::ControlFlow;
 use std::time::Instant;
 
 use codeatlas_application::{LanguageParser, ParseError, ParseInput, ParseLimits};
-use codeatlas_core::{Language, LineIndex, ParsedSource, SyntaxProblem, SyntaxProblemKind};
+use codeatlas_core::{
+    Language, LineIndex, ParsedSource, SyntaxProblem, SyntaxProblemKind, build_symbols,
+};
 use tree_sitter::{Node, ParseOptions, Parser, Tree};
+
+pub mod symbols;
 
 const BOM: &str = "\u{feff}";
 
@@ -89,13 +94,20 @@ impl LanguageParser for TreeSitterParser {
         // Editors drop a byte order mark from the document text, so positions do too.
         let text = input.text.strip_prefix(BOM).unwrap_or(input.text);
         let tree = Self::tree(text, input.language, limits)?;
-        let (problems, truncated) = syntax_problems(tree.root_node(), text, limits.max_problems);
-        Ok(ParsedSource::new(
-            input.path.clone(),
+        let index = LineIndex::new(text);
+        let (problems, truncated) = syntax_problems(tree.root_node(), &index, limits.max_problems);
+        let extracted = symbols::extract(
+            tree.root_node(),
+            text,
             input.language,
-            problems,
-            truncated,
-        ))
+            &index,
+            limits.max_symbols,
+        );
+        let symbols = build_symbols(input.path, extracted.declared, &extracted.exported_names);
+        Ok(
+            ParsedSource::new(input.path.clone(), input.language, problems, truncated)
+                .with_symbols(symbols, extracted.truncated),
+        )
     }
 }
 
@@ -105,12 +117,15 @@ impl LanguageParser for TreeSitterParser {
 /// An `ERROR` node covers text the parser skipped; it is reported once, without looking
 /// inside it. A missing node is a zero-width token the parser assumed. Only subtrees that
 /// contain an error are visited, so a clean file costs one check of the root.
-fn syntax_problems(root: Node<'_>, text: &str, max: usize) -> (Vec<SyntaxProblem>, bool) {
+fn syntax_problems(
+    root: Node<'_>,
+    index: &LineIndex<'_>,
+    max: usize,
+) -> (Vec<SyntaxProblem>, bool) {
     let mut problems = Vec::new();
     if !root.has_error() {
         return (problems, false);
     }
-    let index = LineIndex::new(text);
     let mut cursor = root.walk();
     loop {
         let node = cursor.node();

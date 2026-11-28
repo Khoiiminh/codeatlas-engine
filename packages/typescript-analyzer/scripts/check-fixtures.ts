@@ -5,7 +5,7 @@
 // The Rust tests in tests/fixtures check that every expectation points at real source text.
 // This script checks what only a compiler can: the file inventory, the exact diagnostics, where
 // every import resolves, which declaration every call, reference and heritage edge reaches,
-// and that the symbol list is exhaustive. Every folder under tests/fixtures except src, tests and
+// and that the symbol list is exactly right (scripts/symbol-rules.ts, ENG-03). Every folder under tests/fixtures except src, tests and
 // target is a fixture and must have expected.json. Exits non-zero if any fixture disagrees.
 //
 // TypeScript projects: expected.json may list "typescriptProjects", tsconfig paths relative to
@@ -16,13 +16,14 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import ts from "typescript";
+import { primary, symbolsOf } from "./symbol-rules.ts";
 
 interface Expected {
     root: string;
     typescriptProjects?: string[];
     files: { path: string; language: string }[];
     externalModules: string[];
-    symbols: { id: string; kind: string; name: string; path: string; line: number; parent?: string }[];
+    symbols: ExpectedSymbol[];
     edges: {
         kind: string;
         from: string;
@@ -42,6 +43,19 @@ interface Expected {
         reason: string;
     }[];
     typescriptDiagnostics: { path: string; line: number; code: number }[];
+}
+
+interface ExpectedSymbol {
+    id: string;
+    kind: string;
+    name: string;
+    line: number;
+    parent?: string;
+    exported: boolean;
+}
+
+function symbolKey(s: ExpectedSymbol): string {
+    return `${s.id} ${s.kind} name=${s.name} @${s.line} parent=${s.parent ?? "-"} ${s.exported ? "exported" : "local"}`;
 }
 
 interface Decl {
@@ -135,58 +149,21 @@ function checkFixture(name: string): void {
         expected.typescriptDiagnostics.map((d) => `${d.path}:${d.line} TS${d.code}`),
     );
 
-    // 3. Declarations in the source, named as in expected.json, so the symbol list can be
-    //    compared both ways (README: module scope plus class and interface members).
+    // 3. Symbols, by the rules in symbol-rules.ts (shared with check-symbol-cases.ts): exactly
+    //    the expected list, with the same ids, kinds, names, name lines, parents and export flags.
     const decls: Decl[] = [];
+    const symbolKeys: string[] = [];
     for (const [path, sf] of byPath) {
-        const add = (node: ts.Node, nameNode: ts.Node, qualified: string, kind: string) =>
-            decls.push({
-                id: `symbol:${path}#${qualified}`,
-                kind,
-                node,
-                path,
-                line: lineOf(sf, nameNode.getStart(sf)),
-            });
-        const members = (owner: string, list: ts.NodeArray<ts.ClassElement | ts.TypeElement>) => {
-            for (const m of list) {
-                if (ts.isConstructorDeclaration(m)) {
-                    for (const p of m.parameters) {
-                        if (ts.isIdentifier(p.name) && ts.getModifiers(p)?.length) {
-                            add(p, p.name, `${owner}.${p.name.text}`, "property");
-                        }
-                    }
-                    continue;
-                }
-                if (!m.name || !ts.isIdentifier(m.name)) continue;
-                const kind = ts.isMethodDeclaration(m) || ts.isMethodSignature(m) ? "method" : "property";
-                add(m, m.name, `${owner}.${m.name.text}`, kind);
+        for (const s of symbolsOf(path, sf, owner(path).checker)) {
+            for (const d of s.declarations) {
+                decls.push({ id: s.id, kind: s.kind, node: d.node, path, line: lineOf(sf, d.nameNode.getStart(sf)) });
             }
-        };
-        for (const st of sf.statements) {
-            if (ts.isFunctionDeclaration(st) && st.name) add(st, st.name, st.name.text, "function");
-            else if (ts.isClassDeclaration(st) && st.name) {
-                add(st, st.name, st.name.text, "class");
-                members(st.name.text, st.members);
-            } else if (ts.isInterfaceDeclaration(st)) {
-                add(st, st.name, st.name.text, "interface");
-                members(st.name.text, st.members);
-            } else if (ts.isTypeAliasDeclaration(st)) add(st, st.name, st.name.text, "type_alias");
-            else if (ts.isEnumDeclaration(st)) add(st, st.name, st.name.text, "enum");
-            else if (ts.isVariableStatement(st)) {
-                for (const d of st.declarationList.declarations) {
-                    if (ts.isIdentifier(d.name)) add(d, d.name, d.name.text, "variable");
-                }
-            } else if (ts.isExportDeclaration(st) && st.exportClause && ts.isNamespaceExport(st.exportClause)) {
-                add(st, st.exportClause.name, st.exportClause.name.text, "namespace");
-            }
+            const line = lineOf(sf, primary(s).nameNode.getStart(sf));
+            symbolKeys.push(symbolKey({ ...s, line }));
         }
     }
     const declById = new Map(decls.map((d) => [d.id, d]));
-    sameSet(
-        "symbols",
-        decls.map((d) => `${d.id} ${d.kind} @${d.line}`),
-        expected.symbols.map((s) => `${s.id} ${s.kind} @${s.line}`),
-    );
+    sameSet("symbols", symbolKeys, expected.symbols.map(symbolKey));
 
     // Innermost listed symbol whose declaration contains a position, else the file.
     const enclosing = (path: string, pos: number): string => {

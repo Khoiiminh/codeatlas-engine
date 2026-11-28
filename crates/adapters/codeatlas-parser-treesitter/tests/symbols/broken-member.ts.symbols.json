@@ -1,0 +1,46 @@
+{
+  "symbols": [
+    {
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "0:13-0:20",
+          "range": "0:0-4:1"
+        }
+      ],
+      "exported": true,
+      "id": "symbol:broken-member.ts#Partial",
+      "kind": "class",
+      "name": "Partial"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "method",
+          "name": "1:4-1:8",
+          "range": "1:4-1:19"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:broken-member.ts#Partial.fine",
+      "kind": "method",
+      "name": "fine",
+      "parent": "symbol:broken-member.ts#Partial"
+    },
+    {
+      "declarations": [
+        {
+          "kind": "property",
+          "name": "2:4-2:10",
+          "range": "2:4-2:10"
+        }
+      ],
+      "exported": false,
+      "id": "symbol:broken-member.ts#Partial.broken",
+      "kind": "property",
+      "name": "broken",
+      "parent": "symbol:broken-member.ts#Partial"
+    }
+  ],
+  "truncated": null
+}

@@ -95,3 +95,5 @@ jobs:
         run: npm run check:fixtures
       - name: Parser cases agree with the TypeScript compiler (ENG-02)
         run: npm run check:parser-cases
+      - name: Symbol cases agree with the TypeScript compiler (ENG-03)
+        run: npm run check:symbol-cases
