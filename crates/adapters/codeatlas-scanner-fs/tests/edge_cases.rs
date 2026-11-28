@@ -195,7 +195,12 @@ fn symlinks_are_reported_not_followed() {
     let linked = make_symlink(&dir.path().join("real/a.ts"), &dir.path().join("link.ts"))
         && make_dir_symlink(&dir.path().join("real"), &dir.path().join("mirror"));
     if !linked {
-        // Windows without Developer Mode cannot create symlinks; CI (Linux) runs this test.
+        // Windows without Developer Mode cannot create symlinks. CI can on every system (`rust`
+        // on Linux, `portability` on Windows and macOS), so there it must not skip quietly.
+        assert!(
+            std::env::var_os("CI").is_none(),
+            "CI must be able to create symlinks"
+        );
         eprintln!("symlinks not available here; skipping");
         return;
     }
