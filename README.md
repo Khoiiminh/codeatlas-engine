@@ -38,7 +38,7 @@ cargo test --workspace                        # includes the architecture bounda
 cargo test -p codeatlas-architecture-tests    # boundary check only (tests/architecture)
 cargo test -p codeatlas-fixture-tests         # FND-04 fixtures: SynchroStream golden file, port scenarios
 cargo clippy --workspace --all-targets -- -D warnings
-cd packages/typescript-analyzer && npm ci && npm run typecheck && npm run check:fixtures
+cd packages/typescript-analyzer && npm ci && npm run typecheck && npm run check:fixtures && npm run check:parser-cases
 cd packages/contracts && npm ci && npm run check:generated && npm run format:check && npm run typecheck && npm run test:consumer
 ```
 

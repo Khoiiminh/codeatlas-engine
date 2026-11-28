@@ -8,3 +8,6 @@ package-lock.json
 Cargo.lock
 # Golden line numbers: reformatting the fixture would move every expected line.
 tests/fixtures/
+# ENG-02: parser cases are deliberately broken or unusual source; expected positions depend on
+# their exact bytes.
+crates/adapters/codeatlas-parser-treesitter/tests/cases/

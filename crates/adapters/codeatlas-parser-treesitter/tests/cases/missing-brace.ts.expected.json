@@ -1,0 +1,10 @@
+{
+  "problems": [
+    {
+      "expected": "}",
+      "kind": "missing",
+      "range": "5:15-5:15"
+    }
+  ],
+  "truncated": false
+}

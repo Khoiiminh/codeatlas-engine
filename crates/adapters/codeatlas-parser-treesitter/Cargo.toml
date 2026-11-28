@@ -11,6 +11,12 @@ repository.workspace = true
 [dependencies]
 codeatlas-core.workspace = true
 codeatlas-application.workspace = true
+tree-sitter.workspace = true
+tree-sitter-typescript.workspace = true
+tree-sitter-javascript.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
 
 [lints]
 workspace = true
