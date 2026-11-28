@@ -28,6 +28,31 @@ jobs:
       - run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - run: cargo test --workspace --locked --exclude codeatlas-architecture-tests
 
+  # Required checks `portability (windows-latest)` and `portability (macos-latest)` (ADR-0014):
+  # the engine ships with a VS Code extension that runs on Windows, macOS and Linux, and the
+  # scanner meets what differs between them (path separators, a Windows checkout's line endings,
+  # symbolic links, file systems that ignore case). `rust` covers Linux. Warnings are errors here
+  # too, so code built only for one system meets the same bar. The check names come from the
+  # matrix: renaming the job or an entry renames the checks, and the rulesets must follow.
+  portability:
+    name: portability (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      RUSTFLAGS: -D warnings
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install toolchain from rust-toolchain.toml
+        run: rustup show active-toolchain || rustup toolchain install
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo test --workspace --locked --exclude codeatlas-architecture-tests
+
   # Report only (ADR-0014): times the engine on a generated 1-million-line repository and adds
   # the table to the job summary. Not a required check: shared runners vary too much for a time
   # limit. It fails only if the parallel and single-threaded results differ.
