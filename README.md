@@ -37,12 +37,13 @@ cargo build --workspace
 cargo test --workspace                        # includes the architecture boundary check
 cargo test -p codeatlas-architecture-tests    # boundary check only (tests/architecture)
 cargo test -p codeatlas-fixture-tests         # FND-04 fixtures and port scenarios; ENG-01..03 end to end against the golden files
+cargo test --release -p codeatlas-fixture-tests --test benchmark -- --ignored --nocapture   # ADR-0014 benchmark (1M generated lines)
 cargo clippy --workspace --all-targets -- -D warnings
 cd packages/typescript-analyzer && npm ci && npm run typecheck && npm run check:fixtures && npm run check:parser-cases && npm run check:symbol-cases
 cd packages/contracts && npm ci && npm run check:generated && npm run format:check && npm run typecheck && npm run test:consumer
 ```
 
-CI (`.github/workflows/ci.yml`) runs the jobs `rust`, `architecture`, `contracts` and `typescript-analyzer`. Mark all four as required in branch protection. The `contracts` job also uploads the packed `@codeatlas/contracts` tarball as the `codeatlas-contracts` artifact.
+CI (`.github/workflows/ci.yml`) runs the jobs `rust`, `architecture`, `contracts` and `typescript-analyzer`. Mark all four as required in branch protection. A fifth job, `benchmark`, times the engine on a generated repository and writes the result to the job summary; it is report-only, so do not make it required ([ADR-0014](docs/adr/0014-engine-run-model-and-quality-targets.md)). The `contracts` job also uploads the packed `@codeatlas/contracts` tarball as the `codeatlas-contracts` artifact.
 
 Branches ([ADR-0013](docs/adr/0013-branch-promotion-and-rule-ownership.md)): work reaches `development` through pull requests. New pull requests default to base `main`, so set the base to `development`. `main` only moves forward to a commit of `development` (a fast-forward push by a maintainer on the `protect-main` bypass list, bypass mode Always), so both branches share one history. The `source-branch` check in `.github/workflows/branch-policy.yml` fails any pull request into `main` that does not come from this repository's `development`. Make it required in `protect-main` only. `.github/CODEOWNERS` names the owners of the files that define this repository's rules. Releases are annotated `vX.Y.Z` tags on commits that `main` already points to; a tag is never moved or deleted, and a bad release gets a new patch version. The contract package and schema bundle are versioned separately and tagged `contracts-vX.Y.Z`.
 

@@ -2,7 +2,7 @@
 
 use std::fs;
 
-use codeatlas_application::{ReadError, ScanOptions, ScanRepository, SourceReader};
+use codeatlas_application::{ReadError, RunContext, ScanOptions, ScanRepository, SourceReader};
 use codeatlas_core::{Inventory, SourceFile};
 use codeatlas_scanner_fs::{FsSourceReader, FsSourceScanner};
 use tempfile::TempDir;
@@ -15,7 +15,11 @@ fn scanned(files: &[(&str, &str)]) -> (TempDir, Inventory) {
         fs::write(full, content).unwrap();
     }
     let inventory = ScanRepository::new(&FsSourceScanner)
-        .execute(dir.path().to_path_buf(), &ScanOptions::default())
+        .execute(
+            dir.path().to_path_buf(),
+            &ScanOptions::default(),
+            &RunContext::detached(),
+        )
         .unwrap();
     (dir, inventory)
 }

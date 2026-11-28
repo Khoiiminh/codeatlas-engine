@@ -11,7 +11,9 @@ use std::fs;
 use std::path::{Component, Path};
 use std::sync::{Arc, Mutex, PoisonError};
 
-use codeatlas_application::{ReadError, ScanError, ScanRequest, SourceReader, SourceScanner};
+use codeatlas_application::{
+    Phase, ReadError, RunContext, ScanError, ScanRequest, SourceReader, SourceScanner,
+};
 use codeatlas_core::{
     ContentHash, IgnorePolicy, Inventory, Language, RepoPath, SkipReason, SkippedEntry, SourceFile,
 };
@@ -23,7 +25,7 @@ use sha2::{Digest, Sha256};
 pub struct FsSourceScanner;
 
 impl SourceScanner for FsSourceScanner {
-    fn scan(&self, request: &ScanRequest) -> Result<Inventory, ScanError> {
+    fn scan(&self, request: &ScanRequest, run: &RunContext<'_>) -> Result<Inventory, ScanError> {
         let root = request.root.as_path();
         match fs::metadata(root) {
             Ok(meta) if meta.is_dir() => {}
@@ -79,6 +81,9 @@ impl SourceScanner for FsSourceScanner {
         let mut files = Vec::new();
         let mut skipped = Vec::new();
         for result in walker {
+            if run.is_cancelled() {
+                return Err(ScanError::Cancelled);
+            }
             let entry = match result {
                 Ok(entry) => entry,
                 Err(err) => {
@@ -119,12 +124,15 @@ impl SourceScanner for FsSourceScanner {
                 continue;
             };
             match read_source(entry.path(), request.max_file_bytes) {
-                Ok((size_bytes, content_hash)) => files.push(SourceFile {
-                    path,
-                    language,
-                    size_bytes,
-                    content_hash,
-                }),
+                Ok((size_bytes, content_hash)) => {
+                    files.push(SourceFile {
+                        path,
+                        language,
+                        size_bytes,
+                        content_hash,
+                    });
+                    run.report(Phase::Scan, files.len(), None);
+                }
                 Err(reason) => skipped.push(SkippedEntry { path, reason }),
             }
         }

@@ -7,7 +7,7 @@ use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codeatlas_application::{ScanOptions, ScanRepository};
+use codeatlas_application::{RunContext, ScanOptions, ScanRepository};
 use codeatlas_core::{Inventory, SkipReason};
 use codeatlas_scanner_fs::FsSourceScanner;
 use serde_json::Value;
@@ -41,7 +41,7 @@ fn scanned_fixtures() -> Vec<(String, Value, Inventory)> {
             let expected = read_json(&dir.join(&name).join("expected.json"));
             let root = dir.join(&name).join(expected["root"].as_str().unwrap());
             let inventory = ScanRepository::new(&FsSourceScanner)
-                .execute(root, &ScanOptions::default())
+                .execute(root, &ScanOptions::default(), &RunContext::detached())
                 .unwrap_or_else(|e| panic!("[{name}] scan failed: {e}"));
             (name, expected, inventory)
         })

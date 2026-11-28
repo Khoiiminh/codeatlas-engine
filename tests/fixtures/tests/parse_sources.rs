@@ -8,7 +8,11 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codeatlas_application::{ParseLimits, ParseReport, ParseSources, ScanOptions, ScanRepository};
+use std::num::NonZeroUsize;
+
+use codeatlas_application::{
+    ParseLimits, ParseReport, ParseSources, RunContext, ScanOptions, ScanRepository,
+};
 use codeatlas_core::Inventory;
 use codeatlas_parser_treesitter::TreeSitterParser;
 use codeatlas_scanner_fs::{FsSourceReader, FsSourceScanner};
@@ -16,15 +20,18 @@ use serde_json::Value;
 
 const NOT_FIXTURES: &[&str] = &["src", "tests", "target"];
 
+/// Several threads, so the end-to-end checks also cover parallel parsing (ADR-0014).
+fn run() -> RunContext<'static> {
+    RunContext::detached().with_workers(NonZeroUsize::new(4).unwrap())
+}
+
 fn scan_and_parse(root: &Path) -> (Inventory, ParseReport) {
     let inventory = ScanRepository::new(&FsSourceScanner)
-        .execute(root.to_path_buf(), &ScanOptions::default())
+        .execute(root.to_path_buf(), &ScanOptions::default(), &run())
         .unwrap_or_else(|e| panic!("{}: {e}", root.display()));
-    let report = ParseSources::new(&FsSourceReader, &TreeSitterParser).execute(
-        root,
-        &inventory,
-        &ParseLimits::default(),
-    );
+    let report = ParseSources::new(&FsSourceReader, &TreeSitterParser)
+        .execute(root, &inventory, &ParseLimits::default(), &run())
+        .unwrap();
     (inventory, report)
 }
 
@@ -134,14 +141,12 @@ fn a_file_changed_between_scan_and_parse_is_reported_not_parsed() {
     fs::write(dir.path().join("a.ts"), "export const a = 1;\n").unwrap();
     fs::write(dir.path().join("b.ts"), "export const b = 2;\n").unwrap();
     let inventory = ScanRepository::new(&FsSourceScanner)
-        .execute(dir.path().to_path_buf(), &ScanOptions::default())
+        .execute(dir.path().to_path_buf(), &ScanOptions::default(), &run())
         .unwrap();
     fs::write(dir.path().join("a.ts"), "export const a = 9;\n").unwrap();
-    let report = ParseSources::new(&FsSourceReader, &TreeSitterParser).execute(
-        dir.path(),
-        &inventory,
-        &ParseLimits::default(),
-    );
+    let report = ParseSources::new(&FsSourceReader, &TreeSitterParser)
+        .execute(dir.path(), &inventory, &ParseLimits::default(), &run())
+        .unwrap();
     assert_eq!(report.parsed.len(), 1);
     assert_eq!(report.failed.len(), 1);
     assert_eq!(report.failed[0].path.as_str(), "a.ts");
@@ -151,4 +156,27 @@ fn a_file_changed_between_scan_and_parse_is_reported_not_parsed() {
         diagnostic.message,
         "File could not be parsed: file changed since it was scanned."
     );
+}
+
+#[test]
+fn fixture_reports_do_not_depend_on_the_thread_count() {
+    for (name, root) in fixture_roots() {
+        let inventory = ScanRepository::new(&FsSourceScanner)
+            .execute(
+                root.clone(),
+                &ScanOptions::default(),
+                &RunContext::detached(),
+            )
+            .unwrap();
+        let parse = |workers: usize| {
+            let run = RunContext::detached().with_workers(NonZeroUsize::new(workers).unwrap());
+            ParseSources::new(&FsSourceReader, &TreeSitterParser)
+                .execute(&root, &inventory, &ParseLimits::default(), &run)
+                .unwrap()
+        };
+        let one = parse(1);
+        for workers in [2, 7, 32] {
+            assert_eq!(parse(workers), one, "[{name}] {workers} threads");
+        }
+    }
 }

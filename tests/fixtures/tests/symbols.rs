@@ -5,7 +5,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use codeatlas_application::{ParseLimits, ParseSources, ScanOptions, ScanRepository};
+use codeatlas_application::{ParseLimits, ParseSources, RunContext, ScanOptions, ScanRepository};
 use codeatlas_parser_treesitter::TreeSitterParser;
 use codeatlas_scanner_fs::{FsSourceReader, FsSourceScanner};
 use serde_json::{Value, json};
@@ -60,13 +60,20 @@ fn every_fixture_symbol_list_is_reproduced_exactly() {
     let mut compared = 0;
     for (name, expected, root) in fixtures() {
         let inventory = ScanRepository::new(&FsSourceScanner)
-            .execute(root.clone(), &ScanOptions::default())
+            .execute(
+                root.clone(),
+                &ScanOptions::default(),
+                &RunContext::detached(),
+            )
             .unwrap();
-        let report = ParseSources::new(&FsSourceReader, &TreeSitterParser).execute(
-            &root,
-            &inventory,
-            &ParseLimits::default(),
-        );
+        let report = ParseSources::new(&FsSourceReader, &TreeSitterParser)
+            .execute(
+                &root,
+                &inventory,
+                &ParseLimits::default(),
+                &RunContext::detached(),
+            )
+            .unwrap();
         assert!(report.failed.is_empty(), "[{name}] {:?}", report.failed);
         let got = sorted(
             report
